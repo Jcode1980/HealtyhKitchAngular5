@@ -1,11 +1,13 @@
+<a routerLink="/edit-recipe/{{recipe.id}}">
 <div class="recipe__wrapper">
   <div class="img-wrapper">
-    <a routerLink="/edit-recipe/{{recipe.id}}">
+    
       <img src={{imgLink}} alt="" width="100%" *ngIf="imgLink" class="recipe__img-wrapper">
       <div *ngIf="!imgLink" class="recipe-no-img">{{name}}</div>
       
-    </a>
+    
   </div>
   <div class="recipe-title">{{name}}</div>
   <div class="recipe-details">{{description}}</div>
 </div>
+</a>

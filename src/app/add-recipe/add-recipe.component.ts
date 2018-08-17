@@ -2,6 +2,7 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {RestService} from '../rest.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import { IRecipe } from '../../models/IRecipe';
+import {IMetric} from '../../models/IMetric';
 
 @Component({
   selector: 'app-add-recipe',
@@ -24,7 +25,8 @@ export class AddRecipeComponent implements OnInit {
 
   howManyIngredients = 1;
   maxArr = [1];
-  ingredientsList = [null, {}];
+  //ingredientsList = [null, {}];
+  ingredientsList = [];
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
@@ -41,6 +43,11 @@ export class AddRecipeComponent implements OnInit {
   requirementsList = [];
   selectedRequirments = [];
 
+
+  metricsList = [];
+  selectedMetric:IMetric;
+
+  selectedMetricToPush = null;
   cusinesListToPost = [];
   categoriesListToPost = [];
   benifitsListToPost = [];
@@ -57,6 +64,14 @@ export class AddRecipeComponent implements OnInit {
     allowSearchFilter: true
   };
 
+  singleSelectSettings = {
+    singleSelection: true,
+    idField: 'id',
+    textField: 'name',
+    itemsShowLimit: 1,
+  };
+
+
   // constructor(private rest: RestService, private router: Router ) {
   // }
 
@@ -68,10 +83,11 @@ export class AddRecipeComponent implements OnInit {
     this.loadDietaryCategories();
     this.loadHealthBenefits();
     this.loadCuisines();
+    this.loadMetrics();
     
     const id = +this.activatedRouter.snapshot.paramMap.get('id');
     if(id){
-      this.initializeRecipeData();
+      await this.initializeRecipeData();
     }
     else{
        console.log("no recipe id found"); 
@@ -90,16 +106,17 @@ export class AddRecipeComponent implements OnInit {
     this.method = currentRecipe.instructions;
     this.ingredientsList = currentRecipe.measuredIngredients;
 
-    console.log("ingredients is:");
-    console.log(this.ingredientsList.length);
-    if(this.ingredientsList.length === 0){
-      console.log("got here ingredients");
-      this.ingredientsList = [null, {}];
-    }
+    // console.log("ingredients is:");
+    // console.log(this.ingredientsList.length);
+    // if(this.ingredientsList.length === 0){
+    //   console.log("got here ingredients");
+    //   this.ingredientsList = [null, {}];
+    // }
     
-    this.howManyIngredients = this.ingredientsList.length;
-
-    console.log("no of ingredients in list: " + this.howManyIngredients);
+    //this.howManyIngredients = this.ingredientsList.length;
+    console.log("this.ingredientsList");
+    console.log(this.ingredientsList[0].amount);  
+    console.log("no of ingredients in list: " + this.ingredientsList);
 
     this.defaultImageID=currentRecipe.defaultImageID;
 
@@ -108,6 +125,7 @@ export class AddRecipeComponent implements OnInit {
     this.selectedRequirments = currentRecipe.dietaryCategories;
     this.selectedCuisines = currentRecipe.cuisines;
     this.selectedCategories = currentRecipe.mealTypes;
+    
   }
 
 
@@ -200,6 +218,15 @@ export class AddRecipeComponent implements OnInit {
     this.requirmentListToPost = newArr;
   }
 
+
+  onMetricSelect(item: any) {
+    this.selectedMetricToPush = item;
+  }
+
+  onMetricDeselect(item: any){
+    this.selectedMetricToPush = null;
+  }
+
   onDeselectAllRequirments(item: any) {
     this.requirmentListToPost = [];
   }
@@ -234,6 +261,13 @@ export class AddRecipeComponent implements OnInit {
         this.cuisineList = res;
       }
     );
+  }
+
+  loadMetrics(){
+    this.rest.apiGet('api/recipes/allMetrics').subscribe((res: any[]) => {
+      this.metricsList = res;
+    }
+  );
   }
 
 

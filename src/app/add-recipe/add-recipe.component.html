@@ -120,23 +120,29 @@
   </div>
 
   <div class="add__recipe-title">ingredients</div>
-
   
-  <div class="ingerdients__wrapper" *ngFor="let n of 1">
+  <div class="ingerdients__wrapper" *ngFor="let ingredient of ingredientsList">
 
     <div class="ingerdients__amount-wrapper">
 
       <p>Amount</p>
 
-      <input type="number" [(ngModel)]="ingredientsList[n].metric">
+      <input type="number" [(ngModel)]="ingredient.amount">
 
     </div>
 
     <div class="ingerdients__amount-wrapper">
 
       <p>Unit</p>
-
-      <input type="number" [(ngModel)]="ingredientsList[n].metric">
+      <ng-multiselect-dropdown
+      [placeholder]="'METRIC'"
+      [data]="metricsList"
+      [(ngModel)]="selectedMetric"
+      [settings]="singleSelectSettings"
+      (onSelect)="onMetricSelect($event)"
+      (onDeSelect)="onMetricDeselect($event)"
+    >
+    </ng-multiselect-dropdown>
 
     </div>
 
@@ -145,7 +151,7 @@
       <textarea cols="30"
                 rows="3"
                 placeholder="Description"
-                [(ngModel)]="ingredientsList[n].name"
+                [(ngModel)]="ingredient.name"
                 (keydown.Tab)="addIngredientToList()"
       ></textarea>
 
