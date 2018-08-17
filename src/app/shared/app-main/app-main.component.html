@@ -1,0 +1,24 @@
+<div class="l-app">
+
+  <spinner backgroundColor="#d4b59b" spinner="sk-chasing-dots"></spinner>
+
+
+  <app-app-toolbar></app-app-toolbar>
+  <app-side-nav  (menuOpened)="onOpen($event)"></app-side-nav>
+
+
+
+  <mat-sidenav-container (backdropClick)="onOpen($event)">
+    <mat-sidenav opened={{menuOpened}} style="transform: none !important;">
+      <app-side-menu></app-side-menu>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+      <app-footer></app-footer>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+</div>
+
+

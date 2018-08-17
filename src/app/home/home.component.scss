@@ -1,0 +1,493 @@
+:host {
+  height: 100%;
+}
+
+.home__wrapper{
+  background-color: #fff;
+}
+
+.home__wrapper-img {
+  background: url("../../assets/img/logo.jpg");
+  background-size: 100%;
+  background-position-y: 45%;
+  height: 345px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.home__search-wrapper {
+  display: flex;
+}
+
+.close-wrapper{
+  background-color: transparent;
+  width: 100%;
+  height: 1500px;
+  content: "";
+  position: absolute;
+  top: 0;
+}
+
+.home__search-open--btn {
+  padding: 5px 15px;
+  background-color: #fff;
+  color: #c0c0c0;
+  text-transform: uppercase;
+  font-size: 10px;
+  display: inline-flex;
+  cursor: pointer;
+  border-right: 1px solid;
+  font-family: Campton-Light;
+}
+
+.home__search-show-more--btn {
+  font-size: 22px;
+  padding-left: 25px;
+  padding-top: 5px;
+}
+
+.home__search-show-more--text {
+  display: flex;
+  align-items: center;
+  padding-top: 3px;
+}
+
+.home__search-input {
+  font-size: 12px;
+  font-family: Campton-Light;
+  color: #c0c0c0;
+  outline: none;
+  border: none;
+  padding-left: 30px;
+  width: 500px;
+  padding-top: 4px;
+  &::placeholder {
+    font-size: 11px;
+    font-family: Campton-Light;
+    color: #c0c0c0;
+    text-transform: uppercase;
+  }
+}
+
+.home__search-submit-wrapper {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  background-color: #dec9b9;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 21px;
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    background-color: darken(#dec9b9, 5%);
+  }
+}
+
+.home__search-results {
+  padding-top: 50px;
+  background-color: #fff;
+  width: 65%;
+}
+
+.home__search-meal-types--wrapper {
+  position: relative;
+  display: inline-flex;
+  width: 30%;
+  justify-content: space-evenly;
+  margin-bottom: 2.5%;
+}
+
+.meal-types-img{
+  position: absolute;
+  width: 100%;
+}
+
+.meal-types-text{
+  position: absolute;
+}
+
+.home__search-meal-types--item {
+  background-color: #eeeeee;
+  color: #fff;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  font-size: 25px;
+  text-transform: uppercase;
+  font-family: Campton-Light;
+  height: 335px;
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    background-color: darken(#eeeeee, 3%);
+  }
+}
+
+.border-search-top {
+  width: 100%;
+  border-bottom: 1px solid #c0c0c0;
+  margin-bottom: 60px;
+}
+
+.border-search-right-side-top {
+  width: 73%;
+  border-bottom: 1px solid #c0c0c0;
+  height: 1px;
+  padding-top: 48px;
+  margin-left: 13%;
+}
+
+.home__search-main--wrapper {
+  display: inline-flex;
+  width: 90%;
+  margin-left: 5%;
+  justify-content: space-between;
+}
+
+.home__search-right--side {
+  border-top: 1px solid #c0c0c0;
+  margin-top: 50px;
+}
+
+.home__search-ingredients-search--wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.home__search-ingredients-search {
+  //background: url("../../assets/img/build-a-meal.png") no-repeat;
+  //width: 80%;
+  background-size: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  position: relative;
+}
+
+.home__search-ingredients-search__inputs-wrapper {
+  position: absolute;
+  bottom: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  input {
+    margin-bottom: 10px;
+    width: 200px;
+    margin-left: 19%;
+    background-color: transparent;
+    border: 2px solid #976338;
+    padding: 6px;
+    color: #fff;
+    outline: none;
+    font-size: 11px;
+    font-family: Campton-Light;
+    &::placeholder {
+      font-size: 11px;
+      font-family: Campton-Light;
+      color: #fff;
+    }
+  }
+}
+
+.home__search-ingredients-search-submit {
+  width: 208px;
+  background-color: #fff;
+  padding: 9px 4px 4px 4px;
+  color: #000;
+  text-transform: uppercase;
+  text-align: center;
+  margin-left: 19%;
+  font-family: Campton-Light;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.home__search-ingredients-search__inputs-text {
+  text-align: center;
+  font-size: 15px;
+  color: #fff;
+  font-family: Campton-Light;
+  padding: 17px 50px;
+}
+
+.home__advanced-search-wrapper {
+  position: absolute;
+  top: 215px;
+  z-index: 10;
+  background-color: #fff;
+  width: 777px;
+  height: auto;
+  color: #000;
+  font-family: Campton-Light;
+  text-transform: uppercase;
+  font-size: 13px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .34);
+  display: inline-flex;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+.home__search-meal-types-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.home__advanced-search-column-title {
+  padding-bottom: 20px;
+  font-family: Campton-Bold;
+}
+
+.home__advanced-search-column {
+  width: 24%;
+  margin-right: -4%;
+  border-right: 1px solid #f2f2f2;
+}
+
+.home__advanced-search-column:nth-child(4) {
+  border-right: none;
+}
+
+//arrow
+.home__advanced-search-wrapper:after {
+  bottom: 100%;
+  left: 5%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(136, 183, 213, 0);
+  border-bottom-color: #fff;
+  border-width: 20px;
+  margin-left: -20px;
+}
+
+.home__advanced-search-submit {
+  position: absolute;
+  border: none;
+  bottom: 15px;
+  right: 20px;
+  background-color: #ddc9b8;
+  color: #fff;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  font-size: 11px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover{
+    background-color: darken(#ddc9b8, 5%);
+  }
+  font-family: Campton-Bold;
+  i{
+    margin-left: 7px;
+    font-size: 16px;
+  }
+}
+
+.home__advanced-search-column-item{
+  margin-bottom: 3px;
+}
+
+.home__trending-title{
+  font-family: Holland;
+  font-size: 43px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 15px;
+}
+
+.home__trending-list--wrapper{
+  display: inline-flex;
+  width: 100%;
+  justify-content: space-between;
+  padding-top: 10px;
+}
+
+.home__trending-view-all--wrapper{
+  display: flex;
+  justify-content: flex-end;
+  font-family: Campton-Bold;
+  text-transform: uppercase;
+  font-size: 12px;
+  margin: 45px 0;
+}
+
+.home__trending-view-all{
+  cursor: pointer;
+  transition: all 0.5s;
+  &:hover{
+    text-decoration: underline;
+  }
+}
+
+.home__some-section{
+  height: 190px;
+  background-color: #eeeeee;
+  width: 100%;
+}
+
+
+.home__search-res-wrapp{
+  margin-right: 20px;
+}
+
+.home__search-res-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+
+//checkbox
+
+/* The container */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 7px;
+  cursor: pointer;
+  font-size: 13px;
+  padding-top: 2px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #dec9ba;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #dec9ba;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 6px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.home__trending-list--item:nth-child(1){
+  width: 100%;
+}
+
+.home__trending-list--item:nth-child(2){
+  width: 100%;
+}
+
+.home__back-btn{
+  margin-bottom: 20px;
+  font-family: Campton-Bold;
+  text-transform: uppercase;
+  font-size: 12px;
+  cursor: pointer;
+  &:hover{
+    text-decoration: underline;
+  }
+}
+
+@media screen and (max-width: 1170px) {
+  .home__wrapper-img{
+    height: 140px;
+  }
+  .home__search-show-more--btn{
+    padding-left: 0;
+  }
+  .home__search-input{
+    width: 120px;
+  }
+  .home__search-open--btn{
+    padding: 5px 10px;
+  }
+  .home__search-meal-types--wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .home__search-right--side{
+    display: none;
+  }
+  .home__search-results{
+    width: 100%;
+  }
+  .home__search-meal-types--item{
+    font-size: 18px;
+    width: 260px;
+    height: 300px;
+  }
+  .home__trending-list--wrapper{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .home__trending-list--item{
+    display: flex;
+    justify-content: center;
+  }
+  .home__trending-title{
+    font-size: 30px;
+  }
+  .home__trending-list--wrapper{
+    justify-content: center;
+  }
+  .home__trending-view-all--wrapper{
+    justify-content: center;
+  }
+  .home__search-meal-types-container{
+    justify-content: center;
+  }
+  .meal-types-img{
+    width: 90%;
+  }
+}

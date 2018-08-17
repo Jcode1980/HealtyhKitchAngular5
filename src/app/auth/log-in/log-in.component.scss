@@ -1,0 +1,155 @@
+
+.l-login {
+  max-width: 320px;
+  margin: 50px auto;
+  font-family: Campton-Light;
+
+}
+
+.log-in__header {
+  font-size: 36px;
+  font-weight: 600;
+  margin: 0;
+  height: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: #fff;
+  &:after{
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 320px 30px 0;
+    border-color: transparent #fff transparent transparent;
+    position: absolute;
+    top: 100px;
+    left: -2px;
+  }
+}
+
+.log-in__input-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 15px 0 0 0;
+  position: relative;
+}
+
+.log-in__btn-container {
+  padding-top: 50px;
+  text-align: center;
+  .btn-green{
+    width: 150px;
+  }
+}
+
+.log-in__status-text {
+  color: red;
+  font-size: 16px;
+  padding: 20px 0;
+}
+
+.login-form-wrapper{
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  width: 320px;
+  background-color: #f6f6f6;
+}
+
+.log-in__input{
+  width: 250px;
+  height: 20px;
+  outline: none;
+  padding: 10px;
+  border: 1px solid #e4e4e4;
+  border-radius: 4px;
+  color: grey;
+  font-size: 12px;
+  background-color: #fff;
+}
+
+.invalid-error{
+  color: red;
+  font-size: 11px;
+  position: absolute;
+  top: 58px;
+  left: 30px;
+}
+
+.forgot__pass-wrapper{
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.forgot__pass-inner{
+  width: 250px;
+  display: flex;
+  justify-content: flex-end;
+  a{
+    color: grey;
+    font-size: 12px;
+    text-decoration: none;
+    text-transform: capitalize;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+}
+
+.registration-wrapper{
+  font-size: 13px;
+  display: flex;
+  justify-content: space-evenly;
+  color: grey;
+  padding: 25px;
+  a{
+    color: #e08e49;
+    text-decoration: none;
+    text-transform: capitalize;
+    font-weight: 600;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+}
+
+.log-in-body{
+  background-color: #f6f6f6;
+  padding-top: 50px;
+}
+
+.log-in-button{
+  background-color: #ddc9b8;
+  color: #fff;
+  border: none;
+  width: 200px;
+  height: 30px;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 3px;
+  outline: none;
+  &:hover{
+    background-color: darken(#ddc9b8, 5%);
+  }
+}
+
+.logo-text-up{
+  font-family: Campton-Light;
+  text-transform: uppercase;
+  font-size: 17px;
+  width: 100%;
+  text-align: center;
+}
+
+.logo-text-down{
+  font-family: Holland;
+  font-size: 15px;
+  margin-top: -40px;
+  width: 100%;
+  text-align: center;
+}
+
+

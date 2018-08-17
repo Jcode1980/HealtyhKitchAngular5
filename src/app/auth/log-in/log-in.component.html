@@ -1,0 +1,60 @@
+<div class="l-login">
+  <div class="login-form-wrapper">
+
+
+    <div class="log-in__header">
+      <div class="logo-text-up">Healthy kitch</div>
+      <div class="logo-text-down">healthy doesn't need to bee bored</div>
+    </div>
+
+    <div class="log-in-body">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+
+        <div class="log-in__input-wrapper">
+          <input matInput
+                 placeholder="Email"
+                 formControlName="email"
+                 required
+                 class="log-in__input"
+          >
+          <div *ngIf="isFieldInvalid('email')" class="invalid-error">
+            Your email is not valid
+          </div>
+        </div>
+        <div class="log-in__input-wrapper">
+          <input matInput type="password"
+                 placeholder="Password"
+                 formControlName="password"
+                 required
+                 class="log-in__input"
+          >
+          <div *ngIf="isFieldInvalid('password')" class="invalid-error">
+            Your password is not valid
+          </div>
+        </div>
+
+        <div class="forgot__pass-wrapper">
+          <div class="forgot__pass-inner">
+            <a routerLink="/auth/reset">Forgot password?</a>
+          </div>
+        </div>
+
+
+        <div class="log-in__btn-container">
+          <div class="log-in__status-text" *ngIf="statusText !== null">
+            {{statusText}}
+          </div>
+          <button class="log-in-button" type="submit">Login</button>
+        </div>
+      </form>
+
+      <div class="registration-wrapper">
+        Do not have an account? <a routerLink="/auth/sign-up">create account</a>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+

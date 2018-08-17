@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+@font-face {
+  font-family: Campton-Bold;
+  src: url('./assets/font/campton_bold.otf');
+}
+@font-face {
+  font-family: Campton-Light;
+  src: url('./assets/font/campton_light.otf');
+}
+@font-face {
+  font-family: Holland;
+  src: url('./assets/font/Holland.otf');
+}
+
+
+body{
+  margin: 0;
+}

@@ -1,0 +1,120 @@
+<div class="l-login">
+  <div class="login-form-wrapper">
+
+
+    <div class="log-in__header">
+      <div class="logo-text-up">Healthy kitch</div>
+      <div class="logo-text-down">healthy doesn't need to bee bored</div>
+    </div>
+
+    <div class="log-in-body">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <div class="log-in__input-wrapper">
+          <input matInput type="text"
+                 placeholder="First name"
+                 formControlName="firstName"
+                 required
+                 class="log-in__input"
+          >
+          <div *ngIf="isFieldInvalid('firstName')" class="invalid-error">
+            Your first name is not valid
+          </div>
+        </div>
+
+
+        <div class="log-in__input-wrapper">
+          <input matInput type="text"
+                 placeholder="Last name"
+                 formControlName="lastName"
+                 required
+                 class="log-in__input"
+          >
+          <div *ngIf="isFieldInvalid('lastName')" class="invalid-error">
+            Your last name is not valid
+          </div>
+        </div>
+
+
+        <div class="log-in__input-wrapper">
+          <input matInput
+                 placeholder="Email"
+                 formControlName="email"
+                 required
+                 class="log-in__input"
+          >
+          <div *ngIf="isFieldInvalid('email')" class="invalid-error">
+            Your email is not valid
+          </div>
+        </div>
+
+
+        <div class="log-in__input-wrapper">
+          <mat-form-field>
+            <mat-select placeholder="Your year of birth" [formControl]="yearControl">
+              <mat-option *ngFor="let year of years" [value]="year">
+                {{year}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="yearControl.hasError('required')">Please choose your year of birth</mat-error>
+            <!--<mat-hint>{{animalControl.value?.sound}}</mat-hint>-->
+          </mat-form-field>
+        </div>
+
+
+
+
+        <div class="log-in__input-wrapper">
+          <mat-form-field>
+            <mat-select placeholder="Your gender" [formControl]="genderControl">
+              <mat-option *ngFor="let gender of genders" [value]="gender">
+                {{gender}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="genderControl.hasError('required')">Please choose your gender</mat-error>
+            <!--<mat-hint>{{animalControl.value?.sound}}</mat-hint>-->
+          </mat-form-field>
+        </div>
+
+
+
+        <div class="log-in__input-wrapper">
+          <input matInput type="password"
+                 placeholder="Password"
+                 formControlName="password"
+                 required
+                 class="log-in__input"
+          >
+          <div *ngIf="isFieldInvalid('password')" class="invalid-error">
+            Your password is not valid
+          </div>
+        </div>
+
+        <div class="forgot__pass-wrapper">
+          <div class="forgot__pass-inner">
+            <a routerLink="/auth/reset">Forgot password?</a>
+          </div>
+        </div>
+
+
+
+
+        <div class="log-in__btn-container">
+          <div class="log-in__status-text" *ngIf="statusText !== null">
+            {{statusText}}
+          </div>
+          <button class="log-in-button" type="submit">Login</button>
+        </div>
+      </form>
+
+      <div class="registration-wrapper">
+        Already have an account? <a routerLink="/auth/login">Log in page</a>
+      </div>
+    </div>
+
+
+
+
+  </div>
+</div>
+

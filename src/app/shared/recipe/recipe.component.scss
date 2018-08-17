@@ -1,0 +1,36 @@
+.img-wrapper{
+  width: 260px;
+  height: 330px;
+  display: flex;
+  align-items: center;
+  background-color: #eeeeee;
+}
+
+.recipe__wrapper{
+  width: 260px;
+}
+
+.recipe-title{
+  font-family: Campton-Bold;
+  padding-top: 20px;
+  text-transform: uppercase;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+.recipe-details{
+  font-family: Campton-Light;
+}
+
+.recipe-no-img{
+  width: 260px;
+  height: 335px;
+  background-color: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-transform: uppercase;
+  font-family: Campton-Light;
+  font-size: 22px;
+}

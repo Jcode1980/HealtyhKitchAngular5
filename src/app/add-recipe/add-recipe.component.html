@@ -1,0 +1,222 @@
+<div class="add-recipe__wrapper">
+  <div class="title">edit or add recipe</div>
+
+  <div class="recipe__details-wrapper">
+
+    <div class="recipe__details-left-wrapper">
+
+      <div class="recipe__title">
+
+        <div class="edit__recipe-wrapper" *ngIf="isRecipeTitleChange">
+          <input
+            type="text"
+            [(ngModel)]="recipeTitle"
+            class="change__title-input"
+          >
+
+          <!--<i class="fa fa-times" aria-hidden="true"></i>-->
+          <!--<i class="fa fa-check" aria-hidden="true"></i>-->
+
+        </div>
+
+        <div *ngIf="!isRecipeTitleChange">
+          {{recipeTitle}}
+          <i class="fa fa-pencil" aria-hidden="true" (click)="changeRecipeTitle()"></i>
+        </div>
+
+
+        <div class="two__sections-wrapper">
+          <div class="left__section-wrapper">
+            <span>serves:</span>
+            <input type="text">
+
+          </div>
+
+          <div class="right__section-wrapper">
+            <span>ready in:</span>
+            <input type="text">
+          </div>
+        </div>
+
+
+        <div class="description__wrapper">
+
+          <textarea cols="30" rows="12" placeholder="DESCRIPTION" class="description__text-area"></textarea>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+    <div class="recipe__details-right-wrapper">
+      <div class="upload__img-wrapper">
+        <i class="fa fa-picture-o" aria-hidden="true" *ngIf="!croppedImage"></i>
+        <img [src]="croppedImage" class="croped__img" />
+      </div>
+
+      <button class="upload__img-btn" (click)="isModalOpen = true">upload image</button>
+
+
+    </div>
+
+
+  </div>
+
+
+  <div class="dropdowns__wrapper">
+
+    <ng-multiselect-dropdown
+      [placeholder]="'CUISINE'"
+      [data]="cuisineList"
+      [(ngModel)]="selectedCuisines"
+      [settings]="dropdownSettings"
+      (onSelect)="onCuisineSelect($event)"
+      (onDeSelect)="onCuisineDeselect($event)"
+      (onDeSelectAll)="onDeselectAllCuisines()"
+      (onSelectAll)="onSelectAllCuisines($event)"
+    >
+    </ng-multiselect-dropdown>
+
+
+    <ng-multiselect-dropdown
+      [placeholder]="'CATEGORIES'"
+      [data]="categoriesList"
+      [(ngModel)]="selectedCategories"
+      [settings]="dropdownSettings"
+      (onSelect)="onCategorySelect($event)"
+      (onDeSelect)="onCategoryDeselect($event)"
+      (onDeSelectAll)="onDeselectAllCategories()"
+      (onSelectAll)="onSelectAllCategories($event)"
+    >
+    </ng-multiselect-dropdown>
+
+    <ng-multiselect-dropdown
+      [placeholder]="'NUTRITIONAL BENIFITS'"
+      [data]="benifitsList"
+      [(ngModel)]="selectedBenifits"
+      [settings]="dropdownSettings"
+      (onSelect)="onBenefitSelect($event)"
+      (onDeSelect)="onBenefitDeselect($event)"
+      (onDeSelectAll)="onDeselectAllBenifits()"
+      (onSelectAll)="onSelectAllBenifits($event)"
+    >
+    </ng-multiselect-dropdown>
+
+    <ng-multiselect-dropdown
+      [placeholder]="'DIETARY REQUIRMENTS'"
+      [data]="requirementsList"
+      [(ngModel)]="selectedRequirments"
+      [settings]="dropdownSettings"
+      (onSelect)="onRequirmentSelect($event)"
+      (onDeSelect)="onRequirmentDeselect($event)"
+      (onDeSelectAll)="onDeselectAllRequirments()"
+      (onSelectAll)="onSelectAllRequirments($event)"
+    >
+    </ng-multiselect-dropdown>
+
+  </div>
+
+  <div class="add__recipe-title">ingredients</div>
+
+  
+  <div class="ingerdients__wrapper" *ngFor="let n of 1">
+
+    <div class="ingerdients__amount-wrapper">
+
+      <p>Amount</p>
+
+      <input type="number" [(ngModel)]="ingredientsList[n].metric">
+
+    </div>
+
+    <div class="ingerdients__amount-wrapper">
+
+      <p>Unit</p>
+
+      <input type="number" [(ngModel)]="ingredientsList[n].metric">
+
+    </div>
+
+    <div class="ingerdients__desc-wrapper">
+
+      <textarea cols="30"
+                rows="3"
+                placeholder="Description"
+                [(ngModel)]="ingredientsList[n].name"
+                (keydown.Tab)="addIngredientToList()"
+      ></textarea>
+
+    </div>
+
+    <div class="ingerdients__add-ingredient-btn-mob-warpper">
+      <div class="ingerdients__add-ingredient-btn-warpper mgr" (click)="addIngredientToList()">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+      </div>
+      <div class="ingerdients__add-ingredient-btn-warpper" (click)="deleteIngredientFromList(n)">
+        <i class="fa fa-minus" aria-hidden="true"></i>
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+  <div class="add__recipe-title">method</div>
+
+  <div class="method__textarea-warpper">
+    <textarea cols="30" rows="18" placeholder="TYPE METHOD HERE" class="description__text-area" [(ngModel)]="method"></textarea>
+  </div>
+
+  <div class="submit__btns-wrapper">
+
+    <div class="submit__btn-wrapper" (click)="saveRecipe()">
+      <button>Save</button>
+    </div>
+    <div class="submit__btn-wrapper" (click)="postRecipe()">
+      <button>submit private</button>
+    </div>
+
+  </div>
+
+
+</div>
+
+
+<div class="close-modal" *ngIf="isModalOpen">
+
+</div>
+
+
+<div class="upload-img__modal" *ngIf="isModalOpen">
+  <input type="file" (change)="fileChangeEvent($event)" style="margin-bottom: 20px" />
+
+  <image-cropper
+    [imageChangedEvent]="imageChangedEvent"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="1"
+    [resizeToWidth]="500"
+    format="png"
+    (imageCroppedFile)="imageCroppedFile($event)"
+    (imageCroppedBase64)="imageCropped($event)"
+    (imageLoaded)="imageLoaded()"
+    (loadImageFailed)="loadImageFailed()"
+  ></image-cropper>
+
+  <!--<img [src]="croppedImage" />-->
+
+  <div class="submit__btn-wrapper" *ngIf="croppedImage">
+    <button (click)="isModalOpen = false">ok</button>
+  </div>
+
+  <div class="submit__btn-wrapper" *ngIf="!croppedImage">
+    <button (click)="isModalOpen = false">close</button>
+  </div>
+
+</div>
+
+
+
