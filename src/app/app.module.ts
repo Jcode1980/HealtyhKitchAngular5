@@ -31,6 +31,7 @@ import {NgHttpLoaderModule} from 'ng-http-loader/ng-http-loader.module';
 import {RestService} from './rest.service';
 import {AddRecipeComponent} from './add-recipe/add-recipe.component';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
+import { NgSelectModule } from '@ng-select/ng-select';
 import {ImageCropperModule} from 'ngx-image-cropper';
 import { MyRecipeComponent } from './my-recipe/my-recipe.component';
 import {MyRecipeService} from './my-recipe/my-recipe.service';
@@ -63,6 +64,7 @@ import {MyRecipeService} from './my-recipe/my-recipe.service';
     MatSidenavModule,
     HttpClientModule,
     NgHttpLoaderModule,
+    NgSelectModule,
     NgMultiSelectDropDownModule.forRoot(),
     ImageCropperModule,
     StoreModule.forRoot(rootReducer, {initialState}),

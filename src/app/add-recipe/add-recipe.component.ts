@@ -3,6 +3,7 @@ import {RestService} from '../rest.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import { IRecipe } from '../../models/IRecipe';
 import {IMetric} from '../../models/IMetric';
+import { IMeasuredIngredient } from '../../models/IMeasuredIngredient';
 
 @Component({
   selector: 'app-add-recipe',
@@ -44,7 +45,7 @@ export class AddRecipeComponent implements OnInit {
   selectedRequirments = [];
 
 
-  metricsList = [];
+  metricsList:Array<IMetric> = [];
   selectedMetric:IMetric;
 
   selectedMetricToPush = null;
@@ -115,8 +116,8 @@ export class AddRecipeComponent implements OnInit {
     
     //this.howManyIngredients = this.ingredientsList.length;
     console.log("this.ingredientsList");
-    console.log(this.ingredientsList[0].amount);  
-    console.log("no of ingredients in list: " + this.ingredientsList);
+    console.log(this.ingredientsList);  
+    console.log("no of ingredients in list: " + this.ingredientsList.length);
 
     this.defaultImageID=currentRecipe.defaultImageID;
 
@@ -219,12 +220,26 @@ export class AddRecipeComponent implements OnInit {
   }
 
 
-  onMetricSelect(item: any) {
-    this.selectedMetricToPush = item;
+  onMetricSelect(ingredient:IMeasuredIngredient,item: any) {
+    console.log("measured ingredient passed in??");
+    console.log(ingredient);
+    ingredient.metric = item;
+    console.log("metric id now: " + ingredient.metric);
   }
 
   onMetricDeselect(item: any){
     this.selectedMetricToPush = null;
+  }
+
+  onMetricChange(metricID: any, ingredient :IMeasuredIngredient){
+    console.log("metric passed in??");
+    console.log(metricID);
+    console.log("measured ingredient passed in??");
+    console.log(ingredient);
+    let metricFound = this.metricsList.filter(item => item.id === metricID)[0];
+    console.log("metric");
+    console.log(metricFound);
+    ingredient.metric = metricFound;
   }
 
   onDeselectAllRequirments(item: any) {
@@ -311,7 +326,7 @@ export class AddRecipeComponent implements OnInit {
     console.log(this.cusinesListToPost);
     this.modifyListsToJson();  
 
-    await this.rest.apiPut('session/recipe/${e}', {
+    let returningRecipe : IRecipe ={
       id:this.recipeID,
       defaultImageID: this.defaultImageID,
       cuisines: this.cusinesListToPost,
@@ -321,14 +336,31 @@ export class AddRecipeComponent implements OnInit {
       mealTypes: this.categoriesListToPost,
       measuredIngredients: this.ingredientsListToPost,
       name: this.recipeTitle
-    }).toPromise();
+    };
+
+
+    // await this.rest.apiPut('session/recipe/' +this.recipeID, {
+    //   id:this.recipeID,
+    //   defaultImageID: this.defaultImageID,
+    //   cuisines: this.cusinesListToPost,
+    //   nutritionalBenefits: this.benifitsListToPost,
+    //   dietaryCategories: this.requirmentListToPost,
+    //   instructions: this.method,  
+    //   mealTypes: this.categoriesListToPost,
+    //   measuredIngredients: this.ingredientsListToPost,
+    //   name: this.recipeTitle
+    // }).toPromise();
+
+    console.log("Going to pass through");
+    console.log(returningRecipe);
+    await this.rest.apiPut('session/recipe/' +this.recipeID, returningRecipe).toPromise();
 
     console.log("saveRecipe");
 
     if(this.cropedFile){
       const frmData = new FormData();
       frmData.append('file', this.cropedFile, 'RecipeImage' + this.recipeID + '.png');
-      this.rest.apiPost(`api/recipes/UploadRecipeImage/${this.recipeID}`, frmData).subscribe(re => {console.log(re);}, err => {
+      this.rest.apiPost(`api/recipes/UploadRecipeImage/{this.recipeID}`, frmData).subscribe(re => {console.log(re);}, err => {
           if (err.status === 200) {
             this.router.navigateByUrl('');
           }
@@ -363,11 +395,12 @@ export class AddRecipeComponent implements OnInit {
       };
     });
 
-    this.ingredientsListToPost = this.ingredientsList.slice(1).map((e: any) => {
+    //this.ingredientsListToPost = this.ingredientsList.slice(1).map((e: any) => {
+    this.ingredientsListToPost = this.ingredientsList.map((e: any) => {
       return {
         id:e.id,
         amount: e.amount,
-        metric: {id: e.metric},
+        metric: {id: e.metric.id, name: e.metric.name, code: e.metric.code },
         name: e.name
       };
     });
@@ -383,7 +416,7 @@ export class AddRecipeComponent implements OnInit {
         dietaryCategories: this.requirmentListToPost,
         instructions: this.method,  
         mealTypes: this.categoriesListToPost,
-        measuredIngredients: this.ingredientsListToPost,
+        measuredIngredients: this.ingredientsList,
         name: this.recipeTitle
       }).subscribe(e => {
         const frmData = new FormData();
