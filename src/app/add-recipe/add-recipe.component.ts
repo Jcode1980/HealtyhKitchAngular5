@@ -117,9 +117,9 @@ export class AddRecipeComponent implements OnInit {
      }
     
     //this.howManyIngredients = this.ingredientsList.length;
-    console.log("this.ingredientsList");
-    console.log(this.ingredientsList);  
-    console.log("no of ingredients in list: " + this.ingredientsList.length);
+    // console.log("this.ingredientsList");
+    // console.log(this.ingredientsList);  
+    // console.log("no of ingredients in list: " + this.ingredientsList.length);
 
     this.defaultImageID=currentRecipe.defaultImageID;
 
@@ -142,11 +142,6 @@ export class AddRecipeComponent implements OnInit {
     return newIngredient;
   }
 
- baseItemSelect(item:any, theArray:Array<any>[]){
-    console.log("Going to select item");
-    console.log(item);
-    theArray.push(item);
- }
 
   onCuisineSelect(item: any) {
     console.log("Going to select cuisine");
@@ -204,45 +199,37 @@ export class AddRecipeComponent implements OnInit {
   }
 
   onBenefitSelect(item: any) {
-    this.benifitsListToPost.push(item);
+    this.selectedBenifits.push(item);
   }
 
   onSelectAllBenifits(item: any) {
-    this.benifitsListToPost = item;
+    this.selectedBenifits = item;
   }
 
   onBenefitDeselect(item: any) {
-    const newArr = [];
-    this.benifitsListToPost.forEach(e => {
-      if (e.id !== item.id) {
-        newArr.push(e);
-      }
-    });
-    this.benifitsListToPost = newArr;
+    this.selectedBenifits = this.selectedBenifits.filter(obj => obj.id !== item.id);
   }
 
   onDeselectAllBenifits(item: any) {
-    this.benifitsListToPost = [];
+    this.selectedBenifits = [];
   }
 
   onRequirmentSelect(item: any) {
-    this.requirmentListToPost.push(item);
+    this.selectedRequirments.push(item);
   }
 
   onSelectAllRequirments(item: any) {
-    this.requirmentListToPost = item;
+    this.selectedRequirments = item;
   }
 
   onRequirmentDeselect(item: any) {
-    const newArr = [];
-    this.requirmentListToPost.forEach(e => {
-      if (e.id !== item.id) {
-        newArr.push(e);
-      }
-    });
-    this.requirmentListToPost = newArr;
+    this.selectedRequirments = this.selectedRequirments.filter(obj => obj.id !== item.id);
   }
 
+  onDeselectAllRequirments(item: any) {
+    this.selectedRequirments = [];
+  }
+  
 
   onMetricSelect(ingredient:IMeasuredIngredient,item: any) {
     console.log("measured ingredient passed in??");
@@ -266,9 +253,7 @@ export class AddRecipeComponent implements OnInit {
     ingredient.metric = metricFound;
   }
 
-  onDeselectAllRequirments(item: any) {
-    this.requirmentListToPost = [];
-  }
+ 
 
   changeRecipeTitle() {
     this.isRecipeTitleChange = true;
@@ -348,38 +333,11 @@ export class AddRecipeComponent implements OnInit {
   async saveRecipe(){
     console.log("this is the cusinesList");
     console.log(this.selectedCuisines);
-    this.modifyListsToJson();  
 
-    let returningRecipe : IRecipe ={
-      id:this.recipeID,
-      defaultImageID: this.defaultImageID,
-      cuisines: this.selectedCuisines,
-      nutritionalBenefits: this.benifitsListToPost,
-      dietaryCategories: this.requirmentListToPost,
-      instructions: this.method,  
-      mealTypes: this.categoriesListToPost,
-      measuredIngredients: this.ingredientsListToPost,
-      name: this.recipeTitle
-    };
-
-
-    // await this.rest.apiPut('session/recipe/' +this.recipeID, {
-    //   id:this.recipeID,
-    //   defaultImageID: this.defaultImageID,
-    //   cuisines: this.cusinesListToPost,
-    //   nutritionalBenefits: this.benifitsListToPost,
-    //   dietaryCategories: this.requirmentListToPost,
-    //   instructions: this.method,  
-    //   mealTypes: this.categoriesListToPost,
-    //   measuredIngredients: this.ingredientsListToPost,
-    //   name: this.recipeTitle
-    // }).toPromise();
-
+    const returningRecipe:any = this.recipeDataToReturn();
     console.log("Going to pass through");
     console.log(returningRecipe);
     await this.rest.apiPut('session/recipe/' +this.recipeID, returningRecipe).toPromise();
-
-    console.log("saveRecipe");
 
     if(this.cropedFile){
       const frmData = new FormData();
@@ -393,126 +351,85 @@ export class AddRecipeComponent implements OnInit {
 
   }
 
-
-  modifyListsToJson(){
-    this.cusinesListToPost = this.cusinesListToPost.map(e => {
+  idArrayGenerator(theArray:Array<any>):Array<number>{
+    theArray.map(e => {
       return {
         id: e.id
       };
     });
 
-    this.categoriesListToPost = this.selectedCategories.map(e => {
-      return {
-        id: e.id
-      };
-    });
+    return theArray;
+  }
 
-    this.benifitsListToPost = this.benifitsListToPost.map(e => {
-      return {
-        id: e.id
-      };
-    });
 
-    this.requirmentListToPost = this.requirmentListToPost.map(e => {
-      return {
-        id: e.id
-      };
-    });
+  recipeDataToReturn():any{   
+    let cusinesListToPost = this.idArrayGenerator(this.selectedCuisines);
+    let categoriesListToPost = this.idArrayGenerator(this.selectedCategories);
+    let benifitsListToPost = this.idArrayGenerator(this.selectedBenifits);
+    let requirmentListToPost = this.idArrayGenerator(this.selectedRequirments);
 
-    //this.ingredientsListToPost = this.ingredientsList.slice(1).map((e: any) => {
-    this.ingredientsListToPost = this.ingredientsList.map((e: any) => {
+    let ingredientsListToPost = this.ingredientsList.map((e: any) => {
       return {
-        id:e.id,
+        id: e.id,
         amount: e.amount,
-        metric: {id: e.metric.id, name: e.metric.name, code: e.metric.code },
+        metric: { id: e.metric.id, name: e.metric.name, code: e.metric.code },
         name: e.name
       };
     });
+    
+    let returningRecipe : any ={
+      id:this.recipeID,
+      defaultImageID: this.defaultImageID,
+      cuisines: cusinesListToPost,
+      nutritionalBenefits: benifitsListToPost,
+      dietaryCategories: requirmentListToPost,
+      instructions: this.method,  
+      mealTypes: categoriesListToPost,
+      measuredIngredients: ingredientsListToPost,
+      name: this.recipeTitle
+    };
+
+    return returningRecipe;
+  }
+  
+  postRecipe() {
+    this.rest.apiPost('session/createRecipe', this.recipeDataToReturn()).subscribe(e => {
+      const frmData = new FormData();
+      frmData.append('file', this.cropedFile, 'RecipeImage' + e + '.png');
+      this.rest.apiPost(`api/recipes/UploadRecipeImage/${e}`, frmData).subscribe(re => {
+        console.log(re);
+      }, err => {
+        if (err.status === 200) {
+          this.router.navigateByUrl('');
+        }
+      });
+    });
   }
 
-  postRecipe() {
-     this.modifyListsToJson();
-  
-      this.rest.apiPost('session/createRecipe', {
-        defaultImageID: null,
-        cuisines: this.cusinesListToPost,
-        nutritionalBenefits: this.benifitsListToPost,
-        dietaryCategories: this.requirmentListToPost,
-        instructions: this.method,  
-        mealTypes: this.categoriesListToPost,
-        measuredIngredients: this.ingredientsList,
-        name: this.recipeTitle
-      }).subscribe(e => {
-        const frmData = new FormData();
-        frmData.append('file', this.cropedFile, 'RecipeImage' + e + '.png');
-        this.rest.apiPost(`api/recipes/UploadRecipeImage/${e}`, frmData).subscribe(re => {
-          console.log(re);
-        }, err => {
-          if (err.status === 200) {
-            this.router.navigateByUrl('');
-          }
-        });
-      });
-    }
-  
-
-
   // postRecipe() {
-  //   this.cusinesListToPost = this.cusinesListToPost.map(e => {
-  //     return {
-  //       id: e.id
-  //     };
-  //   });
-
-  //   this.selectedCategories = this.selectedCategories.map(e => {
-  //     return {
-  //       id: e.id
-  //     };
-  //   });
-
-  //   this.benifitsListToPost = this.benifitsListToPost.map(e => {
-  //     return {
-  //       id: e.id
-  //     };
-  //   });
-
-  //   this.requirmentListToPost = this.requirmentListToPost.map(e => {
-  //     return {
-  //       id: e.id
-  //     };
-  //   });
-
-  //   this.ingredientsListToPost = this.ingredientsList.slice(1).map((e: any) => {
-  //     return {
-  //       amount: e.amount,
-  //       metric: {id: e.metric},
-  //       name: e.name
-  //     };
-  //   });
-
-  //   this.rest.apiPost('session/createRecipe', {
-  //     defaultImageID: null,
-  //     cuisines: this.cusinesListToPost,
-  //     nutritionalBenefits: this.benifitsListToPost,
-  //     dietaryCategories: this.requirmentListToPost,
-  //     instructions: this.method,  
-  //     mealTypes: this.categoriesListToPost,
-  //     measuredIngredients: this.ingredientsListToPost,
-  //     name: this.recipeTitle
-  //   }).subscribe(e => {
-  //     const frmData = new FormData();
-  //     frmData.append('file', this.cropedFile, 'RecipeImage' + e + '.png');
-  //     this.rest.apiPost(`api/recipes/UploadRecipeImage/${e}`, frmData).subscribe(re => {
-  //       console.log(re);
-  //     }, err => {
-  //       if (err.status === 200) {
-  //         this.router.navigateByUrl('');
-  //       }
+  
+  //     this.rest.apiPost('session/createRecipe', {
+  //       defaultImageID: null,
+  //       cuisines: this.cusinesListToPost,
+  //       nutritionalBenefits: this.benifitsListToPost,
+  //       dietaryCategories: this.requirmentListToPost,
+  //       instructions: this.method,  
+  //       mealTypes: this.categoriesListToPost,
+  //       measuredIngredients: this.ingredientsList,
+  //       name: this.recipeTitle
+  //     }).subscribe(e => {
+  //       const frmData = new FormData();
+  //       frmData.append('file', this.cropedFile, 'RecipeImage' + e + '.png');
+  //       this.rest.apiPost(`api/recipes/UploadRecipeImage/${e}`, frmData).subscribe(re => {
+  //         console.log(re);
+  //       }, err => {
+  //         if (err.status === 200) {
+  //           this.router.navigateByUrl('');
+  //         }
+  //       });
   //     });
-  //   });
-  // }
-
-
+  //   }
+  
 
 
 
