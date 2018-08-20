@@ -33,7 +33,7 @@ export class AddRecipeComponent implements OnInit {
   croppedImage: any = '';
 
   cuisineList = [];
-  selectedCuisines = [];
+  private selectedCuisines = [];
 
   categoriesList = [];
   selectedCategories = [];
@@ -103,16 +103,18 @@ export class AddRecipeComponent implements OnInit {
     let currentRecipe :IRecipe; 
     currentRecipe = await this.rest.apiGet<IRecipe>(`api/recipes/${id}`).toPromise();
     console.log("got recipe");
+    console.log(currentRecipe);
     this.recipeTitle = currentRecipe.name;
     this.method = currentRecipe.instructions;
     this.ingredientsList = currentRecipe.measuredIngredients;
 
-    // console.log("ingredients is:");
-    // console.log(this.ingredientsList.length);
-    // if(this.ingredientsList.length === 0){
-    //   console.log("got here ingredients");
-    //   this.ingredientsList = [null, {}];
-    // }
+  
+    console.log("ingredients is:");
+     console.log(this.ingredientsList.length);
+     if(this.ingredientsList.length === 0){
+       console.log("got here ingredients");
+       this.ingredientsList = [this.createNewIngredient()];
+     }
     
     //this.howManyIngredients = this.ingredientsList.length;
     console.log("this.ingredientsList");
@@ -129,54 +131,76 @@ export class AddRecipeComponent implements OnInit {
     
   }
 
+  createNewIngredient():IMeasuredIngredient{
+    let newIngredient:IMeasuredIngredient = {
+      id:null,
+      amount: 0,
+      name: null,
+      metric: this.metricsList[0]
+    }
 
-
-
-  onCuisineSelect(item: any) {
-    this.cusinesListToPost.push(item);
+    return newIngredient;
   }
 
+ baseItemSelect(item:any, theArray:Array<any>[]){
+    console.log("Going to select item");
+    console.log(item);
+    theArray.push(item);
+ }
+
+  onCuisineSelect(item: any) {
+    console.log("Going to select cuisine");
+    console.log(item);
+    //this.cusinesListToPost.push(item);
+    this.selectedCuisines.push(item);
+  }
+  
+ 
+  
   onCuisineDeselect(item: any) {
-    const newArr = [];
-    this.cusinesListToPost.forEach(e => {
-      if (e.id !== item.id) {
-        newArr.push(e);
-      }
-    });
-    this.cusinesListToPost = newArr;
+    console.log("Going to deselect cuisine");
+    console.log(item);
+    this.selectedCuisines = this.selectedCuisines.filter(obj => obj.id !== item.id);
+    console.log("filtered c list is");
+    console.log(this.selectedCuisines);
+    //const newArr = [];
+    //this.cusinesListToPost.forEach(e => {
+    // this.cuisineList.forEach(e => {
+    //   if (e.id !== item.id) {
+    //     newArr.push(e);
+    //   }
+    // });
+    // this.cusinesListToPost = newArr;
   }
 
   onSelectAllCuisines(items: any) {
-    this.cusinesListToPost = items;
+    //this.cusinesListToPost = items;
+    this.selectedCuisines = items;
   }
 
   onDeselectAllCuisines() {
-    this.cusinesListToPost = [];
+    //this.cusinesListToPost = [];
+    this.selectedCuisines = [];
   }
 
   onCategorySelect(item: any) {
     console.log("adding category");
     console.log(item);
-    this.categoriesListToPost.push(item);
-    //this.selectedCategories.push(item);
+    //this.categoriesListToPost.push(item);
+    this.selectedCategories.push(item);
   }
 
-  onSelectAllCategories(item: any) {
-    this.categoriesListToPost = item;
+  onSelectAllCategories(items: any) {
+    //this.categoriesListToPost = items;
+    this.selectedCategories= items;
   }
 
   onCategoryDeselect(item: any) {
-    const newArr = [];
-    this.categoriesListToPost.forEach(e => {
-      if (e.id !== item.id) {
-        newArr.push(e);
-      }
-    });
-    this.categoriesListToPost = newArr;
+    this.selectedCategories = this.selectedCategories.filter(obj => obj.id !== item.id);
   }
 
   onDeselectAllCategories(item: any) {
-    this.categoriesListToPost = [];
+    this.selectedCategories = [];
   }
 
   onBenefitSelect(item: any) {
@@ -291,9 +315,9 @@ export class AddRecipeComponent implements OnInit {
   }
 
   addIngredientToList() {
-    this.howManyIngredients++;
-    this.maxArr.push(this.maxArr.length + 1);
-    this.ingredientsList.push({});
+    //this.howManyIngredients++;
+    //this.maxArr.push(this.maxArr.length + 1);
+    this.ingredientsList.push(this.createNewIngredient());
   }
 
   deleteIngredientFromList(index) {
@@ -322,14 +346,14 @@ export class AddRecipeComponent implements OnInit {
   }
 
   async saveRecipe(){
-    console.log("this is the cusinesListToPost");
-    console.log(this.cusinesListToPost);
+    console.log("this is the cusinesList");
+    console.log(this.selectedCuisines);
     this.modifyListsToJson();  
 
     let returningRecipe : IRecipe ={
       id:this.recipeID,
       defaultImageID: this.defaultImageID,
-      cuisines: this.cusinesListToPost,
+      cuisines: this.selectedCuisines,
       nutritionalBenefits: this.benifitsListToPost,
       dietaryCategories: this.requirmentListToPost,
       instructions: this.method,  
@@ -377,7 +401,7 @@ export class AddRecipeComponent implements OnInit {
       };
     });
 
-    this.selectedCategories = this.selectedCategories.map(e => {
+    this.categoriesListToPost = this.selectedCategories.map(e => {
       return {
         id: e.id
       };
