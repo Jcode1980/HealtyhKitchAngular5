@@ -28,20 +28,19 @@
         <div class="two__sections-wrapper">
           <div class="left__section-wrapper">
             <span>serves:</span>
-            <input type="text">
-
+            <input type="text" [(ngModel)]="numServings">
           </div>
 
           <div class="right__section-wrapper">
             <span>ready in:</span>
-            <input type="text">
+            <input type="text" [(ngModel)]="readyInMins">
           </div>
         </div>
 
 
         <div class="description__wrapper">
 
-          <textarea cols="30" rows="12" placeholder="DESCRIPTION" class="description__text-area"></textarea>
+          <textarea cols="30" rows="12" placeholder="DESCRIPTION" class="description__text-area" [(ngModel)]="descText"></textarea>
 
         </div>
 
@@ -53,8 +52,8 @@
 
     <div class="recipe__details-right-wrapper">
       <div class="upload__img-wrapper">
-        <i class="fa fa-picture-o" aria-hidden="true" *ngIf="!croppedImage"></i>
-        <img [src]="croppedImage" class="croped__img" />
+        <i class="fa fa-picture-o" aria-hidden="true" *ngIf="!recipeImageSource()"></i>
+        <img [src]="recipeImageSource()" class="croped__img"  *ngIf="recipeImageSource()"/>
       </div>
 
       <button class="upload__img-btn" (click)="isModalOpen = true">upload image</button>
@@ -134,7 +133,7 @@
     <div class="ingerdients__amount-wrapper">
 
       <p>Unit {{ingredient.metric.name}}</p>
-      <select [(ngModel)]="ingredient.metric.id" (ngModelChange)="onMetricChange($event, ingredient)">
+      <select [(ngModel)]="ingredient.metric.id" (ngModelChange)="onMetricChange($event, ingredient)" id="Metric_{{ingredient.metric.id}}" name="Metric_{{ingredient.metric.id}}">
         <option *ngFor="let metric of metricsList" [ngValue]="metric.id">{{metric.name}}</option>
       </select>
 
