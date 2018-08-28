@@ -99,7 +99,9 @@
 
           <div class="home__search-meal-types--item" (click)="searchType(item)">
 
-            <img [src]="'http://localhost:8085/files/Images/' + item.image.id" class="meal-types-img">
+            <div *ngIf="item.image">
+              <img [src]="'http://localhost:8085/files/Images/' + item.image.id" class="meal-types-img">
+            </div>
             <div class="meal-types-text">
               {{item.name}}
             </div>
