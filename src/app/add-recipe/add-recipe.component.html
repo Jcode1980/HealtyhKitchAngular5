@@ -120,7 +120,7 @@
 
   <div class="add__recipe-title">ingredients</div>
   
-  <div class="ingerdients__wrapper" *ngFor="let ingredient of ingredientsList">
+  <div class="ingerdients__wrapper" *ngFor="let ingredient of ingredientsList; let i = index;">
 
     <div class="ingerdients__amount-wrapper">
 
@@ -132,9 +132,10 @@
 
     <div class="ingerdients__amount-wrapper">
 
-      <p>Unit {{ingredient.metric.name}}</p>
-      <select [(ngModel)]="ingredient.metric.id" (ngModelChange)="onMetricChange($event, ingredient)" id="Metric_{{ingredient.metric.id}}" name="Metric_{{ingredient.metric.id}}">
-        <option *ngFor="let metric of metricsList" [ngValue]="metric.id">{{metric.name}}</option>
+      <p>Unit </p>
+      
+      <select [(ngModel)]="ingredient.metric" [compareWith]="compareFn" id="Ingredient_{{i}}" name="Ingredient_{{i}}">
+        <option *ngFor="let metric of metricsList" [ngValue]="metric">{{metric.name}}</option>
       </select>
 
     </div>
@@ -159,7 +160,7 @@
       </div>
     </div>
 
-
+    
 
   </div>
 

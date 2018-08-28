@@ -19,7 +19,7 @@ export class AddRecipeComponent implements OnInit {
   readyInMins:number;
   descText:string;
   isRecipeTitleChange = false;
-  
+
   isModalOpen = false;
 
   method: string;
@@ -33,7 +33,7 @@ export class AddRecipeComponent implements OnInit {
   croppedImage: any = '';
 
   cuisineList = [];
-  private selectedCuisines = [];
+  selectedCuisines = [];
 
   categoriesList = [];
   selectedCategories = [];
@@ -64,13 +64,13 @@ export class AddRecipeComponent implements OnInit {
 
   async ngOnInit() {
     await this.loadStaticData();
-    
+
     const id = +this.activatedRouter.snapshot.paramMap.get('id');
     if(id){
       await this.initializeRecipeData();
     }
     else{
-       console.log("no recipe id found"); 
+       console.log("no recipe id found");
     }
 
     console.log("ingredients length is:");
@@ -80,7 +80,7 @@ export class AddRecipeComponent implements OnInit {
       console.log(this.metricsList[0]);
       this.ingredientsList = [this.createNewIngredient()];
     }
-   
+
   }
 
   async loadStaticData(){
@@ -94,7 +94,7 @@ export class AddRecipeComponent implements OnInit {
   async initializeRecipeData() {
     console.log("initializeRecipeData");
     const id = +this.activatedRouter.snapshot.paramMap.get('id');
-    let currentRecipe :IRecipe; 
+    let currentRecipe :IRecipe;
     currentRecipe = await this.rest.apiGet<IRecipe>(`api/recipes/${id}`).toPromise();
     console.log("got recipe");
     console.log(currentRecipe);
@@ -105,7 +105,7 @@ export class AddRecipeComponent implements OnInit {
     this.method = currentRecipe.instructions;
     this.ingredientsList = currentRecipe.measuredIngredients;
 
-  
+
     this.defaultImageID=currentRecipe.defaultImageID;
 
     this.recipeID = currentRecipe.id;
@@ -113,7 +113,7 @@ export class AddRecipeComponent implements OnInit {
     this.selectedRequirments = currentRecipe.dietaryCategories;
     this.selectedCuisines = currentRecipe.cuisines;
     this.selectedCategories = currentRecipe.mealTypes;
-    
+
   }
 
   createNewIngredient():IMeasuredIngredient{
@@ -133,8 +133,8 @@ export class AddRecipeComponent implements OnInit {
     //this.cusinesListToPost.push(item);
     this.selectedCuisines.push(item);
   }
-  
- 
+
+
   onCuisineDeselect(item: any) {
     console.log("Going to deselect cuisine");
     console.log(item);
@@ -177,7 +177,7 @@ export class AddRecipeComponent implements OnInit {
     this.selectedCategories = this.selectedCategories.filter(obj => obj.id !== item.id);
   }
 
-  onDeselectAllCategories(item: any) {
+  onDeselectAllCategories() {
     this.selectedCategories = [];
   }
 
@@ -193,7 +193,7 @@ export class AddRecipeComponent implements OnInit {
     this.selectedBenifits = this.selectedBenifits.filter(obj => obj.id !== item.id);
   }
 
-  onDeselectAllBenifits(item: any) {
+  onDeselectAllBenifits() {
     this.selectedBenifits = [];
   }
 
@@ -209,10 +209,10 @@ export class AddRecipeComponent implements OnInit {
     this.selectedRequirments = this.selectedRequirments.filter(obj => obj.id !== item.id);
   }
 
-  onDeselectAllRequirments(item: any) {
+  onDeselectAllRequirments() {
     this.selectedRequirments = [];
   }
-  
+
 
   // onMetricSelect(ingredient:IMeasuredIngredient,item: any) {
   //   console.log("measured ingredient passed in??");
@@ -221,7 +221,7 @@ export class AddRecipeComponent implements OnInit {
   //   console.log("metric id now: " + ingredient.metric);
   // }
 
- 
+
   onMetricChange(metricID: any, ingredient :IMeasuredIngredient){
 
     console.log("measured ingredient passed in??");
@@ -274,10 +274,10 @@ export class AddRecipeComponent implements OnInit {
     //this.maxArr.push(this.maxArr.length + 1);
     this.ingredientsList.push(this.createNewIngredient());
   }
-
+o
   deleteIngredientFromList(index) {
     if (this.ingredientsList.length !== 1) {
-      this.ingredientsList.splice(index, 1); 
+      this.ingredientsList.splice(index, 1);
     }
   }
 
@@ -332,7 +332,7 @@ export class AddRecipeComponent implements OnInit {
   }
 
 
-  recipeDataToReturn():any{   
+  recipeDataToReturn():any{
     let cusinesListToPost = this.idArrayGenerator(this.selectedCuisines);
     let categoriesListToPost = this.idArrayGenerator(this.selectedCategories);
     let benifitsListToPost = this.idArrayGenerator(this.selectedBenifits);
@@ -346,7 +346,7 @@ export class AddRecipeComponent implements OnInit {
         name: e.name
       };
     });
-    
+
     let returningRecipe : any ={
       id:this.recipeID,
       defaultImageID: this.defaultImageID,
@@ -356,7 +356,7 @@ export class AddRecipeComponent implements OnInit {
       cuisines: cusinesListToPost,
       nutritionalBenefits: benifitsListToPost,
       dietaryCategories: requirmentListToPost,
-      instructions: this.method,  
+      instructions: this.method,
       mealTypes: categoriesListToPost,
       measuredIngredients: ingredientsListToPost,
       name: this.recipeTitle
@@ -364,7 +364,7 @@ export class AddRecipeComponent implements OnInit {
 
     return returningRecipe;
   }
-  
+
   postRecipe() {
     this.rest.apiPost('session/recipe/createRecipe', this.recipeDataToReturn()).subscribe(e => {
       const frmData = new FormData();
@@ -380,13 +380,13 @@ export class AddRecipeComponent implements OnInit {
   }
 
   // postRecipe() {
-  
+
   //     this.rest.apiPost('session/createRecipe', {
   //       defaultImageID: null,
   //       cuisines: this.cusinesListToPost,
   //       nutritionalBenefits: this.benifitsListToPost,
   //       dietaryCategories: this.requirmentListToPost,
-  //       instructions: this.method,  
+  //       instructions: this.method,
   //       mealTypes: this.categoriesListToPost,
   //       measuredIngredients: this.ingredientsList,
   //       name: this.recipeTitle
@@ -402,7 +402,7 @@ export class AddRecipeComponent implements OnInit {
   //       });
   //     });
   //   }
-  
+
   imageCroppedFile($event: File) {
     console.log('croped file to back', $event);
     this.cropedFile = $event;
@@ -413,7 +413,7 @@ export class AddRecipeComponent implements OnInit {
 
     //console.log(this.defaultImageID);
     //console.log(this.defaultImageID !==null);
-    
+
     if(this.croppedImage != ''){
       //console.log("444444");
       imageSource = this.croppedImage
@@ -425,9 +425,13 @@ export class AddRecipeComponent implements OnInit {
     //console.log("returning imagesource");
     //console.log(imageSource);
     return imageSource;
-    
+
   }
 
-  
-  
+  compareFn(c1: any, c2: any): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+
+
+
 }
