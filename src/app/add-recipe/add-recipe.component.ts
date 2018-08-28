@@ -131,8 +131,17 @@ export class AddRecipeComponent implements OnInit {
     console.log("Going to select cuisine");
     console.log(item);
     //this.cusinesListToPost.push(item);
-    this.selectedCuisines.push(item);
+    if(!this.itemInArray(item, this.selectedCuisines)){
+      this.selectedCuisines.push(item);
+    }
+    console.log(this.selectedCuisines);
   }
+
+  private itemInArray(item:any, theArray:Array<any>):boolean {
+    let foundArray:Array<any> = theArray.filter(obj => obj.id === item.id);
+    return foundArray.length > 0;
+  }
+  
 
 
   onCuisineDeselect(item: any) {
@@ -141,14 +150,7 @@ export class AddRecipeComponent implements OnInit {
     this.selectedCuisines = this.selectedCuisines.filter(obj => obj.id !== item.id);
     console.log("filtered c list is");
     console.log(this.selectedCuisines);
-    //const newArr = [];
-    //this.cusinesListToPost.forEach(e => {
-    // this.cuisineList.forEach(e => {
-    //   if (e.id !== item.id) {
-    //     newArr.push(e);
-    //   }
-    // });
-    // this.cusinesListToPost = newArr;
+    
   }
 
   onSelectAllCuisines(items: any) {
@@ -165,7 +167,9 @@ export class AddRecipeComponent implements OnInit {
     console.log("adding category");
     console.log(item);
     //this.categoriesListToPost.push(item);
-    this.selectedCategories.push(item);
+    if(!this.itemInArray(item, this.selectedCategories)){
+      this.selectedCategories.push(item);
+    }
   }
 
   onSelectAllCategories(items: any) {
@@ -182,7 +186,9 @@ export class AddRecipeComponent implements OnInit {
   }
 
   onBenefitSelect(item: any) {
-    this.selectedBenifits.push(item);
+    if(!this.itemInArray(item, this.selectedRequirments)){
+      this.selectedRequirments.push(item);
+    }
   }
 
   onSelectAllBenifits(item: any) {
@@ -198,7 +204,9 @@ export class AddRecipeComponent implements OnInit {
   }
 
   onRequirmentSelect(item: any) {
-    this.selectedRequirments.push(item);
+    if(!this.itemInArray(item, this.selectedRequirments)){
+      this.selectedRequirments.push(item);
+    }
   }
 
   onSelectAllRequirments(item: any) {
