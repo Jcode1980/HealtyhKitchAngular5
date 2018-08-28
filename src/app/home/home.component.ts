@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit {
   showResultsBlock = false;
 
   private baseUrl = `${environment.apiUrl}api/recipes`;
+  public resourceURL = '${environment.apiUrl}';
 
   constructor(private homeService: HomeService, private http: HttpClient, private rest: RestService) {
   }
