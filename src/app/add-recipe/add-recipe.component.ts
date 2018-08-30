@@ -4,6 +4,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import { IRecipe } from '../../models/IRecipe';
 import {IMetric} from '../../models/IMetric';
 import { IMeasuredIngredient } from '../../models/IMeasuredIngredient';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-add-recipe',
@@ -12,6 +13,7 @@ import { IMeasuredIngredient } from '../../models/IMeasuredIngredient';
   encapsulation: ViewEncapsulation.None
 })
 export class AddRecipeComponent implements OnInit {
+  public apiURL = environment.apiUrl;
   recipeID;
   defaultImageID;
   recipeTitle = 'Title';
@@ -428,7 +430,7 @@ o
     }
     else if(this.defaultImageID){
       //console.log("333333");
-      imageSource = "http://localhost:8085/files/RecipeImage/"+ this.defaultImageID +"?quality=2";
+      imageSource = this.apiURL +"files/RecipeImage/"+ this.defaultImageID +"?quality=2";
     }
     //console.log("returning imagesource");
     //console.log(imageSource);

@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
 
   showResultsBlock = false;
 
-  private baseUrl = `${environment.apiUrl}api/recipes`;
+  private serverURL = environment.apiUrl;
   public resourceURL = environment.baseURL;
 
   constructor(private homeService: HomeService, private http: HttpClient, private rest: RestService) {
@@ -166,7 +166,7 @@ export class HomeComponent implements OnInit {
   }
 
   searchType(item) {
-    this.http.get<IRecipe[]>(`${this.baseUrl}/recipes`,
+    this.http.get<IRecipe[]>(`${this.serverURL}api/recipes/recipes`,
       {
         params: {
           'mealTypesID': item.id,
