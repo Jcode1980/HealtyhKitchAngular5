@@ -7,15 +7,16 @@
   font-family: Campton-Bold;
   src: url('./assets/font/campton_bold.otf');
 }
-@font-face {
-  font-family: Campton-Light;
-  src: url('./assets/font/campton_light.otf');
-}
+
 @font-face {
   font-family: Holland;
   src: url('./assets/font/Holland.otf');
 }
 
+@font-face {
+  font-family: 'Montserrat';
+  src: url('https://fonts.googleapis.com/css?family=Montserrat');
+}
 
 body{
   margin: 0;

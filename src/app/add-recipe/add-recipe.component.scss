@@ -3,7 +3,7 @@
 }
 
 .title {
-  font-family: Campton-Light;
+  font-family: Montserrat;
   text-transform: uppercase;
   width: 100%;
   display: flex;
@@ -52,7 +52,7 @@
 
 .left__section-wrapper, .right__section-wrapper {
   color: #c0c0c0;
-  font-family: Campton-Light;
+  font-family: Montserrat;
   font-size: 12px;
   padding: 15px 20px;
 
@@ -65,7 +65,7 @@
     border-bottom: 1px solid #c5c5c5;
     outline: none;
     color: #c5c5c5;
-    font-family: Campton-Light;
+    font-family: Montserrat;
     font-size: 14px;
     width: 60px;
   }
@@ -81,7 +81,7 @@
 
 .description__text-area {
   border: 1px solid #c5c5c5;
-  font-family: Campton-Light;
+  font-family: Montserrat;
   outline: none;
   color: #c5c5c5;
   font-size: 14px;
@@ -146,7 +146,7 @@ textarea::placeholder {
 }
 
 ng-multiselect-dropdown {
-  font-family: Campton-Light;
+  font-family: Montserrat;
 
   outline: none;
 
@@ -197,10 +197,10 @@ ng-multiselect-dropdown {
     border: none;
     border-bottom: 1px solid #c5c5c5;
     outline: none;
-    font-family: Campton-Light;
+    font-family: Montserrat;
     color: #c5c5c5;
     width: 46px;
-    font-size: 12px;
+    font-size: 16px;
   }
 }
 
@@ -209,10 +209,10 @@ ng-multiselect-dropdown {
   display: flex;
   textarea {
     border: 1px solid #c5c5c5;
-    font-family: Campton-Light;
+    font-family: Montserrat;
     outline: none;
     color: #c5c5c5;
-    font-size: 12px;
+    font-size: 16px;
     padding: 10px;
     width: 96%;
     resize: none;

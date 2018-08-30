@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://127.0.0.1:8080/'
+  apiUrl: 'http://adolfotrove.ddns.net:8085/',
+  baseURL:'http://adolfotrove.ddns.net:8080/HealthyKitch/'
 };

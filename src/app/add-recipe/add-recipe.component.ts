@@ -119,7 +119,7 @@ export class AddRecipeComponent implements OnInit {
   createNewIngredient():IMeasuredIngredient{
     let newIngredient:IMeasuredIngredient = {
       id:null,
-      amount: 0,
+      amount: null,
       name: null,
       metric: this.metricsList[0]
     }
