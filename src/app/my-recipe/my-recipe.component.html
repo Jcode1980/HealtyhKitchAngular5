@@ -1,15 +1,17 @@
-<div class="myRecipeWrapper">
-    <div class="home__search-res-container" *ngIf="recipes[0]">
-        <div *ngFor="let item of recipes; let i = index" class="home__search-res-wrapp">
-          <app-recipe
-            [name]="item.name"
-            [description]="item.description"
-            [imgLink]="'http://localhost:8085/files/RecipeImage/'+ item.defaultImageID +'?quality=3'"
-          ></app-recipe>
+<div class="my_recipe_wrapper">
+    
+    <div class="container">
+        <div class="row">
+          <div *ngFor="let recipe of recipes; let i = index" class="home__search-res-wrapp col-sm-6 col-md-4 col-lg-3 col-xl-2">
+           <app-recipe
+             [readOnly]="true"
+             [recipe]="recipe"
+           ></app-recipe>
+          </div>
         </div>
-      </div>
+    </div>
 
-      <h2 *ngIf="!recipes[0]">
+      <h2 *ngIf="!hasRecipes()">
         No recipes found
       </h2>
 </div>

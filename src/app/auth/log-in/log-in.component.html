@@ -45,7 +45,7 @@
           <div class="log-in__status-text" *ngIf="statusText !== null">
             {{statusText}}
           </div>
-          <button class="log-in-button" type="submit">Login</button>
+          <button class="log-in-button" type="submit" (click)="loginAction()">Login</button>
         </div>
       </form>
 

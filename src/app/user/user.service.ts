@@ -12,6 +12,7 @@ import {environment} from '../../environments/environment';
 import {UserLoaded} from '../store/actions/UsersActions';
 import {Store} from '@ngrx/store';
 import {IAsyncResponse} from '../../models/IAsyncResponse';
+import {TokenStorage} from '../core/token.storage';
 
 @Injectable()
 export class UserService {
@@ -35,36 +36,42 @@ export class UserService {
 
 
   isAuthenticated() {
-    if (
-      this.localStorageService.getAuthToken() === 'token'
-    ) {
-      return Observable.of(true);
-    } else {
-      return Observable.of(false);
-    }
     // if (
-    //   this.localStorageService.getAuthToken() !== null &&
-    //   this.localStorageService.getAuthToken().length > 0
+    //   this.localStorageService.getAuthToken() === 'token'
     // ) {
-    //   return this.authService.tokenStatus(this.localStorageService.getAuthToken());
+    //   return Observable.of(true);
     // } else {
     //   return Observable.of(false);
     // }
+    if (
+      this.localStorageService.getAuthToken() !== null &&
+      this.localStorageService.getAuthToken().length > 0
+    ) {
+      return this.authService.tokenStatus(this.localStorageService.getAuthToken());
+    } else {
+      return Observable.of(false);
+    }
   }
-
+  
   constructor(private store: Store<IAppState>,
               private router: Router,
               private localStorageService: LocalStorageService,
+              private tokenStorage: TokenStorage,
               private authService: AuthService,
               private http: HttpClient) {
     this.currentUser = this.store.select(state => state.userReducer);
   }
 
   public async authenticate(user: IUserAuthCredentials): Promise<IAsyncResponse> {
+
     try {
       let token = await this.authService.signIn(user);
       console.log("what is my token? ");
       console.log(token.token);
+      
+      //Johns Shizz that i'm trying to figure out
+      this.tokenStorage.saveToken(token.token);
+
       this.localStorageService.setAuthToken(token.token);
       this.store.dispatch(new AuthenticatedAction());
       this.router.navigate(['/']);

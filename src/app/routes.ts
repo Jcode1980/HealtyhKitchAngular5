@@ -6,6 +6,7 @@ import {ResetComponent} from './auth/reset/reset.component';
 import {SignUpComponent} from './auth/sign-up/sign-up.component';
 import {AuthGuard} from './auth/auth.guard';
 import {AddRecipeComponent} from './add-recipe/add-recipe.component';
+import {ViewRecipeComponent} from './view-recipe/view-recipe.component';
 import {HomeComponent} from './home/home.component';
 import { MyRecipeComponent } from './my-recipe/my-recipe.component';
 
@@ -18,7 +19,9 @@ const appRoutes: Routes = [
       {path: '', component: HomeComponent, pathMatch: 'full'},
       {path: 'add-recipe', component: AddRecipeComponent, pathMatch: 'full'},
       {path: 'my-recipes', component: MyRecipeComponent, pathMatch: 'full'},
-      {path: 'edit-recipe/:id', component: AddRecipeComponent }
+      {path: 'edit-recipe/:id', component: AddRecipeComponent },
+      {path: 'view-recipe/:id', component: ViewRecipeComponent},
+     
     ]
 
   },

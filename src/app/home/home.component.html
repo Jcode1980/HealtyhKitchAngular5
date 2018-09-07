@@ -112,7 +112,6 @@
 
       </div>
 
-
       <div class="home__trending-wrapper" *ngIf="!showResultsBlock">
         <div class="home__trending-title">What's trending</div>
 
@@ -121,10 +120,8 @@
 
           <div *ngFor="let item of trendings; let i = index" class="home__trending-list--item">
             <app-recipe
-              [name]="item.name"
-              [description]="item.description"
-              [imgLink]="this.serverURL + 'files/RecipeImage/'+ item.defaultImageID +'?quality=3'"
               [recipe]="item"
+              [readOnly]="false"
               *ngIf="i<3"
             ></app-recipe>
           </div>
@@ -141,10 +138,8 @@
         <div class="home__search-res-container" *ngIf="recipes[0]">
           <div *ngFor="let item of recipes; let i = index" class="home__search-res-wrapp">
             <app-recipe
-              [name]="item.name"
-              [description]="item.description"
-              [imgLink]="'${this.serverURL}files/RecipeImage/'+ item.defaultImageID +'?quality=3'"
               [recipe]="item"
+              [readOnly]="false"
             ></app-recipe>
           </div>
         </div>

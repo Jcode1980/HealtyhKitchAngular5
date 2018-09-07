@@ -59,11 +59,11 @@ export class AuthService {
   //   }
   // }
 
-  // tokenStatus(token: string) {
-  //   return this.http.get(`${this.baseUrl}/token-status`, {
-  //     headers: new HttpHeaders().set('Authorization', token)
-  //   });
-  // }
+  tokenStatus(token: string) {
+    return this.http.get(`${this.baseUrl}/token-status`, {
+      headers: new HttpHeaders().set('Authorization', token)
+    });
+  }
 
   // async forgotPassword(email: string): Promise<IAsyncResponse> {
   //   try {

@@ -20,8 +20,15 @@ export class MyRecipeComponent implements OnInit {
     this.searchForMyRecipes();
   }
 
+
   async searchForMyRecipes() {
     this.recipes = await this.myRecipeService.getMyRecipesForUser();
+    console.log("got recipes: ");
+    console.log(this.recipes);
+  }
+
+  hasRecipes():boolean{
+    return this.recipes.length > 0;
   }
 
 

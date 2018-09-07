@@ -1,0 +1,38 @@
+#recipe-view-wrapper {
+    width: 90%;
+    margin-left: 5%;
+    justify-content: space-between;
+  }
+  
+.home__back-btn{
+margin-top: 20px;
+margin-bottom: 20px;
+font-family: Campton-Bold;
+text-transform: uppercase;
+font-size: 12px;
+cursor: pointer;
+&:hover{
+    text-decoration: underline;
+}
+}
+
+#recipe_title{
+    text-transform: uppercase;
+    font-family: Campton-Bold;
+    margin-bottom:10px;
+}
+
+.server_ready_details{
+    height:40px;
+}
+
+.label{
+    font-family: Campton-Bold;
+    font-size: 12px;
+}
+
+.grey_label{
+    font-family: Campton-Bold;
+    font-size: 10px;
+    color: #c5c5c5;
+}

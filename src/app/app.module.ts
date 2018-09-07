@@ -7,7 +7,7 @@ import {AppMainComponent} from './shared/app-main/app-main.component';
 import {AppToolbarComponent} from './shared/app-main/app-toolbar/app-toolbar.component';
 import {SideNavComponent} from './shared/app-main/side-nav/side-nav.component';
 import {routing} from './routes';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {Angular2FontawesomeModule} from 'angular2-fontawesome';
 import {LogInComponent} from './auth/log-in/log-in.component';
 import {ResetComponent} from './auth/reset/reset.component';
@@ -34,6 +34,10 @@ import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 import {ImageCropperModule} from 'ngx-image-cropper';
 import { MyRecipeComponent } from './my-recipe/my-recipe.component';
 import {MyRecipeService} from './my-recipe/my-recipe.service';
+import {TokenStorage } from './core/token.storage';
+import {Interceptor} from "./core/inteceptor";
+import { ViewRecipeComponent } from './view-recipe/view-recipe.component';
+import { StarsDisplayComponent } from './shared/stars-display/stars-display.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +53,9 @@ import {MyRecipeService} from './my-recipe/my-recipe.service';
     FooterComponent,
     SideMenuComponent,
     AddRecipeComponent,
-    MyRecipeComponent
+    MyRecipeComponent,
+    ViewRecipeComponent,
+    StarsDisplayComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +81,11 @@ import {MyRecipeService} from './my-recipe/my-recipe.service';
     LocalStorageService,
     HomeService,
     RestService,
-    MyRecipeService
+    MyRecipeService,
+    TokenStorage,
+    {provide: HTTP_INTERCEPTORS,
+      useClass: Interceptor,
+      multi : true}
 
   ],
   bootstrap: [AppComponent]

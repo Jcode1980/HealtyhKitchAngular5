@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../user/user.service';
+import { Router,  NavigationExtras,ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -13,10 +14,11 @@ export class LogInComponent implements OnInit {
   form: FormGroup;
   private formSubmitAttempt: boolean;
   statusText: string = null;
+  
+  private returnUrl:string;
 
-  constructor(private fb: FormBuilder,
-              private authService: UserService
-  ) {
+  constructor(private fb: FormBuilder, private authService: UserService,
+    private route: ActivatedRoute, public router: Router) {
   }
 
   ngOnInit() {
@@ -27,6 +29,9 @@ export class LogInComponent implements OnInit {
       ])],
       password: ['', Validators.required]
     });
+
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/index';
+    console.log("activated route is: " + this.returnUrl);
   }
 
   isFieldInvalid(field: string) {
@@ -36,7 +41,7 @@ export class LogInComponent implements OnInit {
     );
   }
 
-  async onSubmit() {
+  async loginAction() {
     if (this.form.valid) {
       const response = await this.authService.authenticate({
         email: this.form.get('email').value,
@@ -50,6 +55,7 @@ export class LogInComponent implements OnInit {
       else{
         console.log(response);
         console.log("token is : "  + response['body']);
+        this.router.navigate([this.returnUrl]);
       }
     }
     this.formSubmitAttempt = true;

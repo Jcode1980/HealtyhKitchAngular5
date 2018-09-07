@@ -1,21 +1,24 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {ICategory} from '../../models/ICategory';
 import {IRecipe} from '../../models/IRecipe';
+import {RestService} from '../rest.service';
 
 
 @Injectable()
 export class MyRecipeService {
 
-  private baseUrl = `${environment.apiUrl}api/recipes`;
+  private sessionAPIURL = `session/recipe/`;
 
-  constructor(private http: HttpClient) {
+
+  constructor(private rest: RestService) {
   }
 
   //FIX me to use Logged in User
-  async getMyRecipesForUser(){
-    return this.http.get<IRecipe[]>(`${this.baseUrl}/recipes`,  {params:{'createdByUserID': "1"}}).toPromise();
+  async getMyRecipesForUser(){    
+    console.log("this is the url: ");
+    console.log(this.sessionAPIURL + 'myRecipes');
+    return this.rest.apiGet<IRecipe[]>(this.sessionAPIURL + 'myRecipes', {}).toPromise();
   }
 
 }
