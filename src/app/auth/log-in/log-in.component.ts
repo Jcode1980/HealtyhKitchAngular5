@@ -55,7 +55,7 @@ export class LogInComponent implements OnInit {
       else{
         console.log(response);
         console.log("token is : "  + response['body']);
-        this.router.navigate([this.returnUrl]);
+        //this.router.navigate([this.returnUrl]);
       }
     }
     this.formSubmitAttempt = true;

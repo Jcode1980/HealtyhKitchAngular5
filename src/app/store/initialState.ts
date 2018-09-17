@@ -10,7 +10,8 @@ export const initialState: IAppState = {
   userReducer: {
     firstName: '',
     lastName: '',
-    avatarLink: '',
     email: '',
+    profileImageThumbnailID: null,
+    profileImagePreviewID: null
   },
 };

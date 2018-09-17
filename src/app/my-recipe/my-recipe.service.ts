@@ -14,7 +14,6 @@ export class MyRecipeService {
   constructor(private rest: RestService) {
   }
 
-  //FIX me to use Logged in User
   async getMyRecipesForUser(){    
     console.log("this is the url: ");
     console.log(this.sessionAPIURL + 'myRecipes');

@@ -5,8 +5,7 @@ import {IAction} from '../../../models/IAction';
 const initialUser: IUser = {
   firstName: '',
   lastName: '',
-  email: '',
-  avatarLink: null,
+  email: ''
 };
 
 export function userReducer(state: IUser = initialUser, action: IAction): IUser {
