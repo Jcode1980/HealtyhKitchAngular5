@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IMeasuredIngredient } from '../../models/IMeasuredIngredient';
 import { IRecipe } from '../../models/IRecipe';
 import {RestService} from '../rest.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {environment} from '../../environments/environment';
 import { IReview } from '../../models/IReview';
 import { User } from '../../models/User';
@@ -13,14 +13,19 @@ import { User } from '../../models/User';
   styleUrls: ['./view-recipe.component.scss']
 })
 export class ViewRecipeComponent implements OnInit {
+  private recipesAPIURL = `api/recipes/`;
   currentRecipe : IRecipe;
   apiURL = environment.apiUrl;
   showReviewModal:boolean = false;
-  private recipesAPIURL = `api/recipes/`;
+  
+  reviewRatingNew:number;
+  reviewCommentNew:string;
+
+  ratingsList: Array<number> = [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
   
   reviews: Array<IReview> = [];
 
-  constructor(private rest: RestService, private activatedRouter: ActivatedRoute) { }
+  constructor(private rest: RestService, private activatedRouter: ActivatedRoute, private router: Router) { }
 
   async ngOnInit() {
     const id = +this.activatedRouter.snapshot.paramMap.get('id');
@@ -95,6 +100,35 @@ export class ViewRecipeComponent implements OnInit {
     return theArray.map((a) => a.name).join(', ');
   }
 
+  createReview(){
+    console.log("Got to create review: " + this.reviewRatingNew);
+    console.log("comment is: " + this.reviewCommentNew );
+
+    if(this.reviewRatingNew != null && this.reviewCommentNew != null){
+      let newReview:any = {
+        comment:this.reviewCommentNew,
+        rating: this.reviewRatingNew
+      }
+
+      console.log("the new review being sent: " );
+      console.log(newReview);
+
+      this.rest.apiPost<IReview>(`/session/recipe/review/${this.currentRecipe.id}`, newReview).subscribe(
+        re => {
+          console.log(re);
+          this.reviews.unshift(re);
+          this.reviewCommentNew = null;
+          this.reviewRatingNew = null;
+          this.showReviewModal = false;
+        }, err => {
+        if (err.status === 200) {
+          this.router.navigateByUrl('');
+        }
+      });
+    }
+  }
  
+
+  
 
 }

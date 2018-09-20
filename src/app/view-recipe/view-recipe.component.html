@@ -6,8 +6,8 @@
     <div class="recipe-details col-sm mb-4 mr-4">
       <div id="recipe_title">{{currentRecipe.name}} </div>
       <div class="row server_ready_details border-top border-bottom ">
-        <div class="col-sm-3 border-right align-middle"><span class="label">SERVES:&nbsp; </span> {{currentRecipe.numServings}}</div>
-        <div class="col-sm-9 align-middle"><span class="label">READY IN:&nbsp; </span>{{currentRecipe.readyInMins}}</div>
+        <div class="col-sm-4 border-right align-middle "><span class="label">SERVES:&nbsp; </span> {{currentRecipe.numServings}}</div>
+        <div class="col-sm-8 align-middle"><span class="label">READY IN:&nbsp; </span>{{currentRecipe.readyInMins}}</div>
       </div>
       <div><span class="grey_label">RECIPE BY:</span> username <button type="button" class="btn btn-secondary btn-sm">Follow</button></div>
       <div class="label">NUTRITIONAL BENEFITS:</div>
@@ -42,12 +42,11 @@
       <span class="label text-left">REVIEWS</span>
     </div>
     <div class="col-sm">
-        <span class="label text-right">WRITE A REVIEW</span>
         <button class="upload__img-btn" (click)="showReviewModal = true">WRITE A REVIEW</button>
     </div>
   </div>
   <div class="row">
-    <div class="review-list-item col-sm" *ngFor="let review of reviews" >
+    <div class="review-list-item col-sm-3" *ngFor="let review of reviews" >
       <div class="review-details">{{review.comment}}</div>
       <div class="review-stars"><app-stars-display [numberOfStars]="review.rating" ></app-stars-display></div>
       <div class="reviewer-info">
@@ -59,9 +58,22 @@
     </div>
   </div>
 
-  <div *ngIf="showReviewModal">
-    This it the review modal
-
-    <button class="upload__img-btn" (click)="showReviewModal = false">Close REVIEW</button>
+  <div class="modals-wrapper" *ngIf="showReviewModal" (click)="showReviewModal = false"></div>
+  
+  <div class="review_modal" *ngIf="showReviewModal">
+    <div class="mb-1">  
+      <span >Rating</span>
+      <select [(ngModel)]="reviewRatingNew" id="reviewRating" name="reviewRating">
+        <option *ngFor="let rating of ratingsList" >{{rating}}</option>
+      </select>
+    </div>
+    <div>
+        <textarea cols="50" rows="5" placeholder="COMMENT" class="review_comment" [(ngModel)]="reviewCommentNew"></textarea>
+    </div>
+    <div>
+      
+    </div>
+    <button class="btn cancel_review_btn" (click)="createReview();">Submit</button>
+    <button class="btn submit_review_btn" (click)="showReviewModal = false">Cancel</button>
   </div>
 </div>
