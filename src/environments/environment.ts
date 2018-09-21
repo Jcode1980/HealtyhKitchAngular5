@@ -5,8 +5,8 @@
 
 export const environment = {
   production: false,
-  //apiUrl: 'http://adolfotrove.ddns.net:8085/',
-  //baseURL:'http://adolfotrove.ddns.net:8080/HealthyKitch/'
-  apiUrl: 'http://localhost:8085/',
-  baseURL:'http://localhost:8080/HealthyKitch/'
+  apiUrl: 'http://adolfotrove.ddns.net/healthykitchServer/',
+  baseURL:'http://adolfotrove.ddns.net/HealthyKitch/'
+  //apiUrl: 'http://localhost:8085/',
+  //baseURL:'http://localhost:8080/HealthyKitch/'
 };

@@ -99,10 +99,10 @@
 
           <div class="home__search-meal-types--item" (click)="searchType(item)">
 
-            <div *ngIf="item.image">
-              <img [src]="this.resourceURL + 'files/Images/' + item.image.id" class="meal-types-img">
-            </div>
-            <div class="meal-types-text">
+            
+            <img *ngIf="item.image" [src]="this.serverURL + 'files/Images/' + item.image.id" class="meal-types-img">
+            
+            <div *ngIf="!item.image" class="meal-types-text">
               {{item.name}}
             </div>
 

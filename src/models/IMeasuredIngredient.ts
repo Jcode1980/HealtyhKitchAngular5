@@ -5,4 +5,5 @@ export interface IMeasuredIngredient {
     amount: string;
     name: string;
     metric: IMetric;
+    sortID: number;
   }

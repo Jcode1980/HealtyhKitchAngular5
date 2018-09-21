@@ -123,7 +123,8 @@ export class AddRecipeComponent implements OnInit {
       id:null,
       amount: null,
       name: null,
-      metric: this.metricsList[0]
+      metric: this.metricsList[0],
+      sortID: null
     }
 
     return newIngredient;
@@ -348,12 +349,13 @@ o
     let benifitsListToPost = this.idArrayGenerator(this.selectedBenifits);
     let requirmentListToPost = this.idArrayGenerator(this.selectedRequirments);
 
-    let ingredientsListToPost = this.ingredientsList.map((e: any) => {
+    let ingredientsListToPost = this.ingredientsList.map((e: any, index:number) => {
       return {
         id: e.id,
         amount: e.amount,
         metric: { id: e.metric.id, name: e.metric.name, code: e.metric.code },
-        name: e.name
+        name: e.name,
+        sortID: index +1
       };
     });
 
