@@ -1,4 +1,5 @@
 import { IMetric } from "./IMetric";
+import { IIngredientSubHeading } from "./IIngredientSubHeading";
 
 export interface IMeasuredIngredient {
     id:number
@@ -6,4 +7,5 @@ export interface IMeasuredIngredient {
     name: string;
     metric: IMetric;
     sortID: number;
+    ingredientSubHeading : IIngredientSubHeading;
   }

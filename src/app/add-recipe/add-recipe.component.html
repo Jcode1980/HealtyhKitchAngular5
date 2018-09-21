@@ -1,4 +1,4 @@
-<div class="add-recipe__wrapper">
+<div class="add-recipe__wrapper" *ngIf="currentRecipe">
   <div class="title">edit or add recipe</div>
 
   <div class="recipe__details-wrapper">
@@ -10,7 +10,7 @@
         <div class="edit__recipe-wrapper" *ngIf="isRecipeTitleChange">
           <input
             type="text"
-            [(ngModel)]="recipeTitle"
+            [(ngModel)]="currentRecipe.name"
             class="change__title-input"
           >
 
@@ -20,7 +20,7 @@
         </div>
 
         <div *ngIf="!isRecipeTitleChange">
-          {{recipeTitle}}
+          {{currentRecipe.name}}
           <i class="fa fa-pencil" aria-hidden="true" (click)="changeRecipeTitle()"></i>
         </div>
 
@@ -28,19 +28,19 @@
         <div class="two__sections-wrapper">
           <div class="left__section-wrapper">
             <span>serves:</span>
-            <input type="text" [(ngModel)]="numServings">
+            <input type="text" [(ngModel)]="currentRecipe.numServings">
           </div>
 
           <div class="right__section-wrapper">
             <span>ready in:</span>
-            <input type="text" [(ngModel)]="readyInMins">
+            <input type="text" [(ngModel)]="currentRecipe.readyInMins">
           </div>
         </div>
 
 
         <div class="description__wrapper">
 
-          <textarea cols="30" rows="12" placeholder="DESCRIPTION" class="description__text-area" [(ngModel)]="descText"></textarea>
+          <textarea cols="30" rows="12" placeholder="DESCRIPTION" class="description__text-area" [(ngModel)]="currentRecipe.descText"></textarea>
 
         </div>
 
@@ -70,7 +70,7 @@
     <ng-multiselect-dropdown
       [placeholder]="'CUISINE'"
       [data]="cuisineList"
-      [(ngModel)]="selectedCuisines"
+      [(ngModel)]="currentRecipe.cuisines"
       [settings]="dropdownSettings"
       (onSelect)="onCuisineSelect($event)"
       (onDeSelect)="onCuisineDeselect($event)"
@@ -82,20 +82,21 @@
 
     <ng-multiselect-dropdown
       [placeholder]="'CATEGORIES'"
-      [data]="categoriesList"
-      [(ngModel)]="selectedCategories"
+      [data]="mealTypesList"
+      [(ngModel)]="currentRecipe.mealTypes"
       [settings]="dropdownSettings"
-      (onSelect)="onCategorySelect($event)"
-      (onDeSelect)="onCategoryDeselect($event)"
-      (onDeSelectAll)="onDeselectAllCategories()"
-      (onSelectAll)="onSelectAllCategories($event)"
+      (onSelect)="onMealTypeSelect($event)"
+      (onDeSelect)="onMealTypeDeselect($event)"
+      (onDeSelectAll)="onDeselectAllMealTypes()"
+      (onSelectAll)="onSelectAllMealTypes($event)"
     >
     </ng-multiselect-dropdown>
+
 
     <ng-multiselect-dropdown
       [placeholder]="'NUTRITIONAL BENIFITS'"
       [data]="benifitsList"
-      [(ngModel)]="selectedBenifits"
+      [(ngModel)]="currentRecipe.nutritionalBenefits"
       [settings]="dropdownSettings"
       (onSelect)="onBenefitSelect($event)"
       (onDeSelect)="onBenefitDeselect($event)"
@@ -106,13 +107,13 @@
 
     <ng-multiselect-dropdown
       [placeholder]="'DIETARY REQUIRMENTS'"
-      [data]="requirementsList"
-      [(ngModel)]="selectedRequirments"
+      [data]="dietaryCategoriesList"
+      [(ngModel)]="currentRecipe.dietaryCategories"
       [settings]="dropdownSettings"
-      (onSelect)="onRequirmentSelect($event)"
-      (onDeSelect)="onRequirmentDeselect($event)"
-      (onDeSelectAll)="onDeselectAllRequirments()"
-      (onSelectAll)="onSelectAllRequirments($event)"
+      (onSelect)="onDietaryCategorySelect($event)"
+      (onDeSelect)="onDietaryCategoryDeselect($event)"
+      (onDeSelectAll)="onDeselectAllDietaryCategories()"
+      (onSelectAll)="onSelectAllDietaryCategoies($event)"
     >
     </ng-multiselect-dropdown>
 
@@ -120,7 +121,7 @@
 
   <div class="add__recipe-title">ingredients</div>
   
-  <div class="ingerdients__wrapper" *ngFor="let ingredient of ingredientsList; let i = index;">
+  <div class="ingerdients__wrapper" *ngFor="let ingredient of currentRecipe.measuredIngredients; let i = index;">
 
     
     <div class="ingerdients__amount-wrapper">
@@ -169,7 +170,7 @@
   <div class="add__recipe-title">method</div>
 
   <div class="method__textarea-warpper">
-    <textarea cols="30" rows="18" placeholder="TYPE METHOD HERE" class="description__text-area" [(ngModel)]="method"></textarea>
+    <textarea cols="30" rows="18" placeholder="TYPE METHOD HERE" class="description__text-area" [(ngModel)]="currentRecipe.instructions"></textarea>
   </div>
 
   <div class="submit__btns-wrapper">

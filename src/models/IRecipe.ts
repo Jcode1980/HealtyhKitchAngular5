@@ -1,4 +1,5 @@
 import { IMeasuredIngredient } from "./IMeasuredIngredient";
+import { IIngredientSubHeading } from "./IIngredientSubHeading";
 import { ICategory } from "./ICategory";
 
 export interface IRecipe {
@@ -14,4 +15,7 @@ export interface IRecipe {
   nutritionalBenefits: Array<any>;
   dietaryCategories:Array<ICategory>;
   cuisines:Array<any>
+  ingredientSubHeadings: Array<IIngredientSubHeading>;
 }
+
+

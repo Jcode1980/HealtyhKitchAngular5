@@ -2,6 +2,7 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {RestService} from '../rest.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import { IRecipe } from '../../models/IRecipe';
+import { Recipe } from '../../models/Recipe';
 import {IMetric} from '../../models/IMetric';
 import { IMeasuredIngredient } from '../../models/IMeasuredIngredient';
 import {environment} from '../../environments/environment';
@@ -13,38 +14,43 @@ import {environment} from '../../environments/environment';
   encapsulation: ViewEncapsulation.None
 })
 export class AddRecipeComponent implements OnInit {
-  public apiURL = environment.apiUrl;
-  recipeID;
-  defaultImageID;
-  recipeTitle = 'Title';
-  numServings:number;
-  readyInMins:number;
-  descText:string;
-  isRecipeTitleChange = false;
+  apiURL = environment.apiUrl;
+  
+  currentRecipe : Recipe;
 
+  //recipeID;
+  // defaultImageID;
+  // recipeTitle = 'Title';
+  // numServings:number;
+  // readyInMins:number;
+  // descText:string;
+  // method: string;
+  // selectedCategories = [];
+  // selectedCuisines = [];
+  // selectedBenifits = [];
+  // selectedRequirments = [];
+  // ingredientsList = [];
+
+  isRecipeTitleChange = false;
   isModalOpen = false;
 
-  method: string;
+  
   cropedFile: File;
 
   f: any;
 
-  ingredientsList = [];
+  
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
 
   cuisineList = [];
-  selectedCuisines = [];
-
-  categoriesList = [];
-  selectedCategories = [];
-
+  
   benifitsList = [];
-  selectedBenifits = [];
+  mealTypesList = [];
+  dietaryCategoriesList = [];
 
-  requirementsList = [];
-  selectedRequirments = [];
+  
 
   metricsList:Array<IMetric> = [];
 
@@ -72,15 +78,15 @@ export class AddRecipeComponent implements OnInit {
       await this.initializeRecipeData();
     }
     else{
-       console.log("no recipe id found");
+       this.currentRecipe = new Recipe(null);
     }
 
-    console.log("ingredients length is:");
-    console.log(this.ingredientsList.length);
-    if(this.ingredientsList.length === 0){
-      console.log("got here ingredients");
-      console.log(this.metricsList[0]);
-      this.ingredientsList = [this.createNewIngredient()];
+    // if(this.currentRecipe.measuredIngredients.length === 0){
+    //   this.currentRecipe.measuredIngredients = [this.createNewIngredient()];
+    // }
+
+    if(this.currentRecipe.measuredIngredients.length === 0){
+      this.currentRecipe.measuredIngredients = [this.createNewIngredient()];
     }
 
   }
@@ -93,29 +99,40 @@ export class AddRecipeComponent implements OnInit {
     this.metricsList =  await this.getMetrics();
   }
 
+  // async initializeRecipeData() {
+  //   console.log("initializeRecipeData");
+  //   const id = +this.activatedRouter.snapshot.paramMap.get('id');
+  //   let currentRecipe :IRecipe;
+  //   currentRecipe = await this.rest.apiGet<IRecipe>(`api/recipes/${id}`).toPromise();
+  //   console.log("got recipe");
+  //   console.log(currentRecipe);
+  //   this.recipeTitle = currentRecipe.name;
+  //   this.numServings = currentRecipe.numServings;
+  //   this.readyInMins = currentRecipe.readyInMins;
+  //   this.descText = currentRecipe.descText;
+  //   this.method = currentRecipe.instructions;
+  //   this.currentRecipe.measuredIngredients = currentRecipe.measuredIngredients;
+
+
+  //   this.defaultImageID=currentRecipe.defaultImageID;
+
+  //   this.recipeID = currentRecipe.id;
+  //   this.currentRecipe.nutritionalBenefits = currentRecipe.nutritionalBenefits;
+  //   this.currentRecipe.nutritionalBenefits = currentRecipe.dietaryCategories;
+  //   this.currentRecipe.cuisines = currentRecipe.cuisines;
+  //   this.currentRecipe.dietaryCategories = currentRecipe.mealTypes;
+
+  // }
+
   async initializeRecipeData() {
     console.log("initializeRecipeData");
     const id = +this.activatedRouter.snapshot.paramMap.get('id');
-    let currentRecipe :IRecipe;
-    currentRecipe = await this.rest.apiGet<IRecipe>(`api/recipes/${id}`).toPromise();
+    let iRecipe:IRecipe = await this.rest.apiGet<Recipe>(`api/recipes/${id}`).toPromise();
+    console.log("got Irecipe");
+    console.log(iRecipe);
+    this.currentRecipe = new Recipe(iRecipe);
     console.log("got recipe");
-    console.log(currentRecipe);
-    this.recipeTitle = currentRecipe.name;
-    this.numServings = currentRecipe.numServings;
-    this.readyInMins = currentRecipe.readyInMins;
-    this.descText = currentRecipe.descText;
-    this.method = currentRecipe.instructions;
-    this.ingredientsList = currentRecipe.measuredIngredients;
-
-
-    this.defaultImageID=currentRecipe.defaultImageID;
-
-    this.recipeID = currentRecipe.id;
-    this.selectedBenifits = currentRecipe.nutritionalBenefits;
-    this.selectedRequirments = currentRecipe.dietaryCategories;
-    this.selectedCuisines = currentRecipe.cuisines;
-    this.selectedCategories = currentRecipe.mealTypes;
-
+    console.log(this.currentRecipe);
   }
 
   createNewIngredient():IMeasuredIngredient{
@@ -124,21 +141,14 @@ export class AddRecipeComponent implements OnInit {
       amount: null,
       name: null,
       metric: this.metricsList[0],
-      sortID: null
+      sortID: null,
+      ingredientSubHeading: null
     }
 
     return newIngredient;
   }
 
-  onCuisineSelect(item: any) {
-    console.log("Going to select cuisine");
-    console.log(item);
-    //this.cusinesListToPost.push(item);
-    if(!this.itemInArray(item, this.selectedCuisines)){
-      this.selectedCuisines.push(item);
-    }
-    console.log(this.selectedCuisines);
-  }
+
 
   private itemInArray(item:any, theArray:Array<any>):boolean {
     let foundArray:Array<any> = theArray.filter(obj => obj.id === item.id);
@@ -147,90 +157,95 @@ export class AddRecipeComponent implements OnInit {
   
 
 
+  //****** CUSINE SELECT FUNCTIONS   ********/
+
+  onCuisineSelect(item: any) {
+    console.log("Going to select cuisine");
+    console.log(item);
+    if(!this.itemInArray(item, this.currentRecipe.cuisines)){
+      this.currentRecipe.cuisines.push(item);
+    }
+    console.log(this.currentRecipe.cuisines);
+  }
+
   onCuisineDeselect(item: any) {
     console.log("Going to deselect cuisine");
     console.log(item);
-    this.selectedCuisines = this.selectedCuisines.filter(obj => obj.id !== item.id);
+    this.currentRecipe.cuisines = this.currentRecipe.cuisines.filter(obj => obj.id !== item.id);
     console.log("filtered c list is");
-    console.log(this.selectedCuisines);
+    console.log(this.currentRecipe.cuisines);
     
   }
 
   onSelectAllCuisines(items: any) {
     //this.cusinesListToPost = items;
-    this.selectedCuisines = items;
+    this.currentRecipe.cuisines = items;
   }
 
   onDeselectAllCuisines() {
-    //this.cusinesListToPost = [];
-    this.selectedCuisines = [];
+    this.currentRecipe.cuisines = [];
   }
 
-  onCategorySelect(item: any) {
-    console.log("adding category");
+  //****** MealType SELECT FUNCTIONS   ********/
+
+  onMealTypeSelect(item: any) {
+    console.log("adding meal Type");
     console.log(item);
-    //this.categoriesListToPost.push(item);
-    if(!this.itemInArray(item, this.selectedCategories)){
-      this.selectedCategories.push(item);
+    if(!this.itemInArray(item, this.currentRecipe.mealTypes)){
+      this.currentRecipe.mealTypes.push(item);
     }
   }
 
-  onSelectAllCategories(items: any) {
-    //this.categoriesListToPost = items;
-    this.selectedCategories= items;
+  onSelectAllMealTypes(items: any) {
+    this.currentRecipe.mealTypes= items;
   }
 
-  onCategoryDeselect(item: any) {
-    this.selectedCategories = this.selectedCategories.filter(obj => obj.id !== item.id);
+  onMealTypeDeselect(item: any) {
+    this.currentRecipe.mealTypes = this.currentRecipe.mealTypes.filter(obj => obj.id !== item.id);
   }
 
-  onDeselectAllCategories() {
-    this.selectedCategories = [];
+  onDeselectAllMealTypes() {
+    this.currentRecipe.mealTypes = [];
   }
 
+  //********* NUTIRITIONAL BENEFIT SELECT FUNCTIONS *****************/
   onBenefitSelect(item: any) {
-    if(!this.itemInArray(item, this.selectedRequirments)){
-      this.selectedRequirments.push(item);
+    if(!this.itemInArray(item, this.currentRecipe.nutritionalBenefits)){
+      this.currentRecipe.nutritionalBenefits.push(item);
     }
   }
 
   onSelectAllBenifits(item: any) {
-    this.selectedBenifits = item;
+    this.currentRecipe.nutritionalBenefits = item;
   }
 
   onBenefitDeselect(item: any) {
-    this.selectedBenifits = this.selectedBenifits.filter(obj => obj.id !== item.id);
+    this.currentRecipe.nutritionalBenefits = this.currentRecipe.nutritionalBenefits.filter(obj => obj.id !== item.id);
   }
 
   onDeselectAllBenifits() {
-    this.selectedBenifits = [];
+    this.currentRecipe.nutritionalBenefits = [];
   }
 
-  onRequirmentSelect(item: any) {
-    if(!this.itemInArray(item, this.selectedRequirments)){
-      this.selectedRequirments.push(item);
+ //********* DIETARY CATEGORY SELECT FUNCTIONS *****************/
+
+  onDietaryCategorySelect(item: any) {
+    if(!this.itemInArray(item, this.currentRecipe.dietaryCategories)){
+      this.currentRecipe.dietaryCategories.push(item);
     }
   }
 
-  onSelectAllRequirments(item: any) {
-    this.selectedRequirments = item;
+  onSelectAllDietaryCategories(item: any) {
+    this.currentRecipe.dietaryCategories = item;
   }
 
-  onRequirmentDeselect(item: any) {
-    this.selectedRequirments = this.selectedRequirments.filter(obj => obj.id !== item.id);
+  onDietaryCategoriesDeselect(item: any) {
+    this.currentRecipe.dietaryCategories = this.currentRecipe.dietaryCategories.filter(obj => obj.id !== item.id);
   }
 
-  onDeselectAllRequirments() {
-    this.selectedRequirments = [];
+  onDeselectAllDietaryCategories() {
+    this.currentRecipe.dietaryCategories = [];
   }
-
-
-  // onMetricSelect(ingredient:IMeasuredIngredient,item: any) {
-  //   console.log("measured ingredient passed in??");
-  //   console.log(ingredient);
-  //   ingredient.metric = item;
-  //   console.log("metric id now: " + ingredient.metric);
-  // }
 
 
   onMetricChange(metricID: any, ingredient :IMeasuredIngredient){
@@ -249,14 +264,14 @@ export class AddRecipeComponent implements OnInit {
 
   loadMealTypes() {
     this.rest.apiGet('api/recipes/allMealTypes').subscribe((res: any[]) => {
-        this.categoriesList = res;
+        this.mealTypesList = res;
       }
     );
   }
 
   loadDietaryCategories() {
     this.rest.apiGet('api/recipes/allDietaryCategories').subscribe((res: any[]) => {
-        this.requirementsList = res;
+        this.dietaryCategoriesList = res;
       }
     );
   }
@@ -279,16 +294,16 @@ export class AddRecipeComponent implements OnInit {
     return this.rest.apiGet<Promise<Array<IMetric>>>('api/recipes/allMetrics').toPromise();
   }
 
+  addSubHeadingToList(){
+  }
 
   addIngredientToList() {
-    //this.howManyIngredients++;
-    //this.maxArr.push(this.maxArr.length + 1);
-    this.ingredientsList.push(this.createNewIngredient());
+    this.currentRecipe.measuredIngredients.push(this.createNewIngredient());
   }
-o
+
   deleteIngredientFromList(index) {
-    if (this.ingredientsList.length !== 1) {
-      this.ingredientsList.splice(index, 1);
+    if (this.currentRecipe.measuredIngredients.length !== 1) {
+      this.currentRecipe.measuredIngredients.splice(index, 1);
     }
   }
 
@@ -312,18 +327,20 @@ o
 
   async saveRecipe(){
     console.log("this is the cusinesList");
-    console.log(this.selectedCuisines);
+    console.log(this.currentRecipe.cuisines);
+    
+    console.log(this.currentRecipe);
 
-    const returningRecipe:any = this.recipeDataToReturn();
+    const returningRecipe:any = this.currentRecipe.recipeDataToReturn();
     console.log("Going to pass through");
     console.log(returningRecipe);
-    await this.rest.apiPut('session/recipe/' +this.recipeID, returningRecipe).toPromise();
+    await this.rest.apiPut('session/recipe/' +this.currentRecipe.id, returningRecipe).toPromise();
 
     if(this.cropedFile){
       console.log("going to upload cropedFile");
       const frmData = new FormData();
-      frmData.append('file', this.cropedFile, 'RecipeImage' + this.recipeID + '.png');
-      this.rest.apiPost(`api/recipes/UploadRecipeImage/${this.recipeID}`, frmData).subscribe(re => {console.log(re);}, err => {
+      frmData.append('file', this.cropedFile, 'RecipeImage' + this.currentRecipe.id + '.png');
+      this.rest.apiPost(`api/recipes/UploadRecipeImage/${this.currentRecipe.id}`, frmData).subscribe(re => {console.log(re);}, err => {
           if (err.status === 200) {
             this.router.navigateByUrl('');
           }
@@ -332,53 +349,9 @@ o
 
   }
 
-  idArrayGenerator(theArray:Array<any>):Array<number>{
-    theArray.map(e => {
-      return {
-        id: e.id
-      };
-    });
-
-    return theArray;
-  }
-
-
-  recipeDataToReturn():any{
-    let cusinesListToPost = this.idArrayGenerator(this.selectedCuisines);
-    let categoriesListToPost = this.idArrayGenerator(this.selectedCategories);
-    let benifitsListToPost = this.idArrayGenerator(this.selectedBenifits);
-    let requirmentListToPost = this.idArrayGenerator(this.selectedRequirments);
-
-    let ingredientsListToPost = this.ingredientsList.map((e: any, index:number) => {
-      return {
-        id: e.id,
-        amount: e.amount,
-        metric: { id: e.metric.id, name: e.metric.name, code: e.metric.code },
-        name: e.name,
-        sortID: index +1
-      };
-    });
-
-    let returningRecipe : any ={
-      id:this.recipeID,
-      defaultImageID: this.defaultImageID,
-      numServings: this.numServings,
-      readyInMins: this.readyInMins,
-      descText: this.descText,
-      cuisines: cusinesListToPost,
-      nutritionalBenefits: benifitsListToPost,
-      dietaryCategories: requirmentListToPost,
-      instructions: this.method,
-      mealTypes: categoriesListToPost,
-      measuredIngredients: ingredientsListToPost,
-      name: this.recipeTitle
-    };
-
-    return returningRecipe;
-  }
 
   postRecipe() {
-    this.rest.apiPost('session/recipe/createRecipe', this.recipeDataToReturn()).subscribe(e => {
+    this.rest.apiPost('session/recipe/createRecipe', this.currentRecipe.recipeDataToReturn()).subscribe(e => {
       const frmData = new FormData();
       frmData.append('file', this.cropedFile, 'RecipeImage' + e + '.png');
       this.rest.apiPost(`api/recipes/UploadRecipeImage/${e}`, frmData).subscribe(re => {
@@ -391,30 +364,6 @@ o
     });
   }
 
-  // postRecipe() {
-
-  //     this.rest.apiPost('session/createRecipe', {
-  //       defaultImageID: null,
-  //       cuisines: this.cusinesListToPost,
-  //       nutritionalBenefits: this.benifitsListToPost,
-  //       dietaryCategories: this.requirmentListToPost,
-  //       instructions: this.method,
-  //       mealTypes: this.categoriesListToPost,
-  //       measuredIngredients: this.ingredientsList,
-  //       name: this.recipeTitle
-  //     }).subscribe(e => {
-  //       const frmData = new FormData();
-  //       frmData.append('file', this.cropedFile, 'RecipeImage' + e + '.png');
-  //       this.rest.apiPost(`api/recipes/UploadRecipeImage/${e}`, frmData).subscribe(re => {
-  //         console.log(re);
-  //       }, err => {
-  //         if (err.status === 200) {
-  //           this.router.navigateByUrl('');
-  //         }
-  //       });
-  //     });
-  //   }
-
   imageCroppedFile($event: File) {
     console.log('croped file to back', $event);
     this.cropedFile = $event;
@@ -423,19 +372,15 @@ o
   recipeImageSource():string{
     let imageSource;
 
-    //console.log(this.defaultImageID);
-    //console.log(this.defaultImageID !==null);
 
     if(this.croppedImage != ''){
-      //console.log("444444");
       imageSource = this.croppedImage
     }
-    else if(this.defaultImageID){
+    else if(this.currentRecipe.defaultImageID){
       //console.log("333333");
-      imageSource = this.apiURL +"files/RecipeImage/"+ this.defaultImageID +"?quality=2";
+      imageSource = this.apiURL +"files/RecipeImage/"+ this.currentRecipe.defaultImageID +"?quality=2";
     }
-    //console.log("returning imagesource");
-    //console.log(imageSource);
+    
     return imageSource;
 
   }
