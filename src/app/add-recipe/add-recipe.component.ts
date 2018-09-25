@@ -6,6 +6,7 @@ import { Recipe } from '../../models/Recipe';
 import {IMetric} from '../../models/IMetric';
 import { IMeasuredIngredient } from '../../models/IMeasuredIngredient';
 import {environment} from '../../environments/environment';
+import { IIngredientSubHeading } from '../../models/IIngredientSubHeading';
 
 @Component({
   selector: 'app-add-recipe',
@@ -135,7 +136,7 @@ export class AddRecipeComponent implements OnInit {
     console.log(this.currentRecipe);
   }
 
-  createNewIngredient():IMeasuredIngredient{
+  private createNewIngredient():IMeasuredIngredient{
     let newIngredient:IMeasuredIngredient = {
       id:null,
       amount: null,
@@ -147,6 +148,11 @@ export class AddRecipeComponent implements OnInit {
 
     return newIngredient;
   }
+
+  // createNewSubHeading():IIngredientSubHeading{
+
+
+  // }
 
 
 
@@ -297,11 +303,14 @@ export class AddRecipeComponent implements OnInit {
   addSubHeadingToList(){
   }
 
-  addIngredientToList() {
-    this.currentRecipe.measuredIngredients.push(this.createNewIngredient());
+  addIngredientToList(index:number) {
+    console.log("add to index : " + index);
+    this.currentRecipe.measuredIngredients.splice(index, 0, this.createNewIngredient());
+    //this.currentRecipe.measuredIngredients.push(this.createNewIngredient());
   }
 
-  deleteIngredientFromList(index) {
+  deleteIngredientFromList(index:number) {
+    console.log("remove the index : " + index);
     if (this.currentRecipe.measuredIngredients.length !== 1) {
       this.currentRecipe.measuredIngredients.splice(index, 1);
     }

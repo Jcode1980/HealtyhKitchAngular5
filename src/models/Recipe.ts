@@ -91,7 +91,32 @@ export class Recipe implements IRecipe {
         
       }
 
+      //construct ingredient Listing here
+      ingredientListing(): Array<any>{
+        let ingredientListing: Array<any> = this.measuredIngredients;
+        ingredientListing = ingredientListing.concat(this.ingredientsForSubHeading);
+        //ingredientListing.push(this.ingredientSubHeadings);
+        //ingredientListing.push(this.measuredIngredients);
+        let sortedIngredientList = ingredientListing.sort((n1,n2) => n1["sortID"] - n2["sortID"]);
 
+        return sortedIngredientList;
+      
+      }
+
+
+
+
+
+      // private compareIngredientListing(listingA, listingB) {
+      //   if (listingA['sortID'] < listingB['sortID']) {
+      //    return -1;
+      //   }
+      //   if (listingA['sortID'] > listingB['sortID']) {
+      //    return 1;
+      //   }
+      //   return 0;
+      //  }
+      
     
 
 }

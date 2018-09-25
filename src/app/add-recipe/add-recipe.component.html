@@ -121,7 +121,7 @@
 
   <div class="add__recipe-title">ingredients</div>
   
-  <div class="ingerdients__wrapper" *ngFor="let ingredient of currentRecipe.measuredIngredients; let i = index;">
+  <div class="ingerdients__wrapper" *ngFor="let ingredient of currentRecipe.ingredientListing(); let i = index;">
 
     
     <div class="ingerdients__amount-wrapper">
@@ -148,16 +148,16 @@
                 rows="3"
                 placeholder="Description"
                 [(ngModel)]="ingredient.name"
-                (keydown.Tab)="addIngredientToList()"
+                (keydown.Tab)="addIngredientToList(i+1)"
       ></textarea>
 
     </div>
 
     <div class="ingerdients__add-ingredient-btn-mob-warpper">
-      <div class="ingerdients__add-ingredient-btn-warpper mgr" (click)="addIngredientToList()">
+      <div class="ingerdients__add-ingredient-btn-warpper mgr" (click)="addIngredientToList(i+1)">
         <i class="fa fa-plus" aria-hidden="true"></i>
       </div>
-      <div class="ingerdients__add-ingredient-btn-warpper" (click)="deleteIngredientFromList(n)">
+      <div class="ingerdients__add-ingredient-btn-warpper" (click)="deleteIngredientFromList(i)">
         <i class="fa fa-minus" aria-hidden="true"></i>
       </div>
     </div>
@@ -191,7 +191,6 @@
 <div class="close-modal" *ngIf="isModalOpen">
 
 </div>
-
 
 <div class="upload-img__modal" *ngIf="isModalOpen">
   <input type="file" (change)="fileChangeEvent($event)" style="margin-bottom: 20px" />
