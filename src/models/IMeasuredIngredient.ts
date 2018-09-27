@@ -7,5 +7,4 @@ export interface IMeasuredIngredient {
     name: string;
     metric: IMetric;
     sortID: number;
-    ingredientSubHeading : IIngredientSubHeading;
   }
