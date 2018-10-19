@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+        <i class="fa fa-picture-o" aria-hidden="true" *ngIf="!recipeImageSource()"></i>
+        <img [src]="userProfileImageSource()"  *ngIf="userProfileImageSource()"/>
+    </div>
+    <div class="col-sm">
+      <div class="container">
+        <div class="row">
+          <div class="col-md">
+              <div>First Name</div>
+              <div><input type="text" name="first_name" [(ngModel)]="currentUser.firstName" #first_name="ngModel" required></div>
+          </div>
+          <div class="col-md">
+              <div>Last Name</div>
+              <div><input type="text" name="last_name" [(ngModel)]="currentUser.firstName" #last_name="ngModel" required></div>
+          </div>
+          <div class="col-sm">
+          </div>
+        </div>
+        <div class="row">
+            <div>Email Address</div>
+            <div><input type="text" name="email_address" [(ngModel)]="currentUser.email" #email="ngModel" required></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md">
+            <div>Gender</div>
+            <div>
+              <select [(ngModel)]="currentUser.gender" id="gender" name="gender">
+                <option [ngValue]="currentUser.gender">M</option>
+                <option [ngValue]="currentUser.gender">F</option>
+              </select>
+            </div>
+        </div>
+        <div class="col-md">
+          <div>Year of Birth</div>
+          <div>
+            <select [(ngModel)]="currentUser.yob"  id="yob" name="yob">
+              <option *ngFor="let year of yearsList" [ngValue]="year">{{year}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm">
+            <div>Country of Stay</div>
+            <div></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div>About me</div>
+      <div><input type="text" name="about_me" [(ngModel)]="currentUser.aboutMe" ></div>
+    </div>
+    <div class="col-sm">
+      <div class="row">
+        <div>Website</div>
+        <div><input type="text" name="webiste_url" [(ngModel)]="currentUser.websiteURL"></div>
+      </div>
+      <div class="row">
+        <div>Blog</div>
+        <div><input type="text" name="blog_url" [(ngModel)]="currentUser.blogURL" ></div>
+      </div>
+      <div class="row">
+        <div>Instragram</div>
+        <div><input type="text" name="instragram_url" [(ngModel)]="currentUser.instragramURL"></div>
+      </div>
+      <div class="row">
+        <div>Facebook</div>
+        <div>
+          <input type="text" name="facebook_url" [(ngModel)]="currentUser.facebookURL"></div>
+      </div>
+    </div>
+  </div>
+</div>

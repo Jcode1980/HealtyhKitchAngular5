@@ -1,5 +1,11 @@
 <div class="my_recipe_wrapper">
-    
+    <div id="search_criterias" class="container">
+      <div class="row">
+          <select [(ngModel)]="selectedStatus" name="selectedstatus">
+              <option *ngFor="let status of recipeStatuses" [ngValue]="status" onchange="">{{status.name}}</option>
+            </select>
+      </div>
+    </div>
     <div class="container">
         <div class="row">
           <div *ngFor="let recipe of recipes; let i = index" class="home__search-res-wrapp col-sm-6 col-md-4 col-lg-3 col-xl-2">

@@ -10,7 +10,11 @@ export class User implements IUser {
   lastName: string;
   profileImageThumbnailID?: number;
   profileImagePreviewID?: number;
-  dob?: number;
+  yob?: number;
+  facebookURL?: string;
+  instagramURL?: string;
+  blogURL?: string;
+  websiteURL?: string;
   
 
 //   constructor(email: string, firstName: string, profileImageThumbnailID?: number,
@@ -22,14 +26,19 @@ export class User implements IUser {
 //         this.dob = dob;
 //     }
 
-    constructor(iUser: IUser ) {
-            this.email = iUser.email;
-            this.firstName = iUser.firstName;
-            this.firstName = iUser.firstName;
-            this.profileImageThumbnailID = iUser.profileImageThumbnailID;
-            this.profileImagePreviewID = iUser.profileImagePreviewID;
-            this.dob = iUser.dob;
-        }
+    constructor(iUser: any ) {
+      this.email = iUser.email;
+      this.firstName = iUser.firstName;
+      this.firstName = iUser.firstName;
+      this.profileImageThumbnailID = iUser.profileImageThumbnailID;
+      this.profileImagePreviewID = iUser.profileImagePreviewID;
+      this.yob = iUser.yob;
+      this.facebookURL = iUser.facebookURL;
+      this.instagramURL = iUser.instagramURL;
+      this.blogURL = iUser.blogURL;
+      this.websiteURL = iUser.websiteURL;
+    }
+
 
   profileImageThumbnailURL():string{
     if(this.profileImageThumbnailID != null){

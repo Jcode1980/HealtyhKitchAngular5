@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {AuthenticatedAction, LogoutAction} from '../store/actions/AuthActions';
+//import {IUser} from '../../models/IUser';
+import {User} from '../../models/User';
 import {IUser} from '../../models/IUser';
 import {Observable} from 'rxjs/Observable';
 import {IUserAuthCredentials} from '../../models/IUserAuthCredentials';
@@ -12,37 +14,60 @@ import {environment} from '../../environments/environment';
 import {UserLoaded} from '../store/actions/UsersActions';
 import {Store} from '@ngrx/store';
 import {IAsyncResponse} from '../../models/IAsyncResponse';
-import {TokenStorage} from '../core/token.storage';
 
 @Injectable()
 export class UserService {
 
-  private currentUser: Observable<IUser>;
+  //private currentUser: Observable<User>;
+  private currentUser: User;
   // baseUrl = `${environment.apiUrl}/user-service`;
 
   // async getCurrentUser() {
-  //   this.http.get<IUser>(`${this.baseUrl}.....`, {
+  //   this.http.get<User>(`${this.baseUrl}.....`, {
   //     headers: new HttpHeaders().set('Authorization', this.localStorageService.getAuthToken())
   //   }).subscribe(data => {
-  //     this.store.dispatch(new UserLoaded({
+     
+  //     let userData: User = new User({
   //       firstName: data.firstName,
   //       lastName: data.lastName,
   //       email: data.email,
-  //       avatarLink: data.avatarLink !== undefined ? `${this.baseUrl}${data.avatarLink}?t=${new Date().getTime()}`
-  //         : `./assets/img/unknown.png`
-  //     }));
+  //       profileImageThumbnailID : data.profileImageThumbnailID,
+  //       profileImagePreviewID : data.profileImagePreviewID,
+  //       yob : data.yob,
+  //       facebookURL : data.facebookURL,
+  //       instagramURL : data.instagramURL,
+  //       blogURL : data.blogURL,
+  //       websiteURL : data.websiteURL
+  //     });
+  //     this.store.dispatch(new UserLoaded(new User(userData)));
+      
   //   });
   // }
 
+  getCurrentUser(){
+    this.http.get<User>(`${this.baseUrl}.....`, {
+      headers: new HttpHeaders().set('Authorization', this.localStorageService.getAuthToken())
+    }).subscribe(data => {
+      
+      let userData: User = new User({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        profileImageThumbnailID : data.profileImageThumbnailID,
+        profileImagePreviewID : data.profileImagePreviewID,
+        yob : data.yob,
+        facebookURL : data.facebookURL,
+        instagramURL : data.instagramURL,
+        blogURL : data.blogURL,
+        websiteURL : data.websiteURL
+      });
+      this.store.dispatch(new UserLoaded(new User(userData)));
+      
+    });
+  }
+
 
   isAuthenticated() {
-    // if (
-    //   this.localStorageService.getAuthToken() === 'token'
-    // ) {
-    //   return Observable.of(true);
-    // } else {
-    //   return Observable.of(false);
-    // }
     if (
       this.localStorageService.getAuthToken() !== null &&
       this.localStorageService.getAuthToken().length > 0
@@ -53,13 +78,9 @@ export class UserService {
     }
   }
   
-  constructor(private store: Store<IAppState>,
-              private router: Router,
-              private localStorageService: LocalStorageService,
-              private tokenStorage: TokenStorage,
-              private authService: AuthService,
-              private http: HttpClient) {
-    this.currentUser = this.store.select(state => state.userReducer);
+  constructor(private store: Store<IAppState>,private router: Router, private localStorageService: LocalStorageService,
+    private authService: AuthService, private http: HttpClient) {
+    //this.currentUser = this.store.select(state => state.userReducer);
   }
 
   public async authenticate(user: IUserAuthCredentials): Promise<IAsyncResponse> {
@@ -69,9 +90,6 @@ export class UserService {
       console.log("what is my token? ");
       console.log(token.token);
       
-      //Johns Shizz that i'm trying to figure out
-      this.tokenStorage.saveToken(token.token);
-
       this.localStorageService.setAuthToken(token.token);
       this.store.dispatch(new AuthenticatedAction());
       this.router.navigate(['/']);
@@ -90,10 +108,11 @@ export class UserService {
     }
   }
 
-  public authenticatedUser(): Observable<IUser> {
-    return this.currentUser;
-  }
+  // public authenticatedUser(): Observable<User> {
+  //   return this.currentUser;
+  // }
 
+  
   // public signout() {
   //   this.localStorageService.purgeAuthToken();
   //   this.store.dispatch(new LogoutAction());
