@@ -8,13 +8,13 @@ export class User implements IUser {
   email: string;
   firstName: string;
   lastName: string;
-  profileImageThumbnailID?: number;
-  profileImagePreviewID?: number;
+  userProfileImageID?: number;
   yob?: number;
   facebookURL?: string;
   instagramURL?: string;
   blogURL?: string;
   websiteURL?: string;
+  gender: string;
   
 
 //   constructor(email: string, firstName: string, profileImageThumbnailID?: number,
@@ -29,34 +29,30 @@ export class User implements IUser {
     constructor(iUser: any ) {
       this.email = iUser.email;
       this.firstName = iUser.firstName;
-      this.firstName = iUser.firstName;
-      this.profileImageThumbnailID = iUser.profileImageThumbnailID;
-      this.profileImagePreviewID = iUser.profileImagePreviewID;
+      this.userProfileImageID = iUser.userProfileImageID;
       this.yob = iUser.yob;
       this.facebookURL = iUser.facebookURL;
       this.instagramURL = iUser.instagramURL;
       this.blogURL = iUser.blogURL;
       this.websiteURL = iUser.websiteURL;
+      this.gender = iUser.gender;
     }
 
-
+    //FIXME
   profileImageThumbnailURL():string{
-    if(this.profileImageThumbnailID != null){
-      return this.basePreviewURL(this.profileImageThumbnailID);
+    if(this.userProfileImageID != null){
+      return this.basePreviewURL(this.userProfileImageID);
     }
     else{
       return null;
     }
   }
 
+  //FIXME
   profileImagePreviewURL():string{
-    if(this.profileImageThumbnailID != null){
-      return this.basePreviewURL(this.profileImagePreviewID);
-    }
-    else{
-      return null;
-    }
+    return null;
   }
+
 
   private basePreviewURL(fileID: number):string{
     return User.apiURL + "/files/Images/" + fileID; 

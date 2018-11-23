@@ -1,0 +1,52 @@
+.heading{
+    width:100%;
+    font-weight: bold;
+}
+
+.maxWidth{
+    width:100%;
+}
+
+input, textarea, select{
+    width:100%;
+}
+
+
+
+.row{
+    margin-bottom:10px;
+}
+
+.fa-user{
+    color:darkgray;
+    margin-bottom:0;
+    width:110px;
+    height:110px;
+}
+
+.profileBackground{
+    margin: auto;
+    width:150px;
+    height:150px;
+    background-color:lightgrey;
+    border-radius: 50%;
+}
+
+.submit__btn-wrapper{
+    margin-top: 15px;
+    margin-right: 10px;
+    button{
+      width: 200px;
+      border: none;
+      background-color: #dec9b9;
+      color: #fff;
+      text-transform: uppercase;
+      padding: 10px;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.3s;
+      &:hover{
+        background-color: darken(#dec9b9, 5%);
+      }
+    }
+  }

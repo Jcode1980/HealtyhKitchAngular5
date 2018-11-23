@@ -23,7 +23,7 @@ const appRoutes: Routes = [
       {path: 'admin-recipes', component: MyRecipeComponent, pathMatch: 'full'},
       {path: 'edit-recipe/:id', component: AddRecipeComponent },
       {path: 'view-recipe/:id', component: ViewRecipeComponent},
-      {path: 'edit-user-profile/', component: UserProfileComponent}
+      {path: 'edit-user-profile', component: UserProfileComponent, pathMatch: 'full'}
     ]
 
   },

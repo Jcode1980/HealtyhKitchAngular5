@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import {AuthenticatedAction, LogoutAction} from '../store/actions/AuthActions';
 //import {IUser} from '../../models/IUser';
 import {User} from '../../models/User';
 import {IUser} from '../../models/IUser';
@@ -9,62 +8,19 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from '../auth/auth.service';
 import {LocalStorageService} from '../shared/services/local-storage/local-storage.service';
 import {Router} from '@angular/router';
-import {IAppState} from '../../models/IAppState';
-import {environment} from '../../environments/environment';
-import {UserLoaded} from '../store/actions/UsersActions';
 import {Store} from '@ngrx/store';
 import {IAsyncResponse} from '../../models/IAsyncResponse';
+import {IAppState} from '../store/IAppState';
+import {LogInUser, LogOutUser} from '../store/actions/currentuser.actions';
+
 
 @Injectable()
 export class UserService {
 
-  //private currentUser: Observable<User>;
-  private currentUser: User;
+  private authenticatedUser: Observable<User>;
   // baseUrl = `${environment.apiUrl}/user-service`;
 
-  // async getCurrentUser() {
-  //   this.http.get<User>(`${this.baseUrl}.....`, {
-  //     headers: new HttpHeaders().set('Authorization', this.localStorageService.getAuthToken())
-  //   }).subscribe(data => {
-     
-  //     let userData: User = new User({
-  //       firstName: data.firstName,
-  //       lastName: data.lastName,
-  //       email: data.email,
-  //       profileImageThumbnailID : data.profileImageThumbnailID,
-  //       profileImagePreviewID : data.profileImagePreviewID,
-  //       yob : data.yob,
-  //       facebookURL : data.facebookURL,
-  //       instagramURL : data.instagramURL,
-  //       blogURL : data.blogURL,
-  //       websiteURL : data.websiteURL
-  //     });
-  //     this.store.dispatch(new UserLoaded(new User(userData)));
-      
-  //   });
-  // }
-
-  getCurrentUser(){
-    this.http.get<User>(`${this.baseUrl}.....`, {
-      headers: new HttpHeaders().set('Authorization', this.localStorageService.getAuthToken())
-    }).subscribe(data => {
-      
-      let userData: User = new User({
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        profileImageThumbnailID : data.profileImageThumbnailID,
-        profileImagePreviewID : data.profileImagePreviewID,
-        yob : data.yob,
-        facebookURL : data.facebookURL,
-        instagramURL : data.instagramURL,
-        blogURL : data.blogURL,
-        websiteURL : data.websiteURL
-      });
-      this.store.dispatch(new UserLoaded(new User(userData)));
-      
-    });
-  }
+  
 
 
   isAuthenticated() {
@@ -80,18 +36,26 @@ export class UserService {
   
   constructor(private store: Store<IAppState>,private router: Router, private localStorageService: LocalStorageService,
     private authService: AuthService, private http: HttpClient) {
-    //this.currentUser = this.store.select(state => state.userReducer);
+    this.authenticatedUser = this.store.select(state => state.loggedInUser);
+    console.log("Auth user is: ");
+    console.log(this.authenticatedUser);
   }
 
   public async authenticate(user: IUserAuthCredentials): Promise<IAsyncResponse> {
 
     try {
-      let token = await this.authService.signIn(user);
+      let authToken = await this.authService.signIn(user);
       console.log("what is my token? ");
-      console.log(token.token);
+      console.log(authToken.token);
       
-      this.localStorageService.setAuthToken(token.token);
-      this.store.dispatch(new AuthenticatedAction());
+      this.localStorageService.setAuthToken(authToken.token);
+
+      console.log("userDto passedIN");
+      console.log(authToken.userDto);
+      this.store.dispatch(new LogInUser(authToken.userDto));
+      
+      console.log(this.store);
+
       this.router.navigate(['/']);
       return {succeeded: true};
     } catch (err) {
@@ -108,9 +72,9 @@ export class UserService {
     }
   }
 
-  // public authenticatedUser(): Observable<User> {
-  //   return this.currentUser;
-  // }
+  public getAuthenticatedUser(): Observable<User> {
+    return this.authenticatedUser;
+  }
 
   
   // public signout() {

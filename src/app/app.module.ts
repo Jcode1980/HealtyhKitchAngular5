@@ -13,9 +13,10 @@ import {LogInComponent} from './auth/log-in/log-in.component';
 import {ResetComponent} from './auth/reset/reset.component';
 import {SignUpComponent} from './auth/sign-up/sign-up.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {initialState} from './store/initialState';
-import {rootReducer} from './store/reducers/rootReducer';
+
 import {StoreModule} from '@ngrx/store';
+import {LoginReducer} from '../app/store/reducers/currentuser.reducer';
+import * as IAppStates from './store/IAppState';
 import {UserService} from './user/user.service';
 import {AuthService} from './auth/auth.service';
 import {AuthGuard} from './auth/auth.guard';
@@ -75,7 +76,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     NgHttpLoaderModule,
     NgMultiSelectDropDownModule.forRoot(),
     ImageCropperModule,
-    StoreModule.forRoot(rootReducer, {initialState}),
+    StoreModule.forRoot({loggedInUser :LoginReducer}),
     routing
   ],
   providers: [
