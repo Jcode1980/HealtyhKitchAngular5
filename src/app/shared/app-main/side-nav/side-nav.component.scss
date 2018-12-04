@@ -10,7 +10,8 @@
 }
 .nav__links-wrapper{
   display: inline-flex;
-  width: 55%;
+  width: 75%;
+  max-width: 900px;
   justify-content: space-between;
 }
 
@@ -47,7 +48,7 @@
   margin-bottom: 5px;
 }
 
-@media screen and (max-width: 1170px) {
+@media screen and (max-width: 1000px) {
   .nav__links-wrapper{
     width: auto;
     margin-left: 17%;

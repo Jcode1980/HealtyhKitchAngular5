@@ -5,19 +5,27 @@
   <div class="row">
     <div class="recipe-details col-sm mb-4 mr-4">
       <div id="recipe_title">{{currentRecipe.name}} </div>
-      <div class="row server_ready_details border-top border-bottom ">
-        <div class="col-sm-4 border-right align-middle "><span class="label">SERVES:&nbsp; </span> {{currentRecipe.numServings}}</div>
-        <div class="col-sm-8 align-middle"><span class="label">READY IN:&nbsp; </span>{{currentRecipe.readyInMins}}</div>
+      <div class="row server_ready_details ">
+        <div class="col-sm-4 border-right align-middle border-top border-bottom "><span class="label">SERVES: </span><span class="label">{{currentRecipe.numServings}}</span></div>
+        <div class="col-sm-8 align-middle border-top border-bottom"><span class="label">READY IN: </span><span class="label">{{currentRecipe.readyInMins}}</span></div>
       </div>
-      <div><span class="grey_label">RECIPE BY:</span> username <button type="button" class="btn btn-secondary btn-sm">Follow</button></div>
-      <div class="label">NUTRITIONAL BENEFITS:</div>
-      <div>{{nutritionalBenefitsDisplay()}}</div>
-      <div><app-stars-display [numberOfStars]="4.5" ></app-stars-display></div>
-      <div>{{currentRecipe.descText}}</div>
-      <div class="label">CATEGORIES:</div>
-      <div>{{dietaryRequirementsDisplay()}}</div>
-      <div class="label">CUISINES:</div>
-      <div>{{cuisinesDisplay()}}</div>
+      <div class="author-info"><span class="profile-pic"></span><span class="light-label">RECIPE BY: </span><span class="light-label">USERNAME</span><button type="button" class="brown btn btn-secondary btn-sm">Follow</button></div>
+      <div class="infobox">
+        <div class="label">NUTRITIONAL BENEFITS:</div>
+        <div class="light-label uppercase">{{nutritionalBenefitsDisplay()}}</div>
+      </div>
+      <div class="stars"><app-stars-display [numberOfStars]="4.5" ></app-stars-display></div>
+      <div class="descbox">Lorem ipsum{{currentRecipe.descText}}</div>
+      <div class="furtherdetails border-top">
+        <div class="infobox">
+          <div class="label">CATEGORIES:</div>
+          <div class="light-label uppercase">{{dietaryRequirementsDisplay()}}</div>
+        </div>
+        <div class="infobox">
+          <div class="label">CUISINES:</div>
+          <div class="light-label uppercase">{{cuisinesDisplay()}}</div>
+        </div>
+      </div>
     </div>
     <div class="recipe-image col-sm">  
       <i class="fa fa-picture-o" aria-hidden="true" *ngIf="!recipeImageSource()"></i>
@@ -25,24 +33,24 @@
     </div>
   </div>
   
-  <div class="row">
+  <div class="row recipe-details-wrapper">
     <div class="recipe-details col-sm">
       <div class="label">INGREDIENTS</div>
       <div class="recipe-ingredient" *ngFor="let ingredient of currentRecipe.measuredIngredients">
         {{ingredientDisplay(ingredient)}}
       </div>
     </div>
-    <div class="recipe-details col-sm">
+    <div class="recipe-details col-sm border-left">
       <div class="label">METHOD</div>
       <div class="multi_lines_text">{{currentRecipe.instructions}}</div>
     </div>  
   </div>
-  <div class="row">
+  <div class="row border-top afterpart">
     <div class="col-sm">
       <span class="label text-left">REVIEWS</span>
     </div>
     <div class="col-sm">
-        <button class="upload__img-btn" (click)="showReviewModal = true">WRITE A REVIEW</button>
+        <button class="plain upload__img-btn" (click)="showReviewModal = true">WRITE A REVIEW</button>
     </div>
   </div>
   <div class="row">

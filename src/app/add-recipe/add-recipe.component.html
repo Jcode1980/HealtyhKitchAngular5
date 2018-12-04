@@ -145,6 +145,18 @@
 
     <!-- Ingredient bit here-->
     <ng-template #measure_ingredient_details>
+      <div class="ingerdients__add-ingredient-btn-mob-warpper">
+        <div class="ingerdients__add-ingredient-btn-warpper mgr" (click)="addSubHeadingToList(i+1)">
+          <i class="fa fa-plus" aria-hidden="true">H</i>
+        </div>
+        <div class="ingerdients__add-ingredient-btn-warpper mgr" (click)="addIngredientToList(i+1)">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </div>
+        <div class="ingerdients__add-ingredient-btn-warpper" (click)="deleteIngredientFromList(i)">
+          <i class="fa fa-minus" aria-hidden="true"></i>
+        </div>
+      </div>
+
       <div class="ingerdients__amount-wrapper" >
 
         <p>Amount</p>
@@ -165,26 +177,14 @@
 
       <div class="ingerdients__desc-wrapper">
 
-        <textarea cols="30"
-                  rows="3"
-                  placeholder="Description"
-                  [(ngModel)]="listing.name"
-                  (keydown.Tab)="addIngredientToList(i+1)"
-        ></textarea>
+        <p>Description </p>
+  
+        <input type="text" placeholder="Description"
+        [(ngModel)]="listing.name"
+        (keydown.Tab)="addIngredientToList(i+1)" />
 
       </div>
 
-      <div class="ingerdients__add-ingredient-btn-mob-warpper">
-        <div class="ingerdients__add-ingredient-btn-warpper mgr" (click)="addSubHeadingToList(i+1)">
-          <i class="fa fa-plus" aria-hidden="true">H</i>
-        </div>
-        <div class="ingerdients__add-ingredient-btn-warpper mgr" (click)="addIngredientToList(i+1)">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-          </div>
-        <div class="ingerdients__add-ingredient-btn-warpper" (click)="deleteIngredientFromList(i)">
-          <i class="fa fa-minus" aria-hidden="true"></i>
-        </div>
-      </div>
     </ng-template>
   </div>
 

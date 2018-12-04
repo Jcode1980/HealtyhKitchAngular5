@@ -1,5 +1,6 @@
 .add-recipe__wrapper {
   background-color: #ffffff;
+  padding: 0 5%;
 }
 
 .title {
@@ -88,6 +89,7 @@
   padding: 10px;
   width: 100%;
   resize: none;
+  height: 226px;
 }
 
 textarea::placeholder {
@@ -107,14 +109,15 @@ textarea::placeholder {
 }
 
 .recipe__details-wrapper {
-  display: inline-flex;
-  width: 90%;
-  margin-left: 5%;
-  justify-content: space-between;
 }
 
-.recipe__details-left-wrapper, .recipe__details-right-wrapper {
-  width: 48%;
+.recipe__details-left-wrapper {
+  width: 47.5%;
+  float: left;
+}
+
+.recipe__details-right-wrapper {
+  margin-left: 52.5%;
 }
 
 .upload__img-btn {
@@ -132,12 +135,15 @@ textarea::placeholder {
   }
 }
 
+.ingerdients__amount-wrapper select {
+  color: #c5c5c5;
+}
+
 .dropdowns__wrapper {
-  width: 88.2%;
-  margin-left: 5%;
   display: inline-flex;
   justify-content: space-between;
   margin-top: 25px;
+  width: 100%;
 }
 
 .dropdowns__item-wrapper {
@@ -169,25 +175,23 @@ ng-multiselect-dropdown {
   font-family: Campton-Bold;
   text-transform: uppercase;
   font-size: 14px;
-  width: 90%;
-  margin-left: 5%;
   padding-top: 60px;
   padding-bottom: 10px;
 }
 
 .ingerdients__wrapper {
-  display: inline-flex;
-  width: 90%;
-  margin-left: 5%;
-  justify-content: space-between;
-  align-items: center;
   margin-bottom: 15px;
+  position: relative;
 }
 
 .ingerdients__amount-wrapper {
   border: 1px solid #c5c5c5;
+  border-right: 0;
   font-family: Campton-Bold;
   padding: 10px;
+  float: left;
+  width: 150px;
+  height: 83px;
   p {
     color: #c5c5c5;
     font-size: 12px;
@@ -205,21 +209,25 @@ ng-multiselect-dropdown {
 }
 
 .ingerdients__desc-wrapper {
-  width: 80%;
-  display: flex;
-  textarea {
-    border: 1px solid #c5c5c5;
-    font-family: Montserrat;
+  border: 1px solid #c5c5c5;
+  font-family: Campton-Bold;
+  padding: 10px;
+  margin-left: 300px;
+  margin-right: 150px;
+  p {
+    color: #c5c5c5;
+    font-size: 12px;
+    margin-top: 0;
+  }
+  input {
+    border: none;
+    border-bottom: 1px solid #c5c5c5;
     outline: none;
+    font-family: Montserrat;
     color: #c5c5c5;
     font-size: 16px;
-    padding: 10px;
-    width: 96%;
-    resize: none;
-  }
-  textarea::placeholder {
-    font-family: Campton-Bold;
-    font-size: 12px;
+    box-sizing: border-box;
+    width: 100%;
   }
 }
 
@@ -237,11 +245,11 @@ ng-multiselect-dropdown {
 
 
 .method__textarea-warpper{
-  width: 90%;
-  margin-left: 5%;
+  margin-right: 150px;
   margin-bottom: 35px;
   textarea{
-    width: 91.5%;
+    width: 100%;
+    box-sizing: border-box;
     resize: none;
     outline: none;
   }
@@ -252,8 +260,6 @@ ng-multiselect-dropdown {
 
 
 .submit__btns-wrapper{
-  width: 90%;
-  margin-left: 5%;
   padding-bottom: 60px;
 }
 
@@ -315,6 +321,13 @@ ng-multiselect-dropdown {
 
 .ingerdients__add-ingredient-btn-mob-warpper{
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  float: right;
+  position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
 }
 
 .mgr{
@@ -330,10 +343,11 @@ ng-multiselect-dropdown {
     display: block;
   }
   .recipe__details-left-wrapper{
-    width: 93%;
+    float: none;
+    width: 100%;
   }
   .recipe__details-right-wrapper{
-    width: 100%;
+    margin-left: 0;
   }
   .upload-img__modal{
     width: 55%;
@@ -371,7 +385,7 @@ ng-multiselect-dropdown {
   }
   .ingerdients__wrapper{
     display: block;
-  }
+ }
   .ingerdients__amount-wrapper{
     margin-bottom: 5px;
     input{
@@ -379,15 +393,10 @@ ng-multiselect-dropdown {
     }
   }
   .ingerdients__desc-wrapper{
-    width: 100%;
   }
   .ingerdients__add-ingredient-btn-mob-warpper{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    padding-top: 15px;
   }
-  ng-multiselect-dropdown{
+  .multiselect-dropdown{
     margin-bottom: 15px;
   }
 }

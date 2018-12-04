@@ -121,7 +121,7 @@
           <div *ngFor="let item of trendings; let i = index" class="home__trending-list--item">
             <app-recipe
               [recipe]="item"
-              [readOnly]="false"
+              [readOnly]="true"
               *ngIf="i<3"
             ></app-recipe>
           </div>
@@ -139,7 +139,7 @@
           <div *ngFor="let item of recipes; let i = index" class="home__search-res-wrapp">
             <app-recipe
               [recipe]="item"
-              [readOnly]="false"
+              [readOnly]="true"
             ></app-recipe>
           </div>
         </div>

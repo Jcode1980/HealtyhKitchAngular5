@@ -20,15 +20,84 @@ cursor: pointer;
     text-transform: uppercase;
     font-family: Campton-Bold;
     margin-bottom:10px;
+    font-size: 24px;
 }
 
 .server_ready_details{
-    height:40px;
+    margin-left: 0;
+    margin-right: 0;
+    div{
+        padding: 18px 0;
+    }
+    .border-right + .align-middle{
+        padding-left: 40px;
+    }
 }
 
 .label{
     font-family: Campton-Bold;
     font-size: 12px;
+}
+
+.profile-pic{
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: red;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 9px;
+}
+
+.author-info{
+    padding: 9px 0;
+}
+
+.recipe-ingredient{
+    margin-bottom: 18px;
+}
+
+.row > .recipe-details {
+    padding-bottom: 54px;
+}
+
+.author-info button.brown{
+    margin-left: 15px;
+}
+
+.light-label{
+    font-family: Montserrat;
+    font-size: 10px;
+}
+
+.light-label.uppercase{
+    text-transform: uppercase;
+}
+
+.furtherdetails{
+    padding-top: 18px;
+    margin-top: 42px;
+}
+
+.recipe-details-wrapper{
+    margin-top: 84px;
+}
+
+.recipe-details-wrapper .label + *{
+    margin-top: 36px;
+}
+
+.infobox{
+    margin: 0 0 12px;
+}
+
+.descbox{
+    margin: 18px 0;
+}
+
+.stars{
+    margin: 24px 0;
 }
 
 .grey_label{
@@ -51,7 +120,9 @@ cursor: pointer;
     width: 100%;
     position: fixed;
     top: 0;
-    height: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-color: rgba(99, 91, 91, 0.5);;
     display: flex;
     z-index: 10;
@@ -75,18 +146,33 @@ cursor: pointer;
 }
 
 
-button{
+button.brown{
     border: none;
     background-color: #dec9b9;
     color: #fff;
     text-transform: uppercase;
-    padding: 5px;
+    border-radius: 10px;
+    padding: 3px 15px;
     cursor: pointer;
     outline: none;
     transition: all 0.3s;
+    font-size:10px;
     &:hover{
       background-color: darken(#dec9b9, 5%);
     }
+  }
+
+  .afterpart{
+      padding-top: 36px;
+  }
+
+  button.plain{
+      float:right;
+      border:0;
+      padding:0;
+      color: #000;
+      font-family: Campton-Bold;
+      font-size: 12px;
   }
   
   
