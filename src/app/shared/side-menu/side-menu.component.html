@@ -2,21 +2,15 @@
 
   <div class="side-menu-user-info">
     <div class="side-menu-img"></div>
-
-    <div class="side-menu-user">
-      Hello, gjgjg
+    <div class="side-menu-user" *ngIf="(loggedInUser | async);">
+        Hello {{ (loggedInUser | async)?.given }}
     </div>
   </div>
-
-
-  <div class="side-menu--nav" [routerLink]="['/edit-user-profile']">edit profile</div>
-  <div class="side-menu--nav" >news feed</div>
-  <div class="side-menu--nav">favourite cooks</div>
-  <div class="side-menu--nav" [routerLink]="['/add-recipe']">add recipe</div>
-  <div class="side-menu--nav" [routerLink]="['/my-recipes']">my recipes</div>
-  <div class="side-menu--nav" [routerLink]="['/admin-recipes']">Manage Recipes</div>
-  <div class="side-menu--nav border-bottom">cookbook</div>
-  <div class="side-menu--logout">Log out</div>
+  <div class="side-menu--nav" [routerLink]="['/edit-user-profile']" (click)="hideMe();" *ngIf="(loggedInUser | async);">edit profile</div>
+  <div class="side-menu--nav" [routerLink]="['/add-recipe']" (click)="hideMe();" *ngIf="(loggedInUser | async);">add recipe</div>
+  <div class="side-menu--nav" [routerLink]="['/my-recipes']" (click)="hideMe();" *ngIf="(loggedInUser | async);">my recipes</div>
+  <div class="side-menu--logout" *ngIf="(loggedInUser | async);" (click)="logout(); hideMe();">LOG OUT</div>
+  
 
 
 </div>

@@ -4,6 +4,7 @@ import {LocalStorageService} from '../shared/services/local-storage/local-storag
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {IUserAuthCredentials} from '../../models/IUserAuthCredentials';
 import {IToken} from '../../models/IToken';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthService {
@@ -59,10 +60,15 @@ export class AuthService {
   //   }
   // }
 
-  tokenStatus(token: string) {
-    return this.http.get(`${this.baseUrl}/token-status`, {
+  tokenStatus(token: string) : Observable<Object>{
+    let statusObs: Observable<Object> = this.http.get(`${this.baseUrl}/token-status`, {
       headers: new HttpHeaders().set('Authorization', token)
     });
+
+    console.log('the status Obs');
+    console.log(statusObs);
+
+    return statusObs;
   }
 
   // async forgotPassword(email: string): Promise<IAsyncResponse> {

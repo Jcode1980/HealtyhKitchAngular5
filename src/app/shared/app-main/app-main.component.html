@@ -10,7 +10,7 @@
 
   <mat-sidenav-container (backdropClick)="onOpen($event)">
     <mat-sidenav opened={{menuOpened}} style="transform: none !important;">
-      <app-side-menu></app-side-menu>
+      <app-side-menu (changeSideViewEvent)="onOpen($event)"></app-side-menu>
     </mat-sidenav>
 
     <mat-sidenav-content>

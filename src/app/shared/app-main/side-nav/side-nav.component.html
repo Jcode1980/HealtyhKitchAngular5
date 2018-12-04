@@ -1,5 +1,5 @@
 <div class="nav-wrapper">
-  <div class="nav__burger-wrapper" (click)="toggleMenu()">
+  <div *ngIf="(loggedInUser | async);" class="nav__burger-wrapper" (click)="toggleMenu()">
     <div class="line"></div>
     <div class="line"></div>
     <div class="line"></div>

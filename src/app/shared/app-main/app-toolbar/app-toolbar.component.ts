@@ -21,6 +21,8 @@ export class AppToolbarComponent implements OnInit {
    // Section 1
    tokens: Observable<IToken[]>;
 
+   isLoggedIn: Boolean = false;
+
   constructor(private store: Store<IAppState>, private userService: UserService) { 
     this.loggedInUser = store.select("loggedInUser");
     console.log("the store");
@@ -30,6 +32,10 @@ export class AppToolbarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userService.isAuthenticated().subscribe(bool => {
+      console.log("the bool is " + bool);
+      this.isLoggedIn = bool;
+    })  
   }
 
   openRegister() {
@@ -50,31 +56,29 @@ export class AppToolbarComponent implements OnInit {
     }
   }
 
-  testLoginAction(){
 
-    this.store.dispatch(new LogInUser(
-      {
-        email : "john@sqonk.com.au",
-        firstName : "john",
+ 
+
+  // testLoginAction(){
+
+  //   this.store.dispatch(new LogInUser(
+  //     {
+  //       email : "john@sqonk.com.au",
+  //       firstName : "john",
         
-        profileImageThumbnailID : 1,
-        profileImagePreviewID : 2,
-        yob : '19810',
-        facebookURL : null,
-        instagramURL : null,
-        blogURL : null,
-        websiteURL : null
-      }
-    ))
-    console.log("the store after test login");
-    console.log(this.store);
-  }
+  //       profileImageThumbnailID : 1,
+  //       profileImagePreviewID : 2,
+  //       yob : '19810',
+  //       facebookURL : null,
+  //       instagramURL : null,
+  //       blogURL : null,
+  //       websiteURL : null
+  //     }
+  //   ))
+  //   console.log("the store after test login");
+  //   console.log(this.store);
+  // }
 
-  testLogoutAction(){
-    this.store.dispatch(new LogOutUser());
-    console.log("the store after test logout");
-    console.log(this.store);
-  }
 
 
 }

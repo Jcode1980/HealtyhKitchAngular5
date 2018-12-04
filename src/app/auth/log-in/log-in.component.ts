@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../user/user.service';
 import { Router,  NavigationExtras,ActivatedRoute } from '@angular/router';
@@ -10,7 +10,8 @@ import { Router,  NavigationExtras,ActivatedRoute } from '@angular/router';
   styleUrls: ['./log-in.component.scss']
 })
 export class LogInComponent implements OnInit {
-
+  //@Output() loginSuccessfull = new EventEmitter<string>();
+  @Output() loginSuccessfull = new EventEmitter();
   form: FormGroup;
   private formSubmitAttempt: boolean;
   statusText: string = null;
@@ -30,7 +31,7 @@ export class LogInComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/index';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     console.log("activated route is: " + this.returnUrl);
   }
 
@@ -54,8 +55,10 @@ export class LogInComponent implements OnInit {
       }
       else{
         console.log(response);
-        console.log("token is : "  + response['body']);
-        //this.router.navigate([this.returnUrl]);
+        console.log("suceeded token is : "  + response['succeeded']);
+        //this.loginSuccessfull.next();
+        this.loginSuccessfull.emit("blah event");
+        this.router.navigate([this.returnUrl]);
       }
     }
     this.formSubmitAttempt = true;

@@ -5,15 +5,13 @@
   </div>
   <div class="header-right-side">
     <div class="header__auth-wrapper">
-      
+      <div *ngIf="!(loggedInUser | async);">
         <span (click)="openRegister()">Register</span>
         <span (click)="openLogin()">Log in</span>
-        <span (click)="testLoginAction()">&nbsp test Login</span>
-        <span (click)="testLogoutAction()">&nbsp test LOGOUT</span>
-      
-      
-        <span>&nbsp &nbspHelloo {{ (loggedInUser | async)?.username }}</span>
-      
+      </div>
+
+
+
     </div>
     <div class="header__socials-wrapper">
       <div class="header__socials-title">stay connected</div>
@@ -37,7 +35,5 @@
 
 <div class="modals-wrapper" *ngIf="registerOpen || loginOpen" (click)="closeModals()"></div>
 
-<app-log-in *ngIf="registerOpen"></app-log-in>
+<app-log-in *ngIf="registerOpen" (loginSuccessfull)="closeModals()"></app-log-in>
 <app-sign-up *ngIf="loginOpen"></app-sign-up>
-
-

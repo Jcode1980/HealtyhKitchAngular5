@@ -1,7 +1,7 @@
 export interface IUser {
   email: string;
-  firstName: string;
-  lastName: string;
+  given: string;
+  surname: string;
   profileImageThumbnailID?: number;
   profileImagePreviewID?: number;
   gender?: string;

@@ -6,8 +6,8 @@ export class User implements IUser {
   static baseURL = environment.baseURL;
   
   email: string;
-  firstName: string;
-  lastName: string;
+  given: string;
+  surname: string;
   userProfileImageID?: number;
   yob?: number;
   facebookURL?: string;
@@ -28,7 +28,7 @@ export class User implements IUser {
 
     constructor(iUser: any ) {
       this.email = iUser.email;
-      this.firstName = iUser.firstName;
+      this.given = iUser.given;
       this.userProfileImageID = iUser.userProfileImageID;
       this.yob = iUser.yob;
       this.facebookURL = iUser.facebookURL;
@@ -56,5 +56,9 @@ export class User implements IUser {
 
   private basePreviewURL(fileID: number):string{
     return User.apiURL + "/files/Images/" + fileID; 
+  }
+
+  fullName():string{
+    return this.given + this.surname;
   }
 }

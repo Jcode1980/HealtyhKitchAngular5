@@ -23,12 +23,19 @@ export class UserService {
   
 
 
-  isAuthenticated() {
+  isAuthenticated(): Observable<boolean> {
     if (
       this.localStorageService.getAuthToken() !== null &&
       this.localStorageService.getAuthToken().length > 0
     ) {
-      return this.authService.tokenStatus(this.localStorageService.getAuthToken());
+      let tokenStatusObs =  this.authService.tokenStatus(this.localStorageService.getAuthToken());
+      //FIX ME.. how to i chekc the tokenStatusOBS.. at the moment.. having token in local storage
+      //is enough to say that it's autehnicated.
+      console.log('returning true??' + this.localStorageService.getAuthToken());
+      
+      console.log(tokenStatusObs);
+      return Observable.of(true);
+
     } else {
       return Observable.of(false);
     }
@@ -49,7 +56,7 @@ export class UserService {
       console.log(authToken.token);
       
       this.localStorageService.setAuthToken(authToken.token);
-
+      
       console.log("userDto passedIN");
       console.log(authToken.userDto);
       this.store.dispatch(new LogInUser(authToken.userDto));
@@ -77,11 +84,14 @@ export class UserService {
   }
 
   
-  // public signout() {
-  //   this.localStorageService.purgeAuthToken();
-  //   this.store.dispatch(new LogoutAction());
-  //   this.router.navigate(['/auth/login']);
-  // }
+  public signout() {
+    this.localStorageService.purgeAuthToken();
+    this.store.dispatch(new LogOutUser());
+    this.router.navigate(['/']);
+
+    console.log('signed out autho token is: ' + this.localStorageService.getAuthToken());
+
+  }
 
   // public async changeName(firstName: string, lastName: string): Promise<IAsyncResponse> {
   //   try {
