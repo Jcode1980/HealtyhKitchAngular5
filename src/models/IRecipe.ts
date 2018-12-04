@@ -6,6 +6,7 @@ export interface IRecipe {
   id: number;
   name: string;
   numServings: number;
+  created: Date;
   readyInMins: number;
   defaultImageID: number;
   descText:string;
@@ -16,6 +17,7 @@ export interface IRecipe {
   dietaryCategories:Array<ICategory>;
   cuisines:Array<any>
   ingredientSubHeadings: Array<IIngredientSubHeading>;
+  recipeStatus: any;
 }
 
 

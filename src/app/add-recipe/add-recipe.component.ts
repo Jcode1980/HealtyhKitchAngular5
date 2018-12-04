@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, ViewChild} from '@angular/core';
 import {RestService} from '../rest.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import { IRecipe } from '../../models/IRecipe';
@@ -7,6 +7,9 @@ import {IMetric} from '../../models/IMetric';
 import { IMeasuredIngredient } from '../../models/IMeasuredIngredient';
 import {environment} from '../../environments/environment';
 import { IIngredientSubHeading } from '../../models/IIngredientSubHeading';
+import { RecipeStatus } from '../../models/RecipeStatus';
+import {NgForm} from '@angular/forms';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-add-recipe',
@@ -14,7 +17,12 @@ import { IIngredientSubHeading } from '../../models/IIngredientSubHeading';
   styleUrls: ['./add-recipe.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
+
+
+
+
 export class AddRecipeComponent implements OnInit {
+  @ViewChild('myForm') private myForm: NgForm;
   apiURL = environment.apiUrl;
   
   currentRecipe : Recipe;
@@ -45,10 +53,11 @@ export class AddRecipeComponent implements OnInit {
     allowSearchFilter: true
   };
 
+
   // constructor(private rest: RestService, private router: Router ) {
   // }
 
-  constructor(private rest: RestService, private activatedRouter: ActivatedRoute, private router: Router ) {
+  constructor(private rest: RestService, private activatedRouter: ActivatedRoute, private router: Router, private location: Location ) {
   }
 
   async ngOnInit() {
@@ -335,8 +344,41 @@ export class AddRecipeComponent implements OnInit {
     // show message
   }
 
+  submitRecipeForApproval(){
+    if(this.myForm.valid){
+      console.log("submitting Recipe for Approval")
+      //Send email to Approver
+      //set Recipe Status to Submitted
+      this.currentRecipe.recipeStatus = RecipeStatus.submittedStatus();
+      
+      //save the recipe
+      this.saveRecipe();
+      
+      //Take user back to previous page.
+      this.location.back();
+    }
+    else{
+      console.log("form not valid");
+      const controls = this.myForm.controls;
+      Object.keys(controls).forEach(controlName => controls[controlName].markAsTouched()); 
+    }
+  }
 
+
+  publishRecipe(){
+    if(this.myForm.valid){
+      this.currentRecipe.recipeStatus = RecipeStatus.publishedStatus();
+      
+      //save the recipe
+      this.saveRecipe();
+      
+      //email creator about the recipe being published
+      
+      this.location.back();
+    }
+  }
   
+
   async saveRecipe(){
     console.log("this is the cusinesList");
     console.log(this.currentRecipe.cuisines);
@@ -409,9 +451,13 @@ export class AddRecipeComponent implements OnInit {
 
   }
 
+  
+
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
+
+
 
 
 

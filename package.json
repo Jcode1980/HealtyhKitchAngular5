@@ -36,6 +36,7 @@
     "ng2-cookies": "^1.0.12",
     "ng2-select": "^2.0.0",
     "ngx-image-cropper": "^1.0.1",
+    "redux-devtools-extension": "^2.13.5",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
   },

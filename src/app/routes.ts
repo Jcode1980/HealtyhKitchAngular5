@@ -8,7 +8,8 @@ import {AuthGuard} from './auth/auth.guard';
 import {AddRecipeComponent} from './add-recipe/add-recipe.component';
 import {ViewRecipeComponent} from './view-recipe/view-recipe.component';
 import {HomeComponent} from './home/home.component';
-import { MyRecipeComponent } from './my-recipe/my-recipe.component';
+import {MyRecipeComponent} from './my-recipe/my-recipe.component';
+import {UserProfileComponent} from './user-profile/user-profile.component';
 
 const appRoutes: Routes = [
   {
@@ -19,9 +20,10 @@ const appRoutes: Routes = [
       {path: '', component: HomeComponent, pathMatch: 'full'},
       {path: 'add-recipe', component: AddRecipeComponent, pathMatch: 'full'},
       {path: 'my-recipes', component: MyRecipeComponent, pathMatch: 'full'},
+      {path: 'admin-recipes', component: MyRecipeComponent, pathMatch: 'full'},
       {path: 'edit-recipe/:id', component: AddRecipeComponent },
       {path: 'view-recipe/:id', component: ViewRecipeComponent},
-     
+      {path: 'edit-user-profile', component: UserProfileComponent, pathMatch: 'full'}
     ]
 
   },

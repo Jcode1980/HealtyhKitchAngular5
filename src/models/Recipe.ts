@@ -2,6 +2,7 @@ import { IRecipe } from '../models/IRecipe';
 import { ICategory } from "./ICategory";
 import { IMeasuredIngredient } from "./IMeasuredIngredient";
 import { IIngredientSubHeading } from "./IIngredientSubHeading";
+import { RecipeStatus } from '../models/RecipeStatus';
 
 export class Recipe implements IRecipe {
   id: number;
@@ -9,7 +10,8 @@ export class Recipe implements IRecipe {
   numServings: number;
   readyInMins: number;
   defaultImageID: number;
-  descText:string;
+  descText: string;
+  created: Date;
   instructions: string;
   mealTypes: Array<any>;
   measuredIngredients: Array<IMeasuredIngredient>;
@@ -17,7 +19,7 @@ export class Recipe implements IRecipe {
   dietaryCategories: Array<ICategory>;
   cuisines: Array<any>;
   ingredientSubHeadings: Array<IIngredientSubHeading> ;
-  
+  recipeStatus: RecipeStatus;
   //private _ingredientListing : Array<any>;
 
   
@@ -35,6 +37,8 @@ export class Recipe implements IRecipe {
   this.dietaryCategories = (iRecipe != null ? iRecipe.dietaryCategories : []);
   this.cuisines = (iRecipe != null ? iRecipe.cuisines : []);
   this.ingredientSubHeadings = (iRecipe != null ? iRecipe.ingredientSubHeadings : []);
+  this.recipeStatus = (iRecipe != null ? iRecipe.recipeStatus : RecipeStatus.newStatus());
+  
   }
 
   // ingredientsForSubHeading(subHeading : IIngredientSubHeading):Array<IMeasuredIngredient>{
@@ -91,7 +95,9 @@ export class Recipe implements IRecipe {
         mealTypes: mealTypesToPost,
         measuredIngredients: ingredientsListToPost,
         ingredientSubHeadings: ingredientSubHeadingsToPost,
-        name: this.name
+        created: this.created,
+        name: this.name,
+        recipeStatus: this.recipeStatus
       };
   
       console.log("Returning recipe: ");
@@ -148,6 +154,38 @@ export class Recipe implements IRecipe {
       this.ingredientSubHeadings = subHeadings;
     }
 
+    canBeSubmittedForApproval(){
+      return this.isNew() || this.isRejected();
+    }
+
+    //FIX ME .. this sux
+    isNew(){
+      return this.recipeStatus.id === 1;
+    }
+
+    isRejected(){
+      return this.recipeStatus.id === 4;
+    }
+
+    isSubmittedForApproval(){
+      return this.recipeStatus.id === 2;
+    }
+
+
+    canSubmitForApproval(){
+    
+    }
+
+    allMandatoryFieldsValid(){
+      let isValid = true;
+
+      if(name)
+
+
+      return true;
+    }
+
+    
 
   // addIngredient(index : number) : IMeasuredIngredient{
   //   let newIngredient : IMeasuredIngredient = this.createNewIngredient(index);

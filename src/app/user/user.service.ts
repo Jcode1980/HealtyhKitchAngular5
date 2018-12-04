@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import {AuthenticatedAction, LogoutAction} from '../store/actions/AuthActions';
+//import {IUser} from '../../models/IUser';
+import {User} from '../../models/User';
 import {IUser} from '../../models/IUser';
 import {Observable} from 'rxjs/Observable';
 import {IUserAuthCredentials} from '../../models/IUserAuthCredentials';
@@ -7,42 +8,22 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from '../auth/auth.service';
 import {LocalStorageService} from '../shared/services/local-storage/local-storage.service';
 import {Router} from '@angular/router';
-import {IAppState} from '../../models/IAppState';
-import {environment} from '../../environments/environment';
-import {UserLoaded} from '../store/actions/UsersActions';
 import {Store} from '@ngrx/store';
 import {IAsyncResponse} from '../../models/IAsyncResponse';
-import {TokenStorage} from '../core/token.storage';
+import {IAppState} from '../store/IAppState';
+import {LogInUser, LogOutUser} from '../store/actions/currentuser.actions';
+
 
 @Injectable()
 export class UserService {
 
-  private currentUser: Observable<IUser>;
+  private authenticatedUser: Observable<User>;
   // baseUrl = `${environment.apiUrl}/user-service`;
 
-  // async getCurrentUser() {
-  //   this.http.get<IUser>(`${this.baseUrl}.....`, {
-  //     headers: new HttpHeaders().set('Authorization', this.localStorageService.getAuthToken())
-  //   }).subscribe(data => {
-  //     this.store.dispatch(new UserLoaded({
-  //       firstName: data.firstName,
-  //       lastName: data.lastName,
-  //       email: data.email,
-  //       avatarLink: data.avatarLink !== undefined ? `${this.baseUrl}${data.avatarLink}?t=${new Date().getTime()}`
-  //         : `./assets/img/unknown.png`
-  //     }));
-  //   });
-  // }
+  
 
 
   isAuthenticated() {
-    // if (
-    //   this.localStorageService.getAuthToken() === 'token'
-    // ) {
-    //   return Observable.of(true);
-    // } else {
-    //   return Observable.of(false);
-    // }
     if (
       this.localStorageService.getAuthToken() !== null &&
       this.localStorageService.getAuthToken().length > 0
@@ -53,27 +34,28 @@ export class UserService {
     }
   }
   
-  constructor(private store: Store<IAppState>,
-              private router: Router,
-              private localStorageService: LocalStorageService,
-              private tokenStorage: TokenStorage,
-              private authService: AuthService,
-              private http: HttpClient) {
-    this.currentUser = this.store.select(state => state.userReducer);
+  constructor(private store: Store<IAppState>,private router: Router, private localStorageService: LocalStorageService,
+    private authService: AuthService, private http: HttpClient) {
+    this.authenticatedUser = this.store.select(state => state.loggedInUser);
+    console.log("Auth user is: ");
+    console.log(this.authenticatedUser);
   }
 
   public async authenticate(user: IUserAuthCredentials): Promise<IAsyncResponse> {
 
     try {
-      let token = await this.authService.signIn(user);
+      let authToken = await this.authService.signIn(user);
       console.log("what is my token? ");
-      console.log(token.token);
+      console.log(authToken.token);
       
-      //Johns Shizz that i'm trying to figure out
-      this.tokenStorage.saveToken(token.token);
+      this.localStorageService.setAuthToken(authToken.token);
 
-      this.localStorageService.setAuthToken(token.token);
-      this.store.dispatch(new AuthenticatedAction());
+      console.log("userDto passedIN");
+      console.log(authToken.userDto);
+      this.store.dispatch(new LogInUser(authToken.userDto));
+      
+      console.log(this.store);
+
       this.router.navigate(['/']);
       return {succeeded: true};
     } catch (err) {
@@ -90,10 +72,11 @@ export class UserService {
     }
   }
 
-  public authenticatedUser(): Observable<IUser> {
-    return this.currentUser;
+  public getAuthenticatedUser(): Observable<User> {
+    return this.authenticatedUser;
   }
 
+  
   // public signout() {
   //   this.localStorageService.purgeAuthToken();
   //   this.store.dispatch(new LogoutAction());

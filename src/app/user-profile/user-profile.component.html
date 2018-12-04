@@ -1,0 +1,92 @@
+<div class="container" *ngIf="currentUser">
+  <div class="row">
+    <div class="col-sm-2">
+      <div class="profileBackground">
+        <i class="fas fa-user fa-7x" *ngIf="!userProfileImageSource()"></i>
+        <img [src]="userProfileImageSource()" *ngIf="userProfileImageSource()" />
+      </div>
+      <div class="submit__btn-wrapper" >
+          <button style="width:150px;" (click)="uploadImage()">Upload Image</button>
+        </div>
+    </div>
+    <div class="col-sm-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+            <div class="heading">First Name</div>
+            <div class="maxWidth"><input type="text" name="first_name" [(ngModel)]="currentUser.firstName" #first_name="ngModel"
+                required></div>
+          </div>
+          <div class="col-sm">
+            <div class="heading">Last Name</div>
+            <div class="maxWidth"><input type="text" name="last_name" [(ngModel)]="currentUser.surname" #last_name="ngModel"
+                required></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm">
+            <div class="heading">Email Address</div>
+            <div class="maxWidth"><input type="text" name="email_address" [(ngModel)]="currentUser.email" #email="ngModel"
+                required></div>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md">
+            <div class="heading">Gender</div>
+            <div>
+              <select [(ngModel)]="currentUser.gender" id="gender" name="gender">
+                <option [ngValue]="currentUser.gender">M</option>
+                <option [ngValue]="currentUser.gender">F</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="heading">Year of Birth</div>
+            <div>
+              <select [(ngModel)]="currentUser.yob" id="yob" name="yob">
+                <option *ngFor="let year of theYearsList()" [ngValue]="year">{{year}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm">
+            <div class="heading">About me</div>
+            <div class="maxWidth">
+              <textarea name="about_me" rows="5" [(ngModel)]="currentUser.aboutMe"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-5">
+      <div class="row">
+        <div class="heading">Website</div>
+        <div class="maxWidth"><input type="text" name="webiste_url" [(ngModel)]="currentUser.websiteURL"></div>
+      </div>
+      <div class="row">
+        <div class="heading">Blog</div>
+        <div class="maxWidth"><input type="text" name="blog_url" [(ngModel)]="currentUser.blogURL"></div>
+      </div>
+      <div class="row">
+        <div class="heading">Instragram</div>
+        <div class="maxWidth"><input type="text" name="instragram_url" [(ngModel)]="currentUser.instragramURL"></div>
+      </div>
+      <div class="row">
+        <div class="heading">Facebook</div>
+        <div class="maxWidth">
+          <input type="text" name="facebook_url" [(ngModel)]="currentUser.facebookURL"></div>
+      </div>
+
+      <div class="row">
+        <div class="submit__btn-wrapper">
+          <button (click)="changePassword()">CHANGE PASSWORD</button>
+        </div>
+        <div class="submit__btn-wrapper">
+          <button (click)="saveProfile()">SAVE PROFILE</button>
+        </div>
+      </div>
+    </div>
+  </div>

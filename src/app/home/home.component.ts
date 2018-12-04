@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HomeService} from './home.service';
 import {ICategory} from '../../models/ICategory';
 import {IRecipe} from '../../models/IRecipe';
+import {IRecipeSearchDTO} from '../../models/IRecipeSearchDTO';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {RestService} from '../rest.service';
@@ -45,6 +46,10 @@ export class HomeComponent implements OnInit {
 
   constructor(private homeService: HomeService, private http: HttpClient, private rest: RestService) {
   }
+
+
+ 
+
 
   async ngOnInit() {
     this.trendings = await this.homeService.getTrandingRecipes();
@@ -118,11 +123,13 @@ export class HomeComponent implements OnInit {
     const strings = [];
     strings.push(this.searchString);
     this.recipes = await this.homeService.getRecipesWithFilters(
-      strings,
-      this.categoriesToSearch,
-      this.cuisinesToSearch,
-      this.benefitsToSerach,
-      this.dietaryRequirementsToSearch
+      { searchStrings : strings,
+        mealTypesID : this.categoriesToSearch,
+        cuisinesID : this.cuisinesToSearch,
+        nutritionalBenefitID : this.benefitsToSerach,
+        dietaryRequirementsID : this.dietaryRequirementsToSearch
+      }
+     
     );
     this.showResultsBlock = true;
   }
@@ -144,11 +151,8 @@ export class HomeComponent implements OnInit {
   async buildMealSearch() {
     this.searchString = '';
     this.recipes = await this.homeService.getRecipesWithFilters(
-      [this.buildMealFirstItem, this.buildMealSecondItem, this.buildMealThirdItem],
-      [],
-      [],
-      [],
-      []
+      {searchStrings : [this.buildMealFirstItem, this.buildMealSecondItem, this.buildMealThirdItem]}
+      
     );
     this.showResultsBlock = true;
     this.allMealTypes.forEach(e => {

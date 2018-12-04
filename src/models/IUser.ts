@@ -5,5 +5,9 @@ export interface IUser {
   profileImageThumbnailID?: number;
   profileImagePreviewID?: number;
   gender?: string;
-  dob?: number;
+  yob?: number;
+  facebookURL?: string;
+  instagramURL?: string;
+  blogURL?: string;
+  websiteURL?: string;
 }
