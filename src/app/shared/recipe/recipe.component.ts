@@ -21,13 +21,19 @@ export class RecipeComponent implements OnInit {
     return environment.apiUrl + "files/RecipeImage/"+ this.recipe.defaultImageID +"?quality=3";
   }
 
+  // recipeLink():string{
+  //   if(this.readOnly){
+  //     return "/view-recipe/" + this.recipe.id;
+  //   }
+  //   else{
+  //     return "/edit-recipe/" + this.recipe.id;
+  //   }
+  // }
+
   recipeLink():string{
-    if(this.readOnly){
-      return "/view-recipe/" + this.recipe.id;
-    }
-    else{
-      return "/edit-recipe/" + this.recipe.id;
-    }
+    return "/view-recipe/" + this.recipe.id;
   }
+
+  
 
 }

@@ -1,5 +1,8 @@
+$imageWidth: 300px;
+
+
 .img-wrapper{
-  width: 300px;
+  width: $imageWidth;
   height: 330px;
   display: flex;
   align-items: center;
@@ -7,7 +10,9 @@
 }
 
 .recipe__wrapper{
-  width: 260px;
+  width: $imageWidth;
+  margin-left:5px;
+  margin-right:5px;
 }
 
 .recipe-title{
@@ -23,7 +28,7 @@
 }
 
 .recipe-no-img{
-  width: 260px;
+  width: $imageWidth;
   height: 335px;
   background-color: #eee;
   display: flex;

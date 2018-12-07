@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, ViewChild, Input} from '@angular/core';
 import {RestService} from '../rest.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import { IRecipe } from '../../models/IRecipe';
@@ -22,10 +22,11 @@ import {Location} from '@angular/common';
 
 
 export class AddRecipeComponent implements OnInit {
+  @Input() currentRecipe:Recipe;
   @ViewChild('myForm') private myForm: NgForm;
   apiURL = environment.apiUrl;
   
-  currentRecipe : Recipe;
+  //currentRecipe : Recipe;
   ingredientListings: Array<any> = [];
 
   isRecipeTitleChange = false;
@@ -63,8 +64,8 @@ export class AddRecipeComponent implements OnInit {
   async ngOnInit() {
     await this.loadStaticData();
 
-    const id = +this.activatedRouter.snapshot.paramMap.get('id');
-    if(id){
+    //const id = +this.activatedRouter.snapshot.paramMap.get('id');
+    if(this.currentRecipe != null){
       await this.initializeRecipeData();
     }
     else{

@@ -1,0 +1,6 @@
+
+<div *ngIf="currentRecipe">
+  <div>Status: {{currentRecipe.recipeStatus.name}} - {{showViewOnly()}}</div>
+  <app-view-recipe [currentRecipe]="currentRecipe"  *ngIf="showViewOnly()"></app-view-recipe >
+  <app-add-recipe [currentRecipe]="currentRecipe" *ngIf="negatedShowViewOnly()"></app-add-recipe>
+</div>

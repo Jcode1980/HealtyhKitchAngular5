@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import {Location} from '@angular/common';
 import { IMeasuredIngredient } from '../../models/IMeasuredIngredient';
 import { IRecipe } from '../../models/IRecipe';
 import {RestService} from '../rest.service';
@@ -13,8 +14,11 @@ import { User } from '../../models/User';
   styleUrls: ['./view-recipe.component.scss']
 })
 export class ViewRecipeComponent implements OnInit {
+  @Input() currentRecipe : IRecipe;
+
+
   private recipesAPIURL = `api/recipes/`;
-  currentRecipe : IRecipe;
+  //currentRecipe : IRecipe;
   apiURL = environment.apiUrl;
   showReviewModal:boolean = false;
   
@@ -25,15 +29,20 @@ export class ViewRecipeComponent implements OnInit {
   
   reviews: Array<IReview> = [];
 
-  constructor(private rest: RestService, private activatedRouter: ActivatedRoute, private router: Router) { }
+  constructor(private rest: RestService, private activatedRouter: ActivatedRoute, private router: Router, 
+    private location: Location) { }
+
+  backClicked() {
+    this.location.back();
+  }
 
   async ngOnInit() {
-    const id = +this.activatedRouter.snapshot.paramMap.get('id');
-    console.log("await for recipe");
-    await this.rest.apiGet<IRecipe>(`api/recipes/${id}`).toPromise()
-      .then(recipe => this.currentRecipe = recipe);
-    console.log("The instuction is: " + this.currentRecipe.instructions);
-    //console.log(this.currentRecipe);
+    // const id = +this.activatedRouter.snapshot.paramMap.get('id');
+    // console.log("await for recipe");
+    // await this.rest.apiGet<IRecipe>(`api/recipes/${id}`).toPromise()
+    //   .then(recipe => this.currentRecipe = recipe);
+    // console.log("The instuction is: " + this.currentRecipe.instructions);
+    // //console.log(this.currentRecipe);
 
     this.getReviewsForRecipe();
   }

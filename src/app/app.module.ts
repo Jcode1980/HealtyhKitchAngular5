@@ -41,6 +41,7 @@ import { ViewRecipeComponent } from './view-recipe/view-recipe.component';
 import { StarsDisplayComponent } from './shared/stars-display/stars-display.component';
 import { ShowErrorsComponent } from './shared/show-errors/show-errors.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ParentRecipeComponent } from './parent-recipe/parent-recipe.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     ViewRecipeComponent,
     StarsDisplayComponent,
     ShowErrorsComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ParentRecipeComponent
   ],
   imports: [
     BrowserModule,
