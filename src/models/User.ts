@@ -63,4 +63,8 @@ export class User implements IUser {
   fullName():string{
     return this.given + this.surname;
   }
+
+  isAdmin(): Boolean{
+    return this.role === "ROLE_ADMIN";
+  }
 }

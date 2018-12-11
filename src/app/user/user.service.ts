@@ -83,7 +83,16 @@ export class UserService {
     return this.authenticatedUser;
   }
 
-  
+  public  theUserObject(): User{
+    this.getAuthenticatedUser().toPromise().then(
+      function(user){
+        console.log("Users role is: " + user.role);
+        return user;
+      }
+    );
+  }
+
+
   public signout() {
     this.localStorageService.purgeAuthToken();
     this.store.dispatch(new LogOutUser());
@@ -91,6 +100,16 @@ export class UserService {
 
     console.log('signed out autho token is: ' + this.localStorageService.getAuthToken());
 
+  }
+
+  public userIsAdmin(){
+    
+    this.authenticatedUser.toPromise().then(
+      function(user){
+        console.log("Users role is: " + user.role);
+        return user.isAdmin();
+      }
+    );
   }
 
   // public async changeName(firstName: string, lastName: string): Promise<IAsyncResponse> {

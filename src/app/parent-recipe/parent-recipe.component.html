@@ -2,7 +2,7 @@
 <div *ngIf="currentRecipe">
   <div class="adminDetailsArea">
     <div>Status: {{currentRecipe.recipeStatus.name}} - {{showViewOnly()}}</div>
-    <select [(ngModel)]="selectedStatus" name="selectedstatus" (change)="searchRecipes();">
+    <select [(ngModel)]="selectedAction" name="selectedAction" (click)="runSelectedAction();">
         <option *ngFor="let status of recipeStatuses" [ngValue]="status">{{status.name}}</option>
     </select>
   </div>

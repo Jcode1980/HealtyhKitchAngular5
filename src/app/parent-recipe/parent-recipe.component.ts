@@ -16,6 +16,12 @@ export class ParentRecipeComponent implements OnInit {
   currentRecipe: Recipe;
   private readOnlyFlag: boolean = false;
 
+  selectedAction: string;
+
+  private PUBLISH_RECIPE: string = "Publish";
+  private EMAIL_CREATOR: string = "Email Creator";
+  private REJECT_RECIPE: string = "Reject"
+
   constructor(private rest: RestService, private activatedRouter: ActivatedRoute,  
     private location: Location, private userService: UserService) { }
 
@@ -31,6 +37,11 @@ export class ParentRecipeComponent implements OnInit {
     return this.userService.
   } 
 
+  runSelectedAction():void{
+    console.log("Running action : " + this.selectedAction);
+
+  }
+
   backClicked() {
     this.location.back();
   }
@@ -44,7 +55,7 @@ export class ParentRecipeComponent implements OnInit {
   }
 
   recipeActions():string[]{
-    if
+    return [this.PUBLISH_RECIPE, this.EMAIL_CREATOR, this.REJECT_RECIPE];
   }
   
 
