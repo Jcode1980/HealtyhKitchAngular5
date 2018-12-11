@@ -17,8 +17,7 @@ export class MyRecipeComponent implements OnInit {
   recipes: IRecipe [] = [];
   recipeStatuses: Array<RecipeStatus>;
   selectedStatus: RecipeStatus;
-  private isAdminView: boolean = true;
-
+  
   constructor(private myRecipeService: MyRecipeService, private http: HttpClient, private rest: RestService,  
     private activatedRouter: ActivatedRoute) {
     
@@ -34,14 +33,18 @@ export class MyRecipeComponent implements OnInit {
   
   }
 
+  isAdminView():boolean{
+    return 
+  }
+  
   async searchRecipes() {
     console.log("searchRecipes");
 
-    if(this.isAdminView){
-      this.recipes = await this.myRecipeService.getRecipesWithFilters(this.theSearchDTO());
-    }else{
-      this.recipes = await this.myRecipeService.getMyRecipesWithFilters(this.theSearchDTO());
-    }
+    // if(this.isAdminView){
+    //   this.recipes = await this.myRecipeService.getRecipesWithFilters(this.theSearchDTO());
+    // }else{
+    //   this.recipes = await this.myRecipeService.getMyRecipesWithFilters(this.theSearchDTO());
+    // }
     
     console.log("got recipes: ");
     console.log(this.recipes);

@@ -27,6 +27,9 @@ export class ParentRecipeComponent implements OnInit {
 
   }
 
+  isAdminView():boolean{
+    return this.userService.
+  } 
 
   backClicked() {
     this.location.back();
@@ -38,6 +41,10 @@ export class ParentRecipeComponent implements OnInit {
 
   negatedShowViewOnly():boolean{
     return !this.showViewOnly();
+  }
+
+  recipeActions():string[]{
+    if
   }
   
 
