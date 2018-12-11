@@ -1,9 +1,11 @@
 <div class="my_recipe_wrapper">
-    <div id="search_criterias" class="container">
+    <div id="admin_details_area" class="container">
       <div class="row">
-          <select [(ngModel)]="selectedStatus" name="selectedstatus" (change)="searchRecipes();">
-              <option *ngFor="let status of recipeStatuses" [ngValue]="status">{{status.name}}</option>
+        <div id="actions_area">
+            <select name="selectedAction" (change)="searchRecipes();">
+                <option *ngFor="let status of recipeStatuses" [ngValue]="status">{{status.name}}</option>
             </select>
+        </div>  
       </div>
     </div>
     <div class="container">

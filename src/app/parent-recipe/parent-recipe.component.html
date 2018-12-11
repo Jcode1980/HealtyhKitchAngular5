@@ -1,6 +1,11 @@
 
 <div *ngIf="currentRecipe">
-  <div>Status: {{currentRecipe.recipeStatus.name}} - {{showViewOnly()}}</div>
+  <div class="adminDetailsArea">
+    <div>Status: {{currentRecipe.recipeStatus.name}} - {{showViewOnly()}}</div>
+    <select [(ngModel)]="selectedStatus" name="selectedstatus" (change)="searchRecipes();">
+        <option *ngFor="let status of recipeStatuses" [ngValue]="status">{{status.name}}</option>
+    </select>
+  </div>
   <app-view-recipe [currentRecipe]="currentRecipe"  *ngIf="showViewOnly()"></app-view-recipe >
   <app-add-recipe [currentRecipe]="currentRecipe" *ngIf="negatedShowViewOnly()"></app-add-recipe>
 </div>

@@ -366,16 +366,18 @@ export class AddRecipeComponent implements OnInit {
   }
 
 
-  publishRecipe(){
+   async publishRecipe(){
     if(this.myForm.valid){
-      this.currentRecipe.recipeStatus = RecipeStatus.publishedStatus();
+      
+      await this.rest.apiPost('/api/recipes/submitRecipe/' +this.currentRecipe.id, null).toPromise();
+      //this.currentRecipe.recipeStatus = RecipeStatus.publishedStatus();
       
       //save the recipe
-      this.saveRecipe();
+      //this.saveRecipe();
       
       //email creator about the recipe being published
       
-      this.location.back();
+      //this.location.back();
     }
   }
   

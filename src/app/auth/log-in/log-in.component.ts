@@ -48,7 +48,7 @@ export class LogInComponent implements OnInit {
         email: this.form.get('email').value,
         password: this.form.get('password').value
       });
-
+      
       
       if (!response.succeeded) {
         this.statusText = response.responseText;

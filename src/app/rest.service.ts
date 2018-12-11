@@ -18,6 +18,7 @@ export class RestService {
         path += k + '=' + params[k] + '&';
       });
     }
+    
     return this.http.get<T>(this.base + path, options);
   }
 
@@ -36,6 +37,8 @@ export class RestService {
   apiDelete<T>(path: string, options?: HttpOptions): Observable<T> {
     return this.http.delete<T>(this.base + path, options);
   }
+
+
 
 }
 

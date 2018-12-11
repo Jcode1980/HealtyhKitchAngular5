@@ -10,4 +10,5 @@ export interface IUser {
   instagramURL?: string;
   blogURL?: string;
   websiteURL?: string;
+  role: string;
 }

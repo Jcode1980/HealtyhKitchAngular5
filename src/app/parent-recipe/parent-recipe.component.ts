@@ -5,6 +5,7 @@ import { IRecipe } from '../../models/IRecipe';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import { InjectSetupWrapper } from '@angular/core/testing';
+import {UserService} from '../user/user.service';
 
 @Component({
   selector: 'app-parent-recipe',
@@ -16,7 +17,7 @@ export class ParentRecipeComponent implements OnInit {
   private readOnlyFlag: boolean = false;
 
   constructor(private rest: RestService, private activatedRouter: ActivatedRoute,  
-    private location: Location) { }
+    private location: Location, private userService: UserService) { }
 
   async ngOnInit() {
     const id = +this.activatedRouter.snapshot.paramMap.get('id');

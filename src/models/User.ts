@@ -15,6 +15,7 @@ export class User implements IUser {
   blogURL?: string;
   websiteURL?: string;
   gender: string;
+  role: string;
   
 
 //   constructor(email: string, firstName: string, profileImageThumbnailID?: number,
@@ -36,6 +37,7 @@ export class User implements IUser {
       this.blogURL = iUser.blogURL;
       this.websiteURL = iUser.websiteURL;
       this.gender = iUser.gender;
+      this.role = iUser.role;
     }
 
     //FIXME

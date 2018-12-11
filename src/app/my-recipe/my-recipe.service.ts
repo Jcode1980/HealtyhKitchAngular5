@@ -14,6 +14,8 @@ export class MyRecipeService extends BaseService {
   recipeStatuses: Array<RecipeStatus>;
   private sessionAPIURL = `session/recipe/`;
 
+
+
   constructor(private rest: RestService,http: HttpClient) {
     super(http);
   }
@@ -34,6 +36,8 @@ export class MyRecipeService extends BaseService {
       // }
     }).toPromise();
   }
+
+
 
   
 
