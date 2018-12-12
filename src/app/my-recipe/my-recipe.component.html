@@ -2,7 +2,7 @@
     <div id="admin_details_area" class="container">
       <div class="row">
         <div id="actions_area">
-            <select name="selectedAction" (change)="searchRecipes();">
+            <select name="selectedStatus" (change)="searchRecipes();">
                 <option *ngFor="let status of recipeStatuses" [ngValue]="status">{{status.name}}</option>
             </select>
         </div>  

@@ -34,7 +34,7 @@ export class ParentRecipeComponent implements OnInit {
   }
 
   isAdminView():boolean{
-    return this.userService.
+    return this.userService.userIsAdmin();
   } 
 
   runSelectedAction():void{

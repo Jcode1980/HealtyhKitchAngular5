@@ -7,6 +7,7 @@ import {RestService} from '../rest.service';
 import { RecipeStatus } from '../../models/RecipeStatus';
 import { IRecipeSearchDTO } from '../../models/IRecipeSearchDTO';
 import {ActivatedRoute} from '@angular/router';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'app-my-recipe',
@@ -17,9 +18,10 @@ export class MyRecipeComponent implements OnInit {
   recipes: IRecipe [] = [];
   recipeStatuses: Array<RecipeStatus>;
   selectedStatus: RecipeStatus;
+
   
   constructor(private myRecipeService: MyRecipeService, private http: HttpClient, private rest: RestService,  
-    private activatedRouter: ActivatedRoute) {
+    private activatedRouter: ActivatedRoute, private userService: UserService) {
     
     let url = activatedRouter.snapshot.url.join('');
     //let href = this.router.url;
@@ -34,17 +36,18 @@ export class MyRecipeComponent implements OnInit {
   }
 
   isAdminView():boolean{
-    return 
+    console.log("calling userIsAdmin: " + this.userService.userIsAdmin());
+    return this.userService.userIsAdmin();
   }
   
   async searchRecipes() {
     console.log("searchRecipes");
 
-    // if(this.isAdminView){
-    //   this.recipes = await this.myRecipeService.getRecipesWithFilters(this.theSearchDTO());
-    // }else{
-    //   this.recipes = await this.myRecipeService.getMyRecipesWithFilters(this.theSearchDTO());
-    // }
+    if(this.isAdminView()){
+      this.recipes = await this.myRecipeService.getRecipesWithFilters(this.theSearchDTO());
+    }else{
+      this.recipes = await this.myRecipeService.getMyRecipesWithFilters(this.theSearchDTO());
+    }
     
     console.log("got recipes: ");
     console.log(this.recipes);
@@ -87,13 +90,5 @@ export class MyRecipeComponent implements OnInit {
     return searchDTO;
   }
 
-  public getIsAdminView(): boolean{ return this.isAdminView;}
 
-  public setIsAdminView(value: boolean){
-    this.isAdminView = value;
-
-    if(this.isAdminView){
-      this.selectedStatus = RecipeStatus.submittedStatus();
-    }
-  }
 }

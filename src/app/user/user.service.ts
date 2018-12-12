@@ -19,7 +19,7 @@ export class UserService {
 
   private authenticatedUser: Observable<User>;
   // baseUrl = `${environment.apiUrl}/user-service`;
-
+  private isAdminView: boolean = false;
   
 
 
@@ -46,6 +46,10 @@ export class UserService {
     this.authenticatedUser = this.store.select(state => state.loggedInUser);
     console.log("Auth user is: ");
     console.log(this.authenticatedUser);
+
+    this.authenticatedUser.subscribe(
+      user => this.isAdminView = (user != null && user.role === "ROLE_USER")
+    );
   }
 
   public async authenticate(user: IUserAuthCredentials): Promise<IAsyncResponse> {
@@ -83,16 +87,6 @@ export class UserService {
     return this.authenticatedUser;
   }
 
-  public  theUserObject(): User{
-    this.getAuthenticatedUser().toPromise().then(
-      function(user){
-        console.log("Users role is: " + user.role);
-        return user;
-      }
-    );
-  }
-
-
   public signout() {
     this.localStorageService.purgeAuthToken();
     this.store.dispatch(new LogOutUser());
@@ -102,15 +96,12 @@ export class UserService {
 
   }
 
-  public userIsAdmin(){
-    
-    this.authenticatedUser.toPromise().then(
-      function(user){
-        console.log("Users role is: " + user.role);
-        return user.isAdmin();
-      }
-    );
+  public userIsAdmin():boolean{
+    console.log("returning user is admin?? " + this.isAdminView);
+    return this.isAdminView;
   }
+
+  
 
   // public async changeName(firstName: string, lastName: string): Promise<IAsyncResponse> {
   //   try {
