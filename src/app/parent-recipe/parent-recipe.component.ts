@@ -16,7 +16,7 @@ export class ParentRecipeComponent implements OnInit {
   currentRecipe: Recipe;
   private readOnlyFlag: boolean = false;
 
-  selectedAction: string;
+  selectedAction: string= "Please Select";
 
   private PUBLISH_RECIPE: string = "Publish";
   private EMAIL_CREATOR: string = "Email Creator";
@@ -57,7 +57,10 @@ export class ParentRecipeComponent implements OnInit {
   recipeActions():string[]{
     return [this.PUBLISH_RECIPE, this.EMAIL_CREATOR, this.REJECT_RECIPE];
   }
-  
+
+  toggleReadOnly():void{
+    this.readOnlyFlag = !this.readOnlyFlag;
+  }
 
 
 }

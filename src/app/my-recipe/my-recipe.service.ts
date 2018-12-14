@@ -12,8 +12,7 @@ import {HttpClient} from '@angular/common/http';
 @Injectable()
 export class MyRecipeService extends BaseService {
   recipeStatuses: Array<RecipeStatus>;
-  private sessionAPIURL = `session/recipe/`;
-
+  protected sessionAPIURL = `${environment.apiUrl}session/recipe/`;
 
 
   constructor(private rest: RestService,http: HttpClient) {
@@ -23,19 +22,30 @@ export class MyRecipeService extends BaseService {
 
   async getMyRecipesWithFilters(searchDTO: IRecipeSearchDTO) {
 
-    return this.rest.apiGet<IRecipe[]>(this.sessionAPIURL + 'myRecipes',  {
+    //return this.rest.apiGet<IRecipe[]>(this.sessionAPIURL + 'myRecipes',  {
+      return this.http.get<IRecipe[]>(this.sessionAPIURL + 'myRecipes',  {
       params: this.paramsForSearchDTO(searchDTO)
-      // params: {
-      //   'searchStrings': searchDTO.searchStrings.toString(),
-      //   'mealTypesID': searchDTO.mealTypesID.toString(),
-      //   'cuisinesID': searchDTO.cuisinesID.toString(),
-      //   'nutritionalBenefitID': searchDTO.nutritionalBenefitID.toString(),
-      //   'dietaryRequirementsID': searchDTO.dietaryRequirementsID.toString(),
-      //   'recipeStatusID': (searchDTO.recipeStatusID != null ? searchDTO.recipeStatusID.toString() : null)
-        
-      // }
     }).toPromise();
   }
+
+  // async getRecipesWithFilters(searchDTO: IRecipeSearchDTO) {
+  //   console.log("the params is: ");
+  //   console.log(this.paramsForSearchDTO(searchDTO));
+
+  //   return this.http.get<IRecipe[]>(`${this.baseUrl}/recipes`,
+  //     {
+  //       params: this.paramsForSearchDTO(searchDTO)
+  //       // params: {
+  //       //   'searchStrings': searchDTO.searchStrings.toString(),
+  //       //   'mealTypesID': searchDTO.mealTypesID.toString(),
+  //       //   'cuisinesID': searchDTO.cuisinesID.toString(),
+  //       //   'nutritionalBenefitID': searchDTO.nutritionalBenefitID.toString(),
+  //       //   'dietaryRequirementsID': searchDTO.dietaryRequirementsID.toString(),
+  //       //   'recipeStatusID': (searchDTO.recipeStatusID != null ? searchDTO.recipeStatusID.toString() : null)
+  //       // }
+  //     }
+  //   ).toPromise();
+  // }
 
 
 

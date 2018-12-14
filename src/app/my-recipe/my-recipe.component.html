@@ -1,11 +1,15 @@
 <div class="my_recipe_wrapper">
     <div id="admin_details_area" class="container">
-      <div class="row">
-        <div id="actions_area">
-            <select name="selectedStatus" (change)="searchRecipes();">
+      <div class="row" id="actions_area">
+        <div class="col-sm-6">
+            <span class="label" style="margin-right:10px;">Status: </span>
+            <select name="selectedStatus" [(ngModel)]="selectedStatus" (change)="searchRecipes();">
                 <option *ngFor="let status of recipeStatuses" [ngValue]="status">{{status.name}}</option>
             </select>
         </div>  
+        <div class="col-sm-6" style="text-align:right;">
+            <input type="checkbox"  name="showRecipesCheckBox" [(ngModel)]="showOwnRecipesOnly" (change)="searchRecipes();" > Show my Recipes only
+        </div>
       </div>
     </div>
     <div class="container">
@@ -19,7 +23,7 @@
         </div>
     </div>
 
-      <h2 *ngIf="!hasRecipes()">
+      <h2 *ngIf="!hasRecipes()" style="text-align: center;">
         No recipes found
       </h2>
 </div>

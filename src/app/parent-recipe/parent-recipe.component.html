@@ -1,11 +1,15 @@
-
 <div *ngIf="currentRecipe">
-  <div class="adminDetailsArea">
-    <div>Status: {{currentRecipe.recipeStatus.name}} - {{showViewOnly()}}</div>
-    <select [(ngModel)]="selectedAction" name="selectedAction" (click)="runSelectedAction();">
-        <option *ngFor="let status of recipeStatuses" [ngValue]="status">{{status.name}}</option>
-    </select>
+  <div class="container">
+    <div class="row adminArea">  
+      <div class="col-sm-6">Status: {{currentRecipe.recipeStatus.name}} - {{showViewOnly()}}</div>
+      <div class="col-sm-6 actionsArea">
+        <select [(ngModel)]="selectedAction" name="selectedAction">
+          <option selected>Please Select</option>
+          <option *ngFor="let action of recipeActions()" [ngValue]="action">{{action}}</option>
+        </select><button (click)="runSelectedAction()" style="margin-left:10px;">Go</button>
+      </div>
+    </div>
   </div>
-  <app-view-recipe [currentRecipe]="currentRecipe"  *ngIf="showViewOnly()"></app-view-recipe >
+  <app-view-recipe [currentRecipe]="currentRecipe" *ngIf="showViewOnly()"></app-view-recipe>
   <app-add-recipe [currentRecipe]="currentRecipe" *ngIf="negatedShowViewOnly()"></app-add-recipe>
 </div>

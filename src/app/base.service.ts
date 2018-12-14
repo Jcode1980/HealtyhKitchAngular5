@@ -8,9 +8,9 @@ import { RecipeStatus } from '../models/RecipeStatus';
 
 @Injectable()
 export class BaseService {
-  private baseUrl = `${environment.apiUrl}api/recipes`;
+  protected baseUrl = `${environment.apiUrl}api/recipes`;
 
-  constructor(private http: HttpClient) {
+  constructor(public http: HttpClient) {
   }
   async getMealTypes() {
     return this.http.get<ICategory[]>(`${this.baseUrl}/allMealTypes`).toPromise();
@@ -47,7 +47,9 @@ export class BaseService {
   //                             dietaryRequirementsID?: number[]) {
   
   async getRecipesWithFilters(searchDTO: IRecipeSearchDTO) {
-   
+    console.log("the params is: ");
+    console.log(this.paramsForSearchDTO(searchDTO));
+
     return this.http.get<IRecipe[]>(`${this.baseUrl}/recipes`,
       {
         params: this.paramsForSearchDTO(searchDTO)

@@ -18,7 +18,7 @@ export class MyRecipeComponent implements OnInit {
   recipes: IRecipe [] = [];
   recipeStatuses: Array<RecipeStatus>;
   selectedStatus: RecipeStatus;
-
+  showOwnRecipesOnly: boolean = true;
   
   constructor(private myRecipeService: MyRecipeService, private http: HttpClient, private rest: RestService,  
     private activatedRouter: ActivatedRoute, private userService: UserService) {
@@ -41,12 +41,15 @@ export class MyRecipeComponent implements OnInit {
   }
   
   async searchRecipes() {
-    console.log("searchRecipes");
+    console.log("searchRecipes with status: ");
+    console.log(this.selectedStatus);
 
-    if(this.isAdminView()){
-      this.recipes = await this.myRecipeService.getRecipesWithFilters(this.theSearchDTO());
-    }else{
+    if(this.showOwnRecipesOnly){
+      console.log("my-recipe.component - searching only my own recipes");
       this.recipes = await this.myRecipeService.getMyRecipesWithFilters(this.theSearchDTO());
+    }else{
+      console.log("my-recipe.component - searching all recipes");
+      this.recipes = await this.myRecipeService.getRecipesWithFilters(this.theSearchDTO());
     }
     
     console.log("got recipes: ");
@@ -80,7 +83,7 @@ export class MyRecipeComponent implements OnInit {
       searchForTrending: false}
       
     if(this.selectedStatus != null){
-      console.log("found Selected Status");
+      console.log("found Selected Status " + this.selectedStatus.id);
       searchDTO.recipeStatusID = this.selectedStatus.id;
     }
     else{
@@ -89,6 +92,7 @@ export class MyRecipeComponent implements OnInit {
     }
     return searchDTO;
   }
+
 
 
 }
