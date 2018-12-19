@@ -32,8 +32,8 @@ export class ShowErrorsComponent {
 
  shouldShowErrors(): boolean {
    //return true;
-   console.log("errors are: ");
-   console.log(this.control);
+   //console.log("errors are: ");
+   //console.log(this.control);
    return this.control &&
      this.control.errors &&
      (this.control.dirty || this.control.touched);

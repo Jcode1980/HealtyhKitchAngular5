@@ -48,7 +48,13 @@ export class UserService {
     console.log(this.authenticatedUser);
 
     this.authenticatedUser.subscribe(
-      user => this.isAdminView = (user != null && user.role === "ROLE_USER")
+      user => {
+        this.isAdminView = (user != null && user.role === "ROLE_USER");
+        //console.log("user role is:");
+        //console.log(user);
+        //console.log(user != null ? user.role : "no role");
+        //console.log("In subscribe fucntion: "+ this.isAdminView);
+      }
     );
   }
 
@@ -97,7 +103,7 @@ export class UserService {
   }
 
   public userIsAdmin():boolean{
-    console.log("returning user is admin?? " + this.isAdminView);
+    //console.log("returning user is admin?? " + this.isAdminView);
     return this.isAdminView;
   }
 

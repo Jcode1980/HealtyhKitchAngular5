@@ -64,12 +64,16 @@ export class AddRecipeComponent implements OnInit {
   async ngOnInit() {
     await this.loadStaticData();
 
-    //const id = +this.activatedRouter.snapshot.paramMap.get('id');
-    if(this.currentRecipe != null){
-      await this.initializeRecipeData();
-    }
-    else{
-       this.currentRecipe = new Recipe(null);
+    // //const id = +this.activatedRouter.snapshot.paramMap.get('id');
+    // if(this.currentRecipe != null){
+    //   await this.initializeRecipeData();
+    // }
+    // else{
+    //    this.currentRecipe = new Recipe(null);
+    // }
+
+    if(this.currentRecipe === null){
+      this.currentRecipe = new Recipe(null);
     }
 
     if(this.currentRecipe.ingredientListing().length > 0){
@@ -96,41 +100,19 @@ export class AddRecipeComponent implements OnInit {
     return this.ingredientListings;
   }
 
+
   // async initializeRecipeData() {
   //   console.log("initializeRecipeData");
   //   const id = +this.activatedRouter.snapshot.paramMap.get('id');
-  //   let currentRecipe :IRecipe;
-  //   currentRecipe = await this.rest.apiGet<IRecipe>(`api/recipes/${id}`).toPromise();
+  //   let iRecipe:IRecipe = await this.rest.apiGet<Recipe>(`api/recipes/${id}`).toPromise();
+  //   console.log("got Irecipe");
+  //   console.log(iRecipe);
+  //   this.currentRecipe = new Recipe(iRecipe);
   //   console.log("got recipe");
-  //   console.log(currentRecipe);
-  //   this.recipeTitle = currentRecipe.name;
-  //   this.numServings = currentRecipe.numServings;
-  //   this.readyInMins = currentRecipe.readyInMins;
-  //   this.descText = currentRecipe.descText;
-  //   this.method = currentRecipe.instructions;
-  //   this.currentRecipe.measuredIngredients = currentRecipe.measuredIngredients;
-
-
-  //   this.defaultImageID=currentRecipe.defaultImageID;
-
-  //   this.recipeID = currentRecipe.id;
-  //   this.currentRecipe.nutritionalBenefits = currentRecipe.nutritionalBenefits;
-  //   this.currentRecipe.nutritionalBenefits = currentRecipe.dietaryCategories;
-  //   this.currentRecipe.cuisines = currentRecipe.cuisines;
-  //   this.currentRecipe.dietaryCategories = currentRecipe.mealTypes;
-
+  //   console.log(this.currentRecipe);
   // }
 
-  async initializeRecipeData() {
-    console.log("initializeRecipeData");
-    const id = +this.activatedRouter.snapshot.paramMap.get('id');
-    let iRecipe:IRecipe = await this.rest.apiGet<Recipe>(`api/recipes/${id}`).toPromise();
-    console.log("got Irecipe");
-    console.log(iRecipe);
-    this.currentRecipe = new Recipe(iRecipe);
-    console.log("got recipe");
-    console.log(this.currentRecipe);
-  }
+
 
 
 
@@ -415,6 +397,7 @@ export class AddRecipeComponent implements OnInit {
       });
     }
   }
+
 
 
 

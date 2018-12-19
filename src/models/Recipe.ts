@@ -74,14 +74,16 @@ export class Recipe implements IRecipe {
           name: e.name,
           sortID: e.sortID
         };
-        console.log("index value: " + index);
+        //console.log("index value: " + index);
         if(e.metric != null){
           returnData["metric"] = { id: e.metric.id, name: e.metric.name, code: e.metric.code };
         }
 
         return returnData;
       });
-  
+      
+      console.log("this is my recipe status: ");
+      console.log(this.recipeStatus);
       let returningRecipe : any ={
         id:this.id,
         defaultImageID: this.defaultImageID,
@@ -163,18 +165,24 @@ export class Recipe implements IRecipe {
       return this.recipeStatus.id === 1;
     }
 
-    isRejected(){
-      return this.recipeStatus.id === 4;
-    }
-
     isSubmittedForApproval(){
       return this.recipeStatus.id === 2;
     }
 
+    isPublished(){
+      return this.recipeStatus.id === 3;
+    }
+
+    isRejected(){
+      return this.recipeStatus.id === 4;
+    }
+
+    
 
     canSubmitForApproval(){
     
     }
+
 
     allMandatoryFieldsValid(){
       let isValid = true;

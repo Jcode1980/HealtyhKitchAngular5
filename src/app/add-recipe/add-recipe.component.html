@@ -1,6 +1,6 @@
 <form #myForm="ngForm" novalidate>
 <div class="add-recipe__wrapper" *ngIf="currentRecipe">
-  <div class="title">edit or add recipe</div>
+  <div class="title">edit or add recipe {{currentRecipe.recipeStatus.name}}</div>
 
   <div class="recipe__details-wrapper">
 

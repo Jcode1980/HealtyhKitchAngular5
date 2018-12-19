@@ -1,8 +1,11 @@
 <div *ngIf="currentRecipe">
   <div class="container">
-    <div class="row adminArea">  
-      <div class="col-sm-6">Status: {{currentRecipe.recipeStatus.name}} - {{showViewOnly()}}</div>
-      <div class="col-sm-6 actionsArea">
+    <div class="row adminArea" *ngIf="isAdminView()">  
+      <div class="col-sm-6">
+        Status: {{currentRecipe.recipeStatus.name}}
+        
+      </div>
+      <div class="col-sm-6 actionsArea" *ngIf="showRecipeActions()">
         <select [(ngModel)]="selectedAction" name="selectedAction">
           <option selected>Please Select</option>
           <option *ngFor="let action of recipeActions()" [ngValue]="action">{{action}}</option>
