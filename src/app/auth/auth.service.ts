@@ -3,7 +3,9 @@ import {environment} from '../../environments/environment';
 import {LocalStorageService} from '../shared/services/local-storage/local-storage.service';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {IUserAuthCredentials} from '../../models/IUserAuthCredentials';
+import {IUserSignUpCredentials} from '../../models/IUserSignUpCredentials';
 import {IToken} from '../../models/IToken';
+import {IAsyncResponse} from '../../models/IAsyncResponse';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -39,26 +41,26 @@ export class AuthService {
     return returnObject;
   }
 
-  // async signUp(user: IUserSignUpCredentials): Promise<IAsyncResponse> {
-  //   try {
-  //     const response = await this.http.post(`${this.baseUrl}/sign-up`, user).toPromise();
-  //     return {
-  //       succeeded: true,
-  //       responseText: 'Successfully registered'
-  //     };
-  //   } catch (err) {
-  //     let response: IAsyncResponse = {
-  //       succeeded: false
-  //     };
-  //     console.log(err);
-  //     if (err.status === 409) {
-  //       response.responseText = 'User with such credentials already exists';
-  //     } else {
-  //       response.responseText = `Something went wrong. Server responded with ${err.status} (${err.statusText})`;
-  //     }
-  //     return response;
-  //   }
-  // }
+  async signUp(user: IUserSignUpCredentials): Promise<IAsyncResponse> {
+    try {
+      const response = await this.http.post(`${this.baseUrl}/sign-up`, user).toPromise();
+      return {
+        succeeded: true,
+        responseText: 'Successfully registered'
+      };
+    } catch (err) {
+      let response: IAsyncResponse = {
+        succeeded: false
+      };
+      console.log(err);
+      if (err.status === 409) {
+        response.responseText = 'User with such credentials already exists';
+      } else {
+        response.responseText = `Something went wrong. Server responded with ${err.status} (${err.statusText})`;
+      }
+      return response;
+    }
+  }
 
   tokenStatus(token: string) : Observable<Object>{
     let statusObs: Observable<Object> = this.http.get(`${this.baseUrl}/token-status`, {

@@ -21,6 +21,23 @@ export class UserService {
   // baseUrl = `${environment.apiUrl}/user-service`;
   private isAdminView: boolean = false;
   
+  constructor(private store: Store<IAppState>,private router: Router, private localStorageService: LocalStorageService,
+    private authService: AuthService, private http: HttpClient) {
+    this.authenticatedUser = this.store.select(state => state.loggedInUser);
+    console.log("Auth user is: ");
+    console.log(this.authenticatedUser);
+
+    this.authenticatedUser.subscribe(
+      user => {
+        this.isAdminView = (user != null && user.role === "ROLE_USER");
+        //console.log("user role is:");
+        //console.log(user);
+        //console.log(user != null ? user.role : "no role");
+        //console.log("In subscribe fucntion: "+ this.isAdminView);
+      }
+    );
+  }
+
 
 
   isAuthenticated(): Observable<boolean> {
@@ -41,23 +58,9 @@ export class UserService {
     }
   }
   
-  constructor(private store: Store<IAppState>,private router: Router, private localStorageService: LocalStorageService,
-    private authService: AuthService, private http: HttpClient) {
-    this.authenticatedUser = this.store.select(state => state.loggedInUser);
-    console.log("Auth user is: ");
-    console.log(this.authenticatedUser);
+  
 
-    this.authenticatedUser.subscribe(
-      user => {
-        this.isAdminView = (user != null && user.role === "ROLE_USER");
-        //console.log("user role is:");
-        //console.log(user);
-        //console.log(user != null ? user.role : "no role");
-        //console.log("In subscribe fucntion: "+ this.isAdminView);
-      }
-    );
-  }
-
+  
   public async authenticate(user: IUserAuthCredentials): Promise<IAsyncResponse> {
 
     try {
