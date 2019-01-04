@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 //import {IUser} from '../../models/IUser';
 import {User} from '../../models/User';
 import {IUser} from '../../models/IUser';
+import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs/Observable';
 import {IUserAuthCredentials} from '../../models/IUserAuthCredentials';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -10,8 +11,11 @@ import {LocalStorageService} from '../shared/services/local-storage/local-storag
 import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {IAsyncResponse} from '../../models/IAsyncResponse';
+import {IRecipe} from '../../models/IRecipe';
 import {IAppState} from '../store/IAppState';
 import {LogInUser, LogOutUser} from '../store/actions/currentuser.actions';
+import {IUserSignUpCredentials} from '../../models/IUserSignUpCredentials';
+import {RestService} from '../../app/rest.service';
 
 
 @Injectable()
@@ -20,9 +24,9 @@ export class UserService {
   private authenticatedUser: Observable<User>;
   // baseUrl = `${environment.apiUrl}/user-service`;
   private isAdminView: boolean = false;
-  
+
   constructor(private store: Store<IAppState>,private router: Router, private localStorageService: LocalStorageService,
-    private authService: AuthService, private http: HttpClient) {
+    private authService: AuthService, private http: HttpClient, private restService: RestService) {
     this.authenticatedUser = this.store.select(state => state.loggedInUser);
     console.log("Auth user is: ");
     console.log(this.authenticatedUser);
@@ -41,6 +45,8 @@ export class UserService {
 
 
   isAuthenticated(): Observable<boolean> {
+    console.log("do i have a token?? ");
+    console.log(this.localStorageService.getAuthToken());
     if (
       this.localStorageService.getAuthToken() !== null &&
       this.localStorageService.getAuthToken().length > 0
@@ -65,17 +71,7 @@ export class UserService {
 
     try {
       let authToken = await this.authService.signIn(user);
-      console.log("what is my token? ");
-      console.log(authToken.token);
-      
-      this.localStorageService.setAuthToken(authToken.token);
-      
-      console.log("userDto passedIN");
-      console.log(authToken.userDto);
-      this.store.dispatch(new LogInUser(authToken.userDto));
-      
-      console.log(this.store);
-
+      this.storeTokenAndUser(authToken);
       this.router.navigate(['/']);
       return {succeeded: true};
     } catch (err) {
@@ -92,6 +88,20 @@ export class UserService {
     }
   }
 
+  private storeTokenAndUser(authToken:any){
+    console.log("what is my token? ");
+    console.log(authToken.token);
+    
+    this.localStorageService.setAuthToken(authToken.token);
+    
+    console.log("userDto passedIN");
+    console.log(authToken.userDto);
+    this.store.dispatch(new LogInUser(authToken.userDto));
+    
+    console.log(this.store);
+  }
+
+
   public getAuthenticatedUser(): Observable<User> {
     return this.authenticatedUser;
   }
@@ -102,8 +112,58 @@ export class UserService {
     this.router.navigate(['/']);
 
     console.log('signed out autho token is: ' + this.localStorageService.getAuthToken());
-
   }
+
+  public async registerUser(user: IUserSignUpCredentials) {
+    try {
+      let response = await this.authService.registerUser(user);
+      console.log("sign in response");
+      console.log(response);
+
+      this.storeTokenAndUser(response);
+
+      this.router.navigate(['/']);
+      return { succeeded: true ,
+        responseText: "Registration Sucessfull"
+      };
+    } catch (err) {
+      return {
+        succeeded: false,
+        responseText: err.error
+      };
+    }
+  }
+
+  authenticatedUserCanCreateReview(recipe: IRecipe): Observable<boolean>{
+    console.log("authenticatedUserCanCreateReview?? ");
+    let getURl = 'session/recipe/canCreateReview/' + recipe.id;
+    return this.restService.apiGet(getURl);
+  }
+
+
+  // public async signIn(user: IUserSignUpCredentials){
+  //   try {
+  //     let response = await this.authService.registerUser(user);
+  //     console.log("sign in response");
+  //     console.log(response);
+      
+  //     this.storeTokenAndUser(response);
+
+  //     this.router.navigate(['/']);
+  //     return {succeeded: true};
+  //   } catch (err) {
+  //     if (err.status === 401) {
+  //       return {
+  //         succeeded: false,
+  //         responseText: 'No user found with these email and password'
+  //       };
+  //     }
+  //     return {
+  //       succeeded: false,
+  //       responseText: 'Something went wrong. Try again later'
+  //     };
+  //   }
+  // }
 
   public userIsAdmin():boolean{
     //console.log("returning user is admin?? " + this.isAdminView);

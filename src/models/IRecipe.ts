@@ -18,6 +18,9 @@ export interface IRecipe {
   cuisines:Array<any>
   ingredientSubHeadings: Array<IIngredientSubHeading>;
   recipeStatus: any;
+  averageRating: number;
+  numberOfReviews: number;
+
 }
 
 

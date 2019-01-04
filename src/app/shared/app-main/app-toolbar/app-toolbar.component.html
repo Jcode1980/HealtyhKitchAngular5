@@ -36,4 +36,4 @@
 <div class="modals-wrapper" *ngIf="registerOpen || loginOpen" (click)="closeModals()"></div>
 
 <app-log-in *ngIf="registerOpen" (loginSuccessfull)="closeModals()"></app-log-in>
-<app-sign-up *ngIf="loginOpen"></app-sign-up>
+<app-sign-up *ngIf="loginOpen" (loginSuccessfull)="closeModals()"></app-sign-up>

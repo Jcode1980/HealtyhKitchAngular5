@@ -16,6 +16,8 @@ export class LocalStorageService {
   }
   purgeAuthToken() {
     Cookie.delete('auth_token');
+    //console.log("after purge.. is token empty??");
+    //console.log(this.authTokenIsEmpty());
   }
 
 }

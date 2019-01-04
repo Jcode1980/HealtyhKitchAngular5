@@ -41,26 +41,31 @@ export class AuthService {
     return returnObject;
   }
 
-  async signUp(user: IUserSignUpCredentials): Promise<IAsyncResponse> {
-    try {
-      const response = await this.http.post(`${this.baseUrl}/sign-up`, user).toPromise();
-      return {
-        succeeded: true,
-        responseText: 'Successfully registered'
-      };
-    } catch (err) {
-      let response: IAsyncResponse = {
-        succeeded: false
-      };
-      console.log(err);
-      if (err.status === 409) {
-        response.responseText = 'User with such credentials already exists';
-      } else {
-        response.responseText = `Something went wrong. Server responded with ${err.status} (${err.statusText})`;
-      }
-      return response;
-    }
+  // async signUp(user: IUserSignUpCredentials): Promise<IAsyncResponse> {
+  //   try {
+  //     const response = await this.http.post(`${this.baseUrl}sign-up`, user).toPromise();
+  //     return {
+  //       succeeded: true,
+  //       responseText: 'Successfully registered'
+  //     };
+  //   } catch (err) {
+  //     let response: IAsyncResponse = {
+  //       succeeded: false
+  //     };
+  //     console.log(err);
+  //     if (err.status === 409) {
+  //       response.responseText = 'User with such credentials already exists';
+  //     } else {
+  //       response.responseText = `Something went wrong. Server responded with ${err.status} (${err.statusText})`;
+  //     }
+  //     return response;
+  //   }
+  // }
+
+  async registerUser(user: IUserSignUpCredentials): Promise<any> {
+   return await this.http.post(`${this.baseUrl}sign-up`, user).toPromise();
   }
+
 
   tokenStatus(token: string) : Observable<Object>{
     let statusObs: Observable<Object> = this.http.get(`${this.baseUrl}/token-status`, {

@@ -7,6 +7,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {environment} from '../../environments/environment';
 import { IReview } from '../../models/IReview';
 import { User } from '../../models/User';
+import {UserService} from '../../app/user/user.service';
+import { useAnimation } from '@angular/core/src/animation/dsl';
 
 @Component({
   selector: 'app-view-recipe',
@@ -15,7 +17,8 @@ import { User } from '../../models/User';
 })
 export class ViewRecipeComponent implements OnInit {
   @Input() currentRecipe : IRecipe;
-
+  private isLoggedIn: boolean = false;
+  private userCanReviewRecipe: boolean = false;
 
   private recipesAPIURL = `api/recipes/`;
   //currentRecipe : IRecipe;
@@ -30,7 +33,7 @@ export class ViewRecipeComponent implements OnInit {
   reviews: Array<IReview> = [];
 
   constructor(private rest: RestService, private activatedRouter: ActivatedRoute, private router: Router, 
-    private location: Location) { }
+    private location: Location, private userService: UserService) { }
 
   backClicked() {
     this.location.back();
@@ -45,7 +48,17 @@ export class ViewRecipeComponent implements OnInit {
     // //console.log(this.currentRecipe);
 
     this.getReviewsForRecipe();
+    
+    this.userService.isAuthenticated().subscribe(bool => {
+      console.log("the bool is " + bool);
+      this.isLoggedIn = bool;
+    })  
+
+    this.userService.authenticatedUserCanCreateReview(this.currentRecipe).subscribe(
+      bool => this.userCanReviewRecipe = bool
+    );
   }
+
 
   //should be moved into ingredient class if used in multiple locations
   ingredientDisplay(theIngredient:IMeasuredIngredient):string{
@@ -129,12 +142,27 @@ export class ViewRecipeComponent implements OnInit {
           this.reviewCommentNew = null;
           this.reviewRatingNew = null;
           this.showReviewModal = false;
+          this.userCanReviewRecipe = false;
         }, err => {
         if (err.status === 200) {
           this.router.navigateByUrl('');
         }
       });
     }
+  }
+
+
+
+  //TODO: set back to this.userIsLoggedIn when done testing
+  showWriteReviewLink()  {
+    //return this.userIsLoggedIn();
+    //return this.userCanReviewRecipe;
+    return true;
+  }
+
+  userIsLoggedIn(): boolean {
+    return this.isLoggedIn;
+    //return false;
   }
  
 

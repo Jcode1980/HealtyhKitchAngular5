@@ -20,6 +20,8 @@ export class Recipe implements IRecipe {
   cuisines: Array<any>;
   ingredientSubHeadings: Array<IIngredientSubHeading> ;
   recipeStatus: RecipeStatus;
+  averageRating: number;
+  numberOfReviews: number;
   //private _ingredientListing : Array<any>;
 
   
@@ -38,6 +40,8 @@ export class Recipe implements IRecipe {
   this.cuisines = (iRecipe != null ? iRecipe.cuisines : []);
   this.ingredientSubHeadings = (iRecipe != null ? iRecipe.ingredientSubHeadings : []);
   this.recipeStatus = (iRecipe != null ? iRecipe.recipeStatus : RecipeStatus.newStatus());
+  this.averageRating = (iRecipe != null ? iRecipe.averageRating : null);
+  this.numberOfReviews = (iRecipe != null ? iRecipe.numberOfReviews : null);
   
   }
 
