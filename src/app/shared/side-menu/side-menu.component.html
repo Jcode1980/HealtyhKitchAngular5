@@ -9,6 +9,7 @@
   <div class="side-menu--nav" [routerLink]="['/edit-user-profile']" (click)="hideMe();" *ngIf="(loggedInUser | async);">edit profile</div>
   <div class="side-menu--nav" [routerLink]="['/add-recipe']" (click)="hideMe();" *ngIf="(loggedInUser | async);">add recipe</div>
   <div class="side-menu--nav" [routerLink]="['/my-recipes']" (click)="hideMe();" *ngIf="(loggedInUser | async);">my recipes</div>
+  <div class="side-menu--nav" [routerLink]="['/my-cookbooks']" (click)="hideMe();" *ngIf="(loggedInUser | async);">my cookbooks</div>
   <div class="side-menu--logout" *ngIf="(loggedInUser | async);" (click)="logout(); hideMe();">LOG OUT</div>
   
 

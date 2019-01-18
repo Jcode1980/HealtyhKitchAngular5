@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { IRecipe } from '../../../models/IRecipe';
 import {environment} from '../../../environments/environment'; 
+import { Recipe } from '../../../models/Recipe';
 
 @Component({
   selector: 'app-recipe',
@@ -21,6 +22,10 @@ export class RecipeComponent implements OnInit {
     return environment.apiUrl + "files/RecipeImage/"+ this.recipe.defaultImageID +"?quality=3";
   }
 
+  hasDefaultImage():boolean{
+    return this.recipe.defaultImageID != null;
+  }
+
   // recipeLink():string{
   //   if(this.readOnly){
   //     return "/view-recipe/" + this.recipe.id;
@@ -32,6 +37,16 @@ export class RecipeComponent implements OnInit {
 
   recipeLink():string{
     return "/view-recipe/" + this.recipe.id;
+  }
+
+  creatorImageSource(): string{
+    let imageSource = null;
+
+    if(this.recipe.createdby.userProfileImageID != null){
+      imageSource = environment.apiUrl +"files/Images/"+ this.recipe.createdby.userProfileImageID ;
+    }
+    return imageSource;
+
   }
 
   

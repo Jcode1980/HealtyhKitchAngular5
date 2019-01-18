@@ -29,7 +29,7 @@ input, textarea, select{
     width:150px;
     height:150px;
     background-color:lightgrey;
-    border-radius: 50%;
+    border-radius: 20%;
 }
 
 .submit__btn-wrapper{
@@ -50,3 +50,14 @@ input, textarea, select{
       }
     }
   }
+
+  .modal-backdrop {
+    /* bug fix - no overlay */    
+    display:none;    
+  }
+
+#profileImage{
+    height:150px;
+    width:150px;
+    border-radius: 20%;
+}

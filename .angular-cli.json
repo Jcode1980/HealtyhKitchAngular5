@@ -9,7 +9,10 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico"
+        "favicon.ico",
+        "build-a-meal.png",
+        "background.png",
+        "placeholder.svg"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -20,9 +23,12 @@
       "prefix": "app",
       "styles": [
         "styles.css",
-        "customTheme.scss"
+        "customTheme.scss",
+        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "../node_modules/font-awesome/css/font-awesome.css"
       ],
-      "scripts": [],
+      "scripts": ["../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.min.js"],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
@@ -59,3 +65,4 @@
     "component": {}
   }
 }
+

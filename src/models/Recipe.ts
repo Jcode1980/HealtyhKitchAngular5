@@ -1,6 +1,7 @@
 import { IRecipe } from '../models/IRecipe';
 import { ICategory } from "./ICategory";
 import { IMeasuredIngredient } from "./IMeasuredIngredient";
+import { User } from "./User";
 import { IIngredientSubHeading } from "./IIngredientSubHeading";
 import { RecipeStatus } from '../models/RecipeStatus';
 
@@ -22,6 +23,7 @@ export class Recipe implements IRecipe {
   recipeStatus: RecipeStatus;
   averageRating: number;
   numberOfReviews: number;
+  createdby: User;
   //private _ingredientListing : Array<any>;
 
   
@@ -42,6 +44,7 @@ export class Recipe implements IRecipe {
   this.recipeStatus = (iRecipe != null ? iRecipe.recipeStatus : RecipeStatus.newStatus());
   this.averageRating = (iRecipe != null ? iRecipe.averageRating : null);
   this.numberOfReviews = (iRecipe != null ? iRecipe.numberOfReviews : null);
+  this.createdby = (iRecipe != null ? iRecipe.createdby : null);
   
   }
 

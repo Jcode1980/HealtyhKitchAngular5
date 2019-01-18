@@ -1,4 +1,5 @@
 import { IMeasuredIngredient } from "./IMeasuredIngredient";
+import { User } from "./User";
 import { IIngredientSubHeading } from "./IIngredientSubHeading";
 import { ICategory } from "./ICategory";
 
@@ -20,6 +21,7 @@ export interface IRecipe {
   recipeStatus: any;
   averageRating: number;
   numberOfReviews: number;
+  createdby: User;
 
 }
 

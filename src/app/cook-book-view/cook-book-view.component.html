@@ -1,0 +1,15 @@
+<div class="my_recipe_wrapper">
+    <div class="container">
+        <div class="row">
+          <div *ngFor="let recipe of recipes(); let i = index" class="col-sm-4">
+           <app-recipe
+             [readOnly]="true"
+             [recipe]="recipe"
+           ></app-recipe>
+          </div>
+        </div>
+    </div>
+      <h2 *ngIf="!hasRecipes()" style="text-align: center;">
+        No recipes found
+      </h2>
+</div>

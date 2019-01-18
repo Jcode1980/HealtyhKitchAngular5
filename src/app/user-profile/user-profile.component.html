@@ -3,11 +3,11 @@
     <div class="col-sm-2">
       <div class="profileBackground">
         <i class="fas fa-user fa-7x" *ngIf="!userProfileImageSource()"></i>
-        <img [src]="userProfileImageSource()" *ngIf="userProfileImageSource()" />
+        <img [src]="userProfileImageSource()" *ngIf="userProfileImageSource()" id="profileImage" />
       </div>
-      <div class="submit__btn-wrapper" >
-          <button style="width:150px;" (click)="uploadImage()">Upload Image</button>
-        </div>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileUploadModalID">
+        Upload Image
+      </button>
     </div>
     <div class="col-sm-5">
       <div class="container">
@@ -72,7 +72,7 @@
       </div>
       <div class="row">
         <div class="heading">Instragram</div>
-        <div class="maxWidth"><input type="text" name="instragram_url" [(ngModel)]="currentUser.instragramURL"></div>
+        <div class="maxWidth"><input type="text" name="instragram_url" [(ngModel)]="currentUser.instagramURL"></div>
       </div>
       <div class="row">
         <div class="heading">Facebook</div>
@@ -81,12 +81,71 @@
       </div>
 
       <div class="row">
-        <div class="submit__btn-wrapper">
-          <button (click)="changePassword()">CHANGE PASSWORD</button>
+        <button (click)="changePassword()" class="btn btn-primary" data-toggle="modal" data-target="#changePassModalID">CHANGE
+          PASSWORD</button>
+        <span style="width:10px;"></span>
+        <button (click)="saveProfile()" class="btn btn-primary">SAVE PROFILE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Image Modal -->
+  <div class="modal fade" data-backdrop="false" id="profileUploadModalID" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Upload Profile Image</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <div class="submit__btn-wrapper">
-          <button (click)="saveProfile()">SAVE PROFILE</button>
+        <div class="modal-body">
+          <input type="file" name="file" (change)="fileChangeEvent($event)" style="margin-bottom: 20px" />
+
+          <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1.00"
+            format="png" (imageCroppedFile)="imageCroppedFile($event)" (imageCroppedBase64)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()" (loadImageFailed)="loadImageFailed()"></image-cropper>
+
+          <!--<img [src]="croppedImage" />-->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="uploadProfileImage()">Save changes</button>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="modal fade" data-backdrop="false" id="changePassModalID" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form [formGroup]="form" (ngSubmit)="submitChangePasswordForm()">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" class="form-control" formControlName="password" [formGroup]="form">
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+              <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword"
+                [formGroup]="form">
+            </div>
+            <div class="alert alert-danger" *ngIf="form.controls.confirmPassword.errors?.MatchPassword">Password not
+              match
+            </div>
+            <div class="alert alert-danger" *ngIf="form.controls.confirmPassword.errors?.PasswordTooShort">
+              Password must be at least 5 characters long
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" >Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

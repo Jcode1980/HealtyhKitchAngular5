@@ -11,6 +11,8 @@ import {ParentRecipeComponent} from './parent-recipe/parent-recipe.component';
 import {HomeComponent} from './home/home.component';
 import {MyRecipeComponent} from './my-recipe/my-recipe.component';
 import {UserProfileComponent} from './user-profile/user-profile.component';
+import { CookbooksListComponent } from './cookbooks-list/cookbooks-list.component';
+import { CookBookViewComponent } from './cook-book-view/cook-book-view.component';
 
 const appRoutes: Routes = [
   {
@@ -21,10 +23,12 @@ const appRoutes: Routes = [
       {path: '', component: HomeComponent, pathMatch: 'full'},
       {path: 'add-recipe', component: AddRecipeComponent, pathMatch: 'full'},
       {path: 'my-recipes', component: MyRecipeComponent, pathMatch: 'full'},
+      {path: 'my-cookbooks', component: CookbooksListComponent, pathMatch: 'full'},
       {path: 'admin-recipes', component: MyRecipeComponent, pathMatch: 'full'},
       {path: 'edit-recipe/:id', component: AddRecipeComponent },
       //{path: 'view-recipe/:id', component: ViewRecipeComponent},
       {path: 'view-recipe/:id', component: ParentRecipeComponent},
+      {path: 'view-cookbook/:id', component: CookBookViewComponent},
       {path: 'edit-user-profile', component: UserProfileComponent, pathMatch: 'full'}
     ]
 

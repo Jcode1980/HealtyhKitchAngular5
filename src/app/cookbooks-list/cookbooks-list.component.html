@@ -1,0 +1,32 @@
+<div id="headingArea" class="border-bottom">
+  <h2>Cookbooks</h2>
+</div>
+
+<div class="cookbookList">
+
+  <div class="container-fluid ">
+    <div class="row">
+      <div class="cookbookContainer" class="col-sm-4" id="createNewCookbook" (click)="createNewCookbook();">
+          <span class="newCookbookSign">+</span>
+      </div>
+      <div *ngFor="let cookbook of cookbooksList; let i = index" class="col-sm-4">
+        <div class="cookbookContainer">
+          <div class="img-wrapper">
+            <a routerLink={{cookbookLink(cookbook)}}>
+              <img src="assets/img/placeholder.svg"  width="200px" *ngIf="!cookbook.defaultImageID()">
+              <img src={{cookbook.defaultImageURL()}} alt="" width="100%" *ngIf="cookbook.defaultImageURL()" class="recipe__img-wrapper">
+            </a>
+          </div>
+          <div class="cookbookDetails">
+            <div>
+              <span>{{cookbook.displayName()}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 *ngIf="!hasCookbooks()" style="text-align: center;">
+        No cookbooks found
+      </h2>
+    </div>
+  </div>
+</div>

@@ -30,11 +30,22 @@ export class ParentRecipeComponent implements OnInit {
     private location: Location, private userService: UserService) { }
 
   async ngOnInit() {
-    const id = +this.activatedRouter.snapshot.paramMap.get('id');
-    console.log("await for recipe");
-    await this.rest.apiGet<IRecipe>(`api/recipes/${id}`).toPromise()
-      .then(recipe => this.currentRecipe = new Recipe(recipe) );
 
+    const id = +this.activatedRouter.snapshot.paramMap.get('id');
+    console.log("id is");
+    console.log(id);
+
+    if(id !== null && id !==0){
+      console.log("await for recipe");
+      await this.rest.apiGet<IRecipe>(`api/recipes/${id}`).toPromise()
+      .then(recipe => this.currentRecipe = new Recipe(recipe) );
+    }
+    else{
+      console.log("creating new recipe");
+      this.currentRecipe = new Recipe(null);
+    }
+    
+    
   }
 
   isAdminView():boolean{

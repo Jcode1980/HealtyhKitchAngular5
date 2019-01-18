@@ -72,8 +72,14 @@ export class AddRecipeComponent implements OnInit {
     //    this.currentRecipe = new Recipe(null);
     // }
 
-    if(this.currentRecipe === null){
+    console.log("init add-recipe ");
+    console.log(this.currentRecipe);
+    if(this.currentRecipe == null){
+      console.log("got here recip is null ");
       this.currentRecipe = new Recipe(null);
+    }
+    else{
+      console.log("recipe is not null");
     }
 
     if(this.currentRecipe.ingredientListing().length > 0){

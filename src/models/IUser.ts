@@ -2,8 +2,7 @@ export interface IUser {
   email: string;
   given: string;
   surname: string;
-  profileImageThumbnailID?: number;
-  profileImagePreviewID?: number;
+  userProfileImageID?: number;
   gender?: string;
   yob?: number;
   facebookURL?: string;

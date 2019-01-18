@@ -1,7 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
-
 import {AppComponent} from './app.component';
 import {AppMainComponent} from './shared/app-main/app-main.component';
 import {AppToolbarComponent} from './shared/app-main/app-toolbar/app-toolbar.component';
@@ -42,6 +41,8 @@ import { StarsDisplayComponent } from './shared/stars-display/stars-display.comp
 import { ShowErrorsComponent } from './shared/show-errors/show-errors.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ParentRecipeComponent } from './parent-recipe/parent-recipe.component';
+import { CookbooksListComponent } from './cookbooks-list/cookbooks-list.component';
+import { CookBookViewComponent } from './cook-book-view/cook-book-view.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,9 @@ import { ParentRecipeComponent } from './parent-recipe/parent-recipe.component';
     StarsDisplayComponent,
     ShowErrorsComponent,
     UserProfileComponent,
-    ParentRecipeComponent
+    ParentRecipeComponent,
+    CookbooksListComponent,
+    CookBookViewComponent
   ],
   imports: [
     BrowserModule,

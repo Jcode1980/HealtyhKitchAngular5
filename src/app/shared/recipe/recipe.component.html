@@ -2,11 +2,24 @@
 <div class="recipe__wrapper">
   <div class="img-wrapper">
     
-      <img src={{imgLink()}} alt="" width="100%" *ngIf="imgLink" class="recipe__img-wrapper">
-      <div *ngIf="!imgLink" class="recipe-no-img">{{name}}</div>
+      
+    <img src={{imgLink()}} alt="" width="100%" *ngIf="hasDefaultImage()" class="recipe__img-wrapper">
+    <img width="200px" src="assets/img/placeholder.svg" >
+    <div *ngIf="!imgLink" class="recipe-no-img">{{name}}</div>
       
   </div>
-  <div class="recipe-title">{{recipe.name}}</div>
-  <div class="recipe-details">{{recipe.descText}}</div>
+  <div>
+    <div class="creatorProfileImage"> 
+        <div class="noProfileImageContainer" *ngIf="!creatorImageSource()">
+            <i class="fa fa-user"  ></i>  
+        </div>
+        <img  [src]="creatorImageSource()" *ngIf="creatorImageSource()">  
+    </div>    
+    <div class="recipeDetailsArea">
+        <div class="recipe-title">{{recipe.name}}</div>
+        <div> <app-stars-display [numberOfStars]="recipe.averageRating" ></app-stars-display> </div>
+    </div>
+  </div>
+  
 </div>
 </a> 

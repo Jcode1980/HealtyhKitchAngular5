@@ -39,3 +39,31 @@ $imageWidth: 300px;
   font-family: Montserrat;
   font-size: 22px;
 }
+
+.creatorProfileImage{
+  display:inline-block;
+  width:60px;
+}
+
+
+
+.creatorProfileImage img{
+  height:50px;
+  width:50px;
+  border-radius: 50%;
+  vertical-align: top;
+}
+
+.noProfileImageContainer{
+  height:50px;
+  width:50px;
+  border-radius: 50%;
+  background-color: lightgray;
+}
+
+.recipeDetailsArea{
+  display:inline-block;
+}
+
+
+
