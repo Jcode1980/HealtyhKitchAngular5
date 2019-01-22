@@ -8,7 +8,7 @@
 .cookbookContainer{
     height:400px;
     width:300px;
-    background-color: aqua;
+    background-color: lightgray;
     margin:10px;
 }
 
@@ -17,8 +17,9 @@
     width:100%;
 }
 
-.img-wrapper > img{
+.img-wrapper img{
     width:100%;
+    height:290px;
 }
 
 #createNewCookbook{

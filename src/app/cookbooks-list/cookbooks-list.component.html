@@ -6,14 +6,16 @@
 
   <div class="container-fluid ">
     <div class="row">
-      <div class="cookbookContainer" class="col-sm-4" id="createNewCookbook" (click)="createNewCookbook();">
+      <div class="col-sm-4">
+      <div class="cookbookContainer" id="createNewCookbook" (click)="createNewCookbook();">
           <span class="newCookbookSign">+</span>
+      </div>
       </div>
       <div *ngFor="let cookbook of cookbooksList; let i = index" class="col-sm-4">
         <div class="cookbookContainer">
           <div class="img-wrapper">
             <a routerLink={{cookbookLink(cookbook)}}>
-              <img src="assets/img/placeholder.svg"  width="200px" *ngIf="!cookbook.defaultImageID()">
+              <img src="assets/img/placeholder.svg"  width="100%" *ngIf="!cookbook.defaultImageURL()">
               <img src={{cookbook.defaultImageURL()}} alt="" width="100%" *ngIf="cookbook.defaultImageURL()" class="recipe__img-wrapper">
             </a>
           </div>

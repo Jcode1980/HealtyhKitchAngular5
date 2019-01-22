@@ -5,11 +5,14 @@ import {environment} from '../environments/environment';
 export class Cookbook {
     id: number;
     name: string;
-    defaultRecipe: IRecipe;
-    recipes: IRecipe[];
+    defaultRecipeDto: IRecipe;
+    recipesDto: IRecipe[];
 
     constructor(cookbook:any){
         this.name = cookbook.name;
+        this.defaultRecipeDto= cookbook.defaultRecipeDto;
+        this.recipesDto = cookbook.recipesDto;
+        this.id = cookbook.id;
     }
 
     displayName():String{
@@ -17,8 +20,8 @@ export class Cookbook {
     }
 
     defaultImageID(){
-        if(this.defaultRecipe != null && this.defaultRecipe.defaultImageID != null ){
-            return this.defaultRecipe.defaultImageID;
+        if(this.defaultRecipeDto != null && this.defaultRecipeDto.defaultImageID != null ){
+            return this.defaultRecipeDto.defaultImageID;
         }
         else{
             return null;

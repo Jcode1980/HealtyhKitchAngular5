@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IRecipe } from '../../models/IRecipe';
 import { RestService } from '../rest.service';
 import { Cookbook } from '../../models/Cookbook';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-cook-book-view',
@@ -11,13 +12,20 @@ import { Cookbook } from '../../models/Cookbook';
 export class CookBookViewComponent implements OnInit {
   private currentCookbook: Cookbook;
 
-  constructor(private restService: RestService) { }
+  constructor(private restService: RestService, private activatedRouter: ActivatedRoute) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    const id = +this.activatedRouter.snapshot.paramMap.get('id');
+    console.log("id is");
+    console.log(id);
+    console.log("await for cookbook");
+    
+    await this.restService.apiGet<any>('api/cookbooks/' + id).toPromise()
+      .then(responsObj => this.currentCookbook = new Cookbook(responsObj));
   }
 
   recipes(): IRecipe[]{
-    let recipes =  this.currentCookbook.recipes;
+    let recipes =  this.currentCookbook.recipesDto;
     return recipes;
   }
 

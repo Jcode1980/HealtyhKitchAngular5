@@ -42,6 +42,8 @@ export class CookbooksListComponent implements OnInit {
   }
 
   cookbookLink(cookbook: Cookbook): string{
+    console.log("what is my cookbook");
+    console.log(cookbook.id);
     return "/view-cookbook/" + cookbook.id;
   }
 
