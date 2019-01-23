@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-2">
       <div class="profileBackground">
-        <i class="fas fa-user fa-7x" *ngIf="!userProfileImageSource()"></i>
+        <img src="assets/img/default-avatar.jpg" *ngIf="!userProfileImageSource()">
         <img [src]="userProfileImageSource()" *ngIf="userProfileImageSource()" id="profileImage" />
       </div>
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileUploadModalID">

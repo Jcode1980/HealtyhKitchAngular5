@@ -25,7 +25,8 @@ import {HomeComponent} from './home/home.component';
 import {HomeService} from './home/home.service';
 import {RecipeComponent} from './shared/recipe/recipe.component';
 import {FooterComponent} from './shared/footer/footer.component';
-import {MatSelectModule, MatSidenav, MatSidenavContainer, MatSidenavContent, MatSidenavModule} from '@angular/material';
+import {MatSelectModule, MatSidenavModule, MatMenuModule, MatButtonModule, 
+        MatIconModule, MatSnackBarModule} from '@angular/material';
 import {SideMenuComponent} from './shared/side-menu/side-menu.component';
 import {NgHttpLoaderModule} from 'ng-http-loader/ng-http-loader.module';
 import {RestService} from './rest.service';
@@ -43,6 +44,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ParentRecipeComponent } from './parent-recipe/parent-recipe.component';
 import { CookbooksListComponent } from './cookbooks-list/cookbooks-list.component';
 import { CookBookViewComponent } from './cook-book-view/cook-book-view.component';
+import { SnackBarDisplayComponent } from './snack-bar-display/snack-bar-display.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,8 @@ import { CookBookViewComponent } from './cook-book-view/cook-book-view.component
     UserProfileComponent,
     ParentRecipeComponent,
     CookbooksListComponent,
-    CookBookViewComponent
+    CookBookViewComponent,
+    SnackBarDisplayComponent
   ],
   imports: [
     BrowserModule,
@@ -77,6 +80,10 @@ import { CookBookViewComponent } from './cook-book-view/cook-book-view.component
     ReactiveFormsModule,
     MatSelectModule,
     MatSidenavModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    MatSnackBarModule,
     HttpClientModule,
     NgHttpLoaderModule,
     NgMultiSelectDropDownModule.forRoot(),

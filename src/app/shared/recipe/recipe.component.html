@@ -1,25 +1,23 @@
-<a routerLink={{recipeLink()}}>
 <div class="recipe__wrapper">
-  <div class="img-wrapper">
-    
-      
-    <img src={{imgLink()}} alt="" width="100%" *ngIf="hasDefaultImage()" class="recipe__img-wrapper">
-    <img width="200px" src="assets/img/placeholder.svg" *ngIf="!hasDefaultImage()">
-    <div *ngIf="!imgLink" class="recipe-no-img">{{name}}</div>
-      
-  </div>
+  <a routerLink={{recipeLink()}}>
+    <div class="img-wrapper">
+      <img src={{imgLink()}} alt="" width="100%" *ngIf="hasDefaultImage()" class="recipe__img-wrapper">
+      <img width="200px" src="assets/img/placeholder.svg" *ngIf="!hasDefaultImage()">
+      <div *ngIf="!imgLink" class="recipe-no-img">{{name}}</div>
+    </div>
+  </a>
   <div>
-    <div class="creatorProfileImage"> 
-        <div class="noProfileImageContainer" *ngIf="!creatorImageSource()">
-            <i class="fa fa-user"  ></i>  
-        </div>
-        <img  [src]="creatorImageSource()" *ngIf="creatorImageSource()">  
-    </div>    
+    <div class="creatorProfileImage">
+      <img src="assets/img/default-avatar.jpg" *ngIf="!creatorImageSource()">
+      <img [src]="creatorImageSource()" *ngIf="creatorImageSource()">
+    </div>
     <div class="recipeDetailsArea">
-        <div class="recipe-title">{{recipe.name}}</div>
-        <div> <app-stars-display [numberOfStars]="recipe.averageRating" ></app-stars-display> </div>
+        <a routerLink={{recipeLink()}}><div class="recipe-title">{{recipe.name}}</div></a>
+      <div>
+        <app-stars-display [numberOfStars]="recipe.averageRating"></app-stars-display>
+        <span *ngIf="recipe.numberOfReviews != null">({{recipe.numberOfReviews}})</span>
+      </div>
     </div>
   </div>
-  
+
 </div>
-</a> 

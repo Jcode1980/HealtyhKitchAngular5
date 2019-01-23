@@ -12,7 +12,8 @@
         "favicon.ico",
         "build-a-meal.png",
         "background.png",
-        "placeholder.svg"
+        "placeholder.svg",
+        "default-avatar.jpg"
       ],
       "index": "index.html",
       "main": "main.ts",

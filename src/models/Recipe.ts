@@ -44,7 +44,7 @@ export class Recipe implements IRecipe {
   this.recipeStatus = (iRecipe != null ? iRecipe.recipeStatus : RecipeStatus.newStatus());
   this.averageRating = (iRecipe != null ? iRecipe.averageRating : null);
   this.numberOfReviews = (iRecipe != null ? iRecipe.numberOfReviews : null);
-  this.createdby = (iRecipe != null ? iRecipe.createdby : null);
+  this.createdby = (iRecipe != null ? new User(iRecipe.createdby) : null);
   
   }
 
@@ -200,7 +200,15 @@ export class Recipe implements IRecipe {
       return true;
     }
 
-    
+    creatorDisplayName(): string{
+      if(this.createdby != null){
+        console.log("found user");
+        console.log(this.createdby);
+        return this.createdby.fullName();
+      }
+      else
+        return "No Creator";
+    }
 
   // addIngredient(index : number) : IMeasuredIngredient{
   //   let newIngredient : IMeasuredIngredient = this.createNewIngredient(index);

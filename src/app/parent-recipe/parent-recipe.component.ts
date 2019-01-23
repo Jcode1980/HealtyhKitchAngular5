@@ -38,7 +38,13 @@ export class ParentRecipeComponent implements OnInit {
     if(id !== null && id !==0){
       console.log("await for recipe");
       await this.rest.apiGet<IRecipe>(`api/recipes/${id}`).toPromise()
-      .then(recipe => this.currentRecipe = new Recipe(recipe) );
+      .then(
+        recipe =>{ 
+          console.log("the createdby")
+          console.log(recipe.createdby);
+          console.log(recipe);
+          this.currentRecipe = new Recipe(recipe);
+        });
     }
     else{
       console.log("creating new recipe");

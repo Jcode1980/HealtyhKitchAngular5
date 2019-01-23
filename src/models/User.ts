@@ -32,6 +32,7 @@ export class User implements IUser {
       this.given = iUser.given;
       this.userProfileImageID = iUser.userProfileImageID;
       this.yob = iUser.yob;
+      this.surname = iUser.surname;
       this.facebookURL = iUser.facebookURL;
       this.instagramURL = iUser.instagramURL;
       this.blogURL = iUser.blogURL;
@@ -61,7 +62,7 @@ export class User implements IUser {
   }
 
   fullName():string{
-    return this.given + this.surname;
+    return this.given + " " +this.surname;
   }
 
   isAdmin(): Boolean{
