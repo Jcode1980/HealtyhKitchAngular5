@@ -95,19 +95,16 @@
 
       <div class="home__search-meal-types-container" *ngIf="!showResultsBlock">
 
-        <div class="home__search-meal-types--wrapper" *ngFor="let item of allMealTypes">
+        <div class="home__search-meal-types--wrapper" *ngFor="let item of searchableItems()">
 
           <div class="home__search-meal-types--item" (click)="searchType(item)">
 
-            
-            <img *ngIf="item.image" [src]="this.serverURL + 'files/Images/' + item.image.id" class="meal-types-img">
-            
-            <div *ngIf="!item.image" class="meal-types-text">
+            <img [src]="searchableDisplayImage(item)" class="meal-types-img">            
+            <div  class="meal-types-text">
               {{item.name}}
             </div>
 
           </div>
-
         </div>
 
       </div>

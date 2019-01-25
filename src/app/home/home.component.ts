@@ -6,6 +6,7 @@ import {IRecipeSearchDTO} from '../../models/IRecipeSearchDTO';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {RestService} from '../rest.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -26,7 +27,7 @@ export class HomeComponent implements OnInit {
   buildMealSecondItem = '';
   buildMealThirdItem = '';
 
-  allMealTypes;
+  allMealTypes: Array<any>;
 
   advancedSearchExpanded = false;
 
@@ -44,8 +45,24 @@ export class HomeComponent implements OnInit {
   private serverURL = environment.apiUrl;
   public resourceURL = environment.baseURL;
 
-  constructor(private homeService: HomeService, private http: HttpClient, private rest: RestService) {
+  CUISINE_SEARCH : String = "Cuisines";
+  MEAL_SEARCH: String = "MealTypes";
+  CATEGORY_SEARCH: String = "Categories";
+
+  searchTypes: Array<String> = [this.CUISINE_SEARCH, this.MEAL_SEARCH, this.CATEGORY_SEARCH];
+  selectedSearchType: String = this.MEAL_SEARCH;
+
+  constructor(private homeService: HomeService, private http: HttpClient, private rest: RestService,  
+    private activatedRouter: ActivatedRoute) {
+
+      let url = activatedRouter.snapshot.url.join('');
+      //let href = this.router.url;
+  
+      console.log('this is the home URL: ');
+      console.log(url);
+      console.log('end URL');    
   }
+
 
 
  
@@ -189,6 +206,8 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  
+
 
   loadMealTypes() {
     this.rest.apiGet('api/recipes/allMealTypes').subscribe((res: any[]) => {
@@ -239,5 +258,47 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  public isMealTypeSearch(): boolean{
+    return this.selectedSearchType === this.MEAL_SEARCH;
+  }
+
+  public isCuisinesSearch(): boolean{
+    return this.selectedSearchType === this.CUISINE_SEARCH;
+  }
+
+  public isCategorySearch(): boolean{
+    return this.selectedSearchType === this.CATEGORY_SEARCH;
+  }
+
+  public searchableItems(): Array<any>{
+    if(this.isCuisinesSearch()){
+      return this.cuisines;
+    }  
+    else if(this.isCategorySearch()){
+      return this.dietaryRequirements();
+    }
+    else{
+      return this.allMealTypes;
+    }
+  }
+
+  public searchableDisplayImage(item): string{
+    let imageURL:string = "assets/img/placeholder.svg";
+
+    if(this.isMealTypeSearch()){
+      //console.log("meal type search display");
+      if(item.image){
+        imageURL = "this.serverURL + 'files/Images/' + item.image.id";
+      }
+    }else{
+        imageURL = "assets/img/" + this.selectedSearchType + item.id + ".png";
+    }
+    //console.log("returning searchable Display URL: " + imageURL);
+    
+    return imageURL;
+  }
+
+
+ 
 
 }

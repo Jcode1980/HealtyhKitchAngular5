@@ -21,6 +21,9 @@ const appRoutes: Routes = [
     // canActivate: [AuthGuard],
     children: [
       {path: '', component: HomeComponent, pathMatch: 'full'},
+      {path: 'cuisines', component: HomeComponent, pathMatch: 'full'},
+      {path: 'dietary-requirements', component: HomeComponent, pathMatch: 'full'},
+      {path: 'nutrition-benefits', component: HomeComponent, pathMatch: 'full'},
       {path: 'add-recipe', component: AddRecipeComponent, pathMatch: 'full'},
       {path: 'my-recipes', component: MyRecipeComponent, pathMatch: 'full'},
       {path: 'my-cookbooks', component: CookbooksListComponent, pathMatch: 'full'},
